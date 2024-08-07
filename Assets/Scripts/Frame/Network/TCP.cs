@@ -7,6 +7,8 @@ using System;
 using System.Linq;
 using System.Text;
 using LitJson;
+using Unity.VisualScripting;
+using UnityEditor;
 
 public static class TCP
 {
@@ -61,7 +63,7 @@ public static class TCP
                 mp.length = int.Parse(data["length"].ToString());
                 mp.event_type = data["event_type"].ToString();
                 mp.get_length = true;
-
+              
                 FrontMp fp = new FrontMp();
                 fp.event_type = data["event_type"].ToString();
                 percent = 0.0f; // 在准备队列填装之前 清空上一次消息留下的百分比
@@ -80,7 +82,8 @@ public static class TCP
                 if (percent >= 100.0f)
                 {
                     mp.finish = true;
-                    m_MessQueue.Enqueue(mp);
+
+                    MessQueueAdd(mp);
                     mp.Clear();
                 }
             }
@@ -91,6 +94,70 @@ public static class TCP
         {
 
         }
+    }
+
+    /// <summary>
+    /// 异步发送信息
+    /// </summary>
+    /// <param name="mess">内容</param>
+    /// <param name="event_type">事件类型</param>
+    public static async void SendAsync(string mess, EventType event_type)
+    {
+        SendFrontPackage(mess, event_type);
+
+        await Tools.OnAwait(0.1f, () =>
+        {
+            var outputBuffer = Encoding.Unicode.GetBytes(mess);
+            m_Socket.BeginSend(outputBuffer, 0, outputBuffer.Length, SocketFlags.None, SendAsyncCbk, null);
+        });
+    }
+
+    /// <summary>
+    /// 发送前置包
+    /// </summary>
+    /// <param name="mess"></param>
+    /// <param name="event_type"></param>
+    public static void SendFrontPackage(string mess, EventType event_type)
+    {
+        FrontMp mpinfo = new FrontMp()
+        {
+            ip = netTools.GetIPForTypeIPV4(),
+            length = mess.Count().ToString(),
+            event_type = event_type.ToSafeString()
+        };
+
+        string s_info = JsonMapper.ToJson(mpinfo);
+        var outputBuffer = Encoding.Unicode.GetBytes(s_info);
+        m_Socket.BeginSend(outputBuffer, 0, outputBuffer.Length, SocketFlags.None, SendAsyncCbk, null);
+    }
+
+    /// <summary>
+    /// 异步发送回调
+    /// </summary>
+    /// <param name="ar"></param>
+    private static void SendAsyncCbk(IAsyncResult ar)
+    {
+        try
+        {
+            if (m_Socket != null)
+            {
+                m_Socket.EndSend(ar);
+            }
+        }
+        catch (SocketException e)
+        {
+            Debug.Log("socket send fail" + e.ToString());
+        }
+    }
+
+    /// <summary>
+    /// 为消息队列 Clone pkg 并且存放
+    /// </summary>
+    /// <param name="pkg"></param>
+    public static void MessQueueAdd(MessPackage mp)
+    {
+        MessPackage pkg = new MessPackage(mp);
+        m_MessQueue.Enqueue(pkg);
     }
 }
 
@@ -141,4 +208,14 @@ public class FrontMp
     public string ip;
     public string length;
     public string event_type;
+}
+
+public enum EventType
+{
+    None = 0,
+    UploadEvent,
+    DownLoadEvent,
+    CheckEvent,
+    UserLoginEvent,
+    RegisterEvent
 }
