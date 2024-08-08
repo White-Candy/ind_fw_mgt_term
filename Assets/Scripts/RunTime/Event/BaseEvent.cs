@@ -16,3 +16,14 @@ public class BaseEvent
     /// <param name="args"></param>
     public virtual async void OnEvent(params object[] args) { await UniTask.Yield(); }
 }
+
+public enum EventType
+{
+    None = 0,
+    UploadEvent,
+    DownLoadEvent,
+    CheckEvent,
+    UserLoginEvent,
+    RegisterEvent,
+    GetStuInfoEvent
+}

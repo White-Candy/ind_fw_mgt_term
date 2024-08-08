@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasePanel : MonoBehaviour
+public class BasePanel : MonoBehaviour, IPanel
 {
     //Panel Name
     [HideInInspector]
@@ -18,6 +18,7 @@ public class BasePanel : MonoBehaviour
     {
         m_NameP = this.GetType().ToString();
         m_Visible = m_Content == null ? false : m_Content.activeSelf;
+        UITools.AddPanel(m_NameP, this);
     }
 
     /// <summary>
@@ -33,3 +34,5 @@ public class BasePanel : MonoBehaviour
         }
     }
 }
+
+public interface IPanel { }

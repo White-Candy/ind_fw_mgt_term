@@ -1,7 +1,7 @@
 
 using System.Net.NetworkInformation;
 
-public static class netTools
+public static class NetTools
 {
     /// <summary>
     /// 获取主机的ipv4地址

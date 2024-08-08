@@ -1,6 +1,7 @@
 
-using Cysharp.Threading.Tasks;
 using LitJson;
+using System.Collections.Generic;
+using UnityEngine;
 
 public static class TCPExp
 {
@@ -19,5 +20,16 @@ public static class TCPExp
 
         string sJson = JsonMapper.ToJson(inf);
         TCP.SendAsync(sJson, EventType.UserLoginEvent);
+    }
+
+    /// <summary>
+    /// 获取学生信息请求
+    /// </summary>
+    public static void GetStuInfReq()
+    {
+        List<UserInfo> inf = new List<UserInfo>();
+        
+        string body = JsonMapper.ToJson(inf);
+        TCP.SendAsync(body, EventType.GetStuInfoEvent);
     }
 }

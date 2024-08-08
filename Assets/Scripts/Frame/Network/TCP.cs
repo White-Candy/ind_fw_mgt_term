@@ -121,7 +121,7 @@ public static class TCP
     {
         FrontMp mpinfo = new FrontMp()
         {
-            ip = netTools.GetIPForTypeIPV4(),
+            ip = NetTools.GetIPForTypeIPV4(),
             length = mess.Count().ToString(),
             event_type = event_type.ToSafeString()
         };
@@ -208,14 +208,4 @@ public class FrontMp
     public string ip;
     public string length;
     public string event_type;
-}
-
-public enum EventType
-{
-    None = 0,
-    UploadEvent,
-    DownLoadEvent,
-    CheckEvent,
-    UserLoginEvent,
-    RegisterEvent
 }

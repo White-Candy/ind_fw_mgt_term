@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +17,8 @@ public class MenuControl : MonoBehaviour
         {
             btn.onClick.AddListener(() =>
             {
-                // TODO: Switch UI Panel.
-                Debug.Log(btn.GetComponentInChildren<TextMeshProUGUI>().text);
+                BaseAction @event = Tools.CreateObject<BaseAction>($"{btn.name}Action");
+                @event.OnEvent();
             });
 
         }

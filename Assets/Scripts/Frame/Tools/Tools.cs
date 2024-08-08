@@ -27,6 +27,7 @@ public static class Tools
     /// <returns></returns>
     static public T CreateObject<T>(string name) where T : class
     {
+        Debug.Log(name);
         object obj = CreateObject(name);
         return obj == null ? null : obj as T;
     }
@@ -42,6 +43,7 @@ public static class Tools
         try
         {
             Type type = Type.GetType(name, true);
+            Debug.Log("Type: " + type.Name);
             obj = Activator.CreateInstance(type); //创建指定类型的实例。
         }
         catch (Exception ex)
