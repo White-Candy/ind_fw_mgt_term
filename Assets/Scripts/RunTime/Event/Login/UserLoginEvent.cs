@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UserLoginEvent : BaseEvent
 {
-    public override async void OnEvent(params object[] args) 
+    public override async void OnEvent(params object[] args)
     {
         MessPackage mp = args[0] as MessPackage;
         UserInfo inf = JsonMapper.ToObject<UserInfo>(mp.ret);
