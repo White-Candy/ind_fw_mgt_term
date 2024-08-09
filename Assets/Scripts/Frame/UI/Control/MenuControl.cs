@@ -18,7 +18,7 @@ public class MenuControl : MonoBehaviour
             btn.onClick.AddListener(() =>
             {
                 BaseAction @event = Tools.CreateObject<BaseAction>($"{btn.name}Action");
-                @event.OnEvent();
+                @event?.OnEvent();
             });
 
         }
