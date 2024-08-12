@@ -9,5 +9,6 @@ public class StudentAction : BaseAction
 
         m_Panel = UITools.FindPanel<StudentPanel>();
         m_Panel.Init();
+        m_Panel.Active(true);
     }
 }
