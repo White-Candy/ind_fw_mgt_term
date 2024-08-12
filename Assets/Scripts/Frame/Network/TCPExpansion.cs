@@ -32,4 +32,11 @@ public static class TCPExp
         string body = JsonMapper.ToJson(inf);
         TCP.SendAsync(body, EventType.GetStuInfoEvent);
     }
+
+    // 添加用户信息
+    public static void AddUsersInfo(List<UserInfo> inf)
+    {
+        string body = JsonMapper.ToJson(inf);
+        TCP.SendAsync(body, EventType.AddStuInfoEvent);
+    }
 }
