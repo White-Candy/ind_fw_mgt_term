@@ -1,10 +1,8 @@
 using LitJson;
-using System.Collections;
 using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class StudentPanel : BasePanel
 {
@@ -13,7 +11,7 @@ public class StudentPanel : BasePanel
 
     public Button Import;
     public Button Export;
-    public Button Revise;
+    public Button Add;
     public Button Refresh;
 
     public static StudentPanel instance;
@@ -26,13 +24,13 @@ public class StudentPanel : BasePanel
     {
         base.Awake();
         instance = this;
-
+        
         Active(false);
     }
 
     public void Start()
     {
-        // µ¼Èë°´Å¥¡£
+        // å­¦ç”Ÿä¿¡æ¯å¯¼å…¥
         Import.OnClickAsObservable().Subscribe(async x =>
         {
             string filePath = FileTools.OpenFileDialog();
@@ -40,14 +38,14 @@ public class StudentPanel : BasePanel
 
             var list = await ExcelTools.Excel2UserInfos(filePath);
 
-            // ÇëÇó°ÑĞÂµ¼ÈëµÄÑ§ÉúĞÅÏ¢±£´æµ½·şÎñÆ÷ÖĞ
+            // è¯·æ±‚æŠŠæ–°å¯¼å…¥çš„å­¦ç”Ÿä¿¡æ¯ä¿å­˜åˆ°æœåŠ¡å™¨ä¸­
             if (list != null)
             {
                 TCPExp.AddUsersInfo(list);
             }
         });
 
-        // µ¼³ö°´Å¥¡£
+        // å¯¼å‡ºæŒ‰é’®ã€‚
         Export.OnClickAsObservable().Subscribe(async x => 
         {
             string savePath = FileTools.SaveFileDialog();
@@ -57,10 +55,23 @@ public class StudentPanel : BasePanel
 
             await ExcelTools.WriteUserinfo2Excel(m_UsersInfo, savePath);
         });
+
+        // æ·»åŠ å­¦ç”Ÿä¿¡æ¯ã€‚
+        Add.OnClickAsObservable().Subscribe(x => 
+        {
+            PropertyDialog.instance.Init(default, PropertyType.PT_ADD);
+            PropertyDialog.instance.Active(true);
+        });
+
+        // åˆ·æ–°å­¦ç”Ÿä¿¡æ¯ã€‚
+        Refresh.OnClickAsObservable().Subscribe(x => 
+        {
+            TCPExp.GetStuInfReq();
+        });
     }
 
     /// <summary>
-    /// ³õÊ¼»¯
+    /// åˆå§‹åŒ–
     /// </summary>
     public void Init(params object[] objs)
     {
@@ -68,7 +79,7 @@ public class StudentPanel : BasePanel
     }
 
     /// <summary>
-    /// Õ¹Ê¾Panel
+    /// æ˜¾ç¤ºPanel
     /// </summary>
     /// <param name="objs"></param>
     public void Show(params object[] objs)

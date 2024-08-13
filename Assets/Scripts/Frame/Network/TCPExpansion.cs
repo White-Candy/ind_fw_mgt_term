@@ -13,10 +13,12 @@ public static class TCPExp
     /// <param name="level"></param>
     public static void LoginReq(string account, string pwd, int level)
     {
-        UserInfo inf = new UserInfo();
-        inf.userName = account;
-        inf.password = pwd;
-        inf.level = level;
+        UserInfo inf = new UserInfo
+        {
+            userName = account,
+            password = pwd,
+            level = level
+        };
 
         string sJson = JsonMapper.ToJson(inf);
         TCP.SendAsync(sJson, EventType.UserLoginEvent);
@@ -33,10 +35,23 @@ public static class TCPExp
         TCP.SendAsync(body, EventType.GetStuInfoEvent);
     }
 
-    // 添加用户信息
+    /// <summary>
+    /// 添加用户信息
+    /// </summary>
+    /// <param name="inf"></param>
     public static void AddUsersInfo(List<UserInfo> inf)
     {
         string body = JsonMapper.ToJson(inf);
         TCP.SendAsync(body, EventType.AddStuInfoEvent);
+    }
+
+    /// <summary>
+    /// 修改用户信息
+    /// </summary>
+    /// <param name="inf"></param>
+    public static void ReviseUserInfo(UserInfo inf)
+    {
+        string body = JsonMapper.ToJson(inf);
+        TCP.SendAsync(body, EventType.ReviseStuInfoEvent);
     }
 }
