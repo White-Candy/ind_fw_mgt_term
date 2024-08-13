@@ -26,5 +26,6 @@ public enum EventType
     UserLoginEvent,
     RegisterEvent,
     GetStuInfoEvent,
-    AddStuInfoEvent
+    AddStuInfoEvent,
+    ReviseStuInfoEvent
 }

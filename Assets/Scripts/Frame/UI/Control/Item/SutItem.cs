@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,11 +15,32 @@ public class SutItem : MonoBehaviour
     public Button Contact;
     public Button HeadTeacher;
     public Button ClassName;
-    public Button Set;
+    public Button Revise;
     public Button Delete;
 
+    private UserInfo m_inf = new UserInfo();
+
+    public void Start()
+    {
+        // 信息修改
+        Revise.OnClickAsObservable().Subscribe(x => 
+        {
+            PropertyDialog.instance.Init(m_inf, PropertyType.PT_SET);
+            PropertyDialog.instance.Active(true);
+        });
+
+        // 信息删除
+        Delete.OnClickAsObservable().Subscribe(x => 
+        {
+
+        });
+    }
+
+    // 初始化
     public void Init(UserInfo inf)
     {
+        m_inf = inf;
+
         UserName.GetComponentInChildren<TextMeshProUGUI>().text = inf.userName;
         Name.GetComponentInChildren<TextMeshProUGUI>().text = inf.Name;
         Gender.GetComponentInChildren<TextMeshProUGUI>().text = inf.Gender;
