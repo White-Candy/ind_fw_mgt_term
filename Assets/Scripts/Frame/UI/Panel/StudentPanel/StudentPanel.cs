@@ -41,7 +41,7 @@ public class StudentPanel : BasePanel
             // 请求把新导入的学生信息保存到服务器中
             if (list != null)
             {
-                TCPExp.AddUsersInfo(list);
+                TCPHelper.AddUsersInfo(list);
             }
         });
 
@@ -66,7 +66,7 @@ public class StudentPanel : BasePanel
         // 刷新学生信息。
         Refresh.OnClickAsObservable().Subscribe(x => 
         {
-            TCPExp.GetStuInfReq();
+            TCPHelper.GetStuInfReq();
         });
     }
 
@@ -75,7 +75,7 @@ public class StudentPanel : BasePanel
     /// </summary>
     public void Init(params object[] objs)
     {
-        TCPExp.GetStuInfReq();
+        TCPHelper.GetStuInfReq();
     }
 
     /// <summary>

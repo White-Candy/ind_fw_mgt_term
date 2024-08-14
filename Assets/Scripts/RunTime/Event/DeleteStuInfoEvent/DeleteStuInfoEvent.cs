@@ -2,7 +2,7 @@ using Cysharp.Threading.Tasks;
 using LitJson;
 using UnityEngine;
 
-public class ReviseStuInfoEvent : BaseEvent
+public class DeleteStuInfoEvent : BaseEvent
 {
     public override async void OnEvent(params object[] args)
     {

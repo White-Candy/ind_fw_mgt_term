@@ -9,5 +9,7 @@ public class UserLoginEvent : BaseEvent
         MessPackage mp = args[0] as MessPackage;
         UserInfo inf = JsonMapper.ToObject<UserInfo>(mp.ret);
         Debug.Log(inf.hint);
+
+        await UniTask.Yield();
     }
 }
