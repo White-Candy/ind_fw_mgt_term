@@ -30,7 +30,7 @@ public class LoginPanel : BasePanel
     {
         m_Login.OnClickAsObservable().Subscribe((x) => 
         {
-            TCPExp.LoginReq(m_Account?.text, m_Pwd?.text, 1);
+            TCPHelper.LoginReq(m_Account?.text, m_Pwd?.text, 1);
         });
     }
 }

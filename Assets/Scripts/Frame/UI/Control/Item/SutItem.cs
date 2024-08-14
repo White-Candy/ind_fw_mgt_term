@@ -32,7 +32,7 @@ public class SutItem : MonoBehaviour
         // 信息删除
         Delete.OnClickAsObservable().Subscribe(x => 
         {
-
+            MessageDialog dialog = DialogHelper.Instance.CreateMessDialog("MessageDialog");         
         });
     }
 

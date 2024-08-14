@@ -3,7 +3,7 @@ using LitJson;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class TCPExp
+public static class TCPHelper
 {
     /// <summary>
     /// 登录请求。
@@ -53,5 +53,15 @@ public static class TCPExp
     {
         string body = JsonMapper.ToJson(inf);
         TCP.SendAsync(body, EventType.ReviseStuInfoEvent);
+    }
+
+    /// <summary>
+    /// 删除用户信息
+    /// </summary>
+    /// <param name="inf"></param>
+    public static void DeleteUserInfo(UserInfo inf)
+    {
+        string body = JsonMapper.ToJson(inf);
+        TCP.SendAsync(body, EventType.DeleteStuInfoEvent);
     }
 }

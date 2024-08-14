@@ -28,6 +28,6 @@ public class SetAction : PD_BaseAction
         base.Action(inf);
 
         // Debug.Log("Set Action!");
-        TCPExp.ReviseUserInfo(inf);
+        TCPHelper.ReviseUserInfo(inf);
     }
 }

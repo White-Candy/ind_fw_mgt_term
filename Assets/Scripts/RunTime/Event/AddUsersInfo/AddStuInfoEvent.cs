@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class AddStuInfoEvent : BaseEvent
@@ -9,5 +10,7 @@ public class AddStuInfoEvent : BaseEvent
         // Debug.Log("AddStuInfoEvent..");
         StudentPanel panel = UITools.FindPanel<StudentPanel>();
         panel.Show(mp.ret);
+
+        await UniTask.Yield();
     }
 }

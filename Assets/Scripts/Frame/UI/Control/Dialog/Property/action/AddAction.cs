@@ -32,6 +32,6 @@ public class AddAction : PD_BaseAction
             inf
         };
             
-        TCPExp.AddUsersInfo(single);
+        TCPHelper.AddUsersInfo(single);
     }
 }
