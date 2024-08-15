@@ -6,13 +6,13 @@ using UnityEngine;
 public class ObjectPool<T> where T : Component
 {
     // 实例方法
-    public Func<T> onInstance = () => { return default(T); };
+    private Func<T> onInstance = () => { return default(T); };
 
     // 对象存储的队列
-    public Queue<T> objQ = new Queue<T>();
+    private Queue<T> objQ = new Queue<T>();
 
     // 最大容量
-    public int maxSize = 1000;
+    private int maxSize = 1000;
 
     /// <summary>
     /// 创建
@@ -30,10 +30,9 @@ public class ObjectPool<T> where T : Component
         else
         {
             T t = onInstance();
-            objQ.Enqueue(t);
-
             t.gameObject.SetActive(true);
-            t.transform.name =  $"{name}-{objQ.Count}";;
+            System.Random rand = new System.Random();
+            t.transform.name =  $"{name}-{rand.Next(10000)}";;
             return t;
         }
     }

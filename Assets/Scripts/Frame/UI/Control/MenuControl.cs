@@ -10,6 +10,8 @@ public class MenuControl : MonoBehaviour
 {
     private List<Button> btnList = new List<Button>();
 
+    private BaseAction m_currAction = new BaseAction();
+
     private void Awake()
     {
         btnList = GetComponentsInChildren<Button>().ToList();
@@ -18,7 +20,12 @@ public class MenuControl : MonoBehaviour
             btn.onClick.AddListener(() =>
             {
                 BaseAction action = Tools.CreateObject<BaseAction>($"{btn.name}Action");
-                action?.OnEvent();
+                if (m_currAction != null)
+                {
+                    m_currAction.Close();
+                }
+                m_currAction = action;
+                m_currAction?.OnEvent();
             });
 
         }

@@ -5,4 +5,9 @@ public class BaseAction
     {
 
     }
+
+    public virtual void Close(params object[] objs)
+    {
+        
+    }
 }

@@ -34,15 +34,17 @@ public static class ExcelTools
                         break;
                     }
 
-                    UserInfo inf = new UserInfo();
-                    inf.userName = sheet.Cells[i, 1].Value?.ToString();
-                    inf.Name = sheet.Cells[i, 2].Value?.ToString();
-                    inf.Gender = sheet.Cells[i, 3].Value?.ToString();
-                    inf.idCoder = sheet.Cells[i, 4].Value?.ToString();
-                    inf.Age = sheet.Cells[i, 5].Value?.ToString();
-                    inf.Contact = sheet.Cells[i, 6].Value?.ToString();
-                    inf.HeadTeacher = sheet.Cells[i, 7].Value?.ToString();
-                    inf.className = sheet.Cells[i, 8].Value?.ToString();
+                    UserInfo inf = new UserInfo
+                    {
+                        userName = sheet.Cells[i, 1].Value?.ToString(),
+                        Name = sheet.Cells[i, 2].Value?.ToString(),
+                        Gender = sheet.Cells[i, 3].Value?.ToString(),
+                        idCoder = sheet.Cells[i, 4].Value?.ToString(),
+                        Age = sheet.Cells[i, 5].Value?.ToString(),
+                        Contact = sheet.Cells[i, 6].Value?.ToString(),
+                        HeadTeacher = sheet.Cells[i, 7].Value?.ToString(),
+                        className = sheet.Cells[i, 8].Value?.ToString()
+                    };
                     list.Add(inf);
                 }
                 //excelPkg.Save();
