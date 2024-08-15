@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -25,14 +24,15 @@ public class SutItem : MonoBehaviour
         // 信息修改
         Revise.OnClickAsObservable().Subscribe(x => 
         {
-            PropertyDialog.instance.Init(m_inf, PropertyType.PT_SET);
-            PropertyDialog.instance.Active(true);
+            StuPropertyDialog.instance.Init(m_inf, PropertyType.PT_STU_SET);
+            StuPropertyDialog.instance.Active(true);
         });
 
         // 信息删除
         Delete.OnClickAsObservable().Subscribe(x => 
         {
-            MessageDialog dialog = DialogHelper.Instance.CreateMessDialog("MessageDialog");         
+            MessageDialog dialog = DialogHelper.Instance.CreateMessDialog("MessageDialog");
+            dialog.Init("学生信息的删除", "是否删除学生信息？", new ItemPackage("确定", ConfirmDelete), new ItemPackage("取消", null));     
         });
     }
 
@@ -50,5 +50,13 @@ public class SutItem : MonoBehaviour
         HeadTeacher.GetComponentInChildren<TextMeshProUGUI>().text = inf.HeadTeacher;
         ClassName.GetComponentInChildren<TextMeshProUGUI>().text = inf.className;
         gameObject.SetActive(true);    
+    }
+
+    /// <summary>
+    /// 确认删除
+    /// </summary>
+    public void ConfirmDelete()
+    {
+        TCPHelper.DeleteUserInfo(m_inf);
     }
 }  

@@ -1,13 +1,15 @@
 
-public class StudentAction : BaseAction
+using Unity.VisualScripting;
+
+public class FacultyAction : BaseAction
 {
-    public StudentPanel m_Panel;
+    public FacultyPanel m_Panel;
 
     public override void OnEvent(params object[] objs)
     {
         base.OnEvent(objs);
 
-        m_Panel = UITools.FindPanel<StudentPanel>();
+        m_Panel = UITools.FindPanel<FacultyPanel>();
         m_Panel.Init();
         m_Panel.Active(true);
     }

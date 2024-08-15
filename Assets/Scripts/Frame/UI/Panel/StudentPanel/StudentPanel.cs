@@ -11,7 +11,7 @@ public class StudentPanel : BasePanel
 
     public Button Import;
     public Button Export;
-    public Button Add;
+    public Button AddTo;
     public Button Refresh;
 
     public static StudentPanel instance;
@@ -57,10 +57,10 @@ public class StudentPanel : BasePanel
         });
 
         // 添加学生信息。
-        Add.OnClickAsObservable().Subscribe(x => 
+        AddTo.OnClickAsObservable().Subscribe(x => 
         {
-            PropertyDialog.instance.Init(default, PropertyType.PT_ADD);
-            PropertyDialog.instance.Active(true);
+            StuPropertyDialog.instance.Init(default, PropertyType.PT_STU_ADDTO);
+            StuPropertyDialog.instance.Active(true);
         });
 
         // 刷新学生信息。
@@ -110,5 +110,14 @@ public class StudentPanel : BasePanel
             Destroy(item);
         }
         itemList.Clear();
+    }
+
+    /// <summary>
+    /// 关闭
+    /// </summary>
+    public void Close()
+    {
+        Active(false);
+        Clear();
     }
 }

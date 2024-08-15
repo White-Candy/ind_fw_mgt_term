@@ -10,11 +10,12 @@ using UnityEngine.UI;
 public enum PropertyType
 {
     PT_None = 0,
-    PT_ADD, // 添加
-    PT_SET, // 修改
+    PT_STU_ADDTO, // 学生添加
+    PT_STU_SET, // 学生修改
+    PT_FAC_ADDTO
 }
 
-public class PropertyDialog : BasePanel
+public class StuPropertyDialog : BasePanel
 {
     [HideInInspector]
     public Button OK;
@@ -52,16 +53,12 @@ public class PropertyDialog : BasePanel
     [HideInInspector]
     public TMP_InputField m_ClassName;
 
-    public static PropertyDialog instance;
-
+    public static StuPropertyDialog instance;
+    
+    [HideInInspector]
     public PropertyType m_Type = PropertyType.PT_None; 
 
     private PD_BaseAction m_Action;
-
-    private Dictionary<PropertyType, string> m_Enum2Type = new Dictionary<PropertyType, string>()
-    {
-        {PropertyType.PT_ADD, "AddAction"}, {PropertyType.PT_SET, "SetAction"}
-    };
 
     public override void Awake()
     {
@@ -107,7 +104,7 @@ public class PropertyDialog : BasePanel
     // 初始化界面
     public void Init(UserInfo inf, PropertyType t)
     {
-        m_Action = Tools.CreateObject<PD_BaseAction>(m_Enum2Type[t]);
+        m_Action = Tools.CreateObject<PD_BaseAction>(GlobalData.m_Enum2Type[t]);
         m_Action.Init(inf);
     }
 
@@ -161,11 +158,4 @@ public class PropertyDialog : BasePanel
 
         return inf;
     }
-}
-
-public abstract class PD_BaseAction
-{
-    public virtual void Init(UserInfo inf) {}
-
-    public virtual void Action(UserInfo inf) {}
 }
