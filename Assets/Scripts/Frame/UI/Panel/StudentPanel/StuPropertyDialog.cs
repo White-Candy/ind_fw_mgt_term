@@ -7,14 +7,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum PropertyType
-{
-    PT_None = 0,
-    PT_STU_ADDTO, // 学生添加
-    PT_STU_SET, // 学生修改
-    PT_FAC_ADDTO
-}
-
 public class StuPropertyDialog : BasePanel
 {
     [HideInInspector]
@@ -101,14 +93,20 @@ public class StuPropertyDialog : BasePanel
         });
     }
 
-    // 初始化界面
+    /// <summary>
+    /// 初始化界面
+    /// </summary>
+    /// <param name="inf"></param>
+    /// <param name="t"></param>
     public void Init(UserInfo inf, PropertyType t)
     {
         m_Action = Tools.CreateObject<PD_BaseAction>(GlobalData.m_Enum2Type[t]);
         m_Action.Init(inf);
     }
 
-    // 清除InputField的内容
+    /// <summary>
+    /// 清除InputField的内容
+    /// </summary>
     public void Clear()
     {
         m_userName.text = "";
@@ -123,7 +121,10 @@ public class StuPropertyDialog : BasePanel
         m_ClassName.text = "";
     }
 
-    // UI装填
+    /// <summary>
+    /// UI装填
+    /// </summary>
+    /// <param name="inf"></param>
     public void Loading(UserInfo inf)
     {
         m_userName.text = inf.userName;
@@ -139,7 +140,10 @@ public class StuPropertyDialog : BasePanel
         m_ClassName.text = inf.className;
     }
 
-    // 将目前界面上的内容信息存储到服务器中。
+    /// <summary>
+    /// 将目前界面上的内容信息存储到服务器中。
+    /// </summary>
+    /// <returns></returns>
     public UserInfo Output()
     {
         UserInfo inf = new UserInfo
@@ -155,7 +159,7 @@ public class StuPropertyDialog : BasePanel
             HeadTeacher = m_HeadTeacher.text,
             className = m_ClassName.text
         };
-
+        
         return inf;
     }
 }

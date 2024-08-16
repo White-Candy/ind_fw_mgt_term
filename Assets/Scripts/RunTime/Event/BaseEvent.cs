@@ -28,5 +28,8 @@ public enum EventType
     GetStuInfoEvent,
     AddStuInfoEvent,
     ReviseStuInfoEvent,
-    DeleteStuInfoEvent
+    DeleteStuInfoEvent,
+    GetFacInfoEvent,
+    AddFacInfoEvent,
+    ReviseFacInfoEvent,
 }
