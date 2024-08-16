@@ -79,7 +79,7 @@ public class StudentPanel : BasePanel
     }
 
     /// <summary>
-    /// 显示Panel
+    /// 显示数据到主面板上
     /// </summary>
     /// <param name="objs"></param>
     public void Show(params object[] objs)

@@ -57,4 +57,33 @@ public static class Tools
         }
         return obj;
     }
+
+
+    /// <summary>
+    /// 获取
+    /// </summary>
+    /// <returns></returns>
+    public static string GetCurrLocalTime()
+    {
+        string year = DateTime.Now.Year.ToString();
+        string month = DateTime.Now.Month.ToString();
+        string day = DateTime.Now.Day.ToString();
+
+        string hour = DateTime.Now.Hour.ToString();
+        string min = DateTime.Now.Minute.ToString();
+        string sec = DateTime.Now.Second.ToString();
+
+        return $"{year}/{month}/{day} {hour}:{min}:{sec}";
+    }
+
+
+    /// <summary>
+    /// 生成一个随机数
+    /// </summary>
+    /// <returns></returns>
+    public static int SpawnRandom()
+    {
+       return UnityEngine.Random.Range(0, 10000);
+        
+    }
 }

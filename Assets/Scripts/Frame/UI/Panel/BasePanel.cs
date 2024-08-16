@@ -36,3 +36,12 @@ public class BasePanel : MonoBehaviour, IPanel
 }
 
 public interface IPanel { }
+
+public enum PropertyType
+{
+    PT_None = 0,
+    PT_STU_ADDTO, // 学生添加
+    PT_STU_SET, // 学生修改
+    PT_FAC_ADDTO, // 学院添加
+    PT_FAC_SET  // 学院修改
+}
