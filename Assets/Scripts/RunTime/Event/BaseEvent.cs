@@ -32,4 +32,5 @@ public enum EventType
     GetFacInfoEvent,
     AddFacInfoEvent,
     ReviseFacInfoEvent,
+    DeleteFacInfoEvent
 }

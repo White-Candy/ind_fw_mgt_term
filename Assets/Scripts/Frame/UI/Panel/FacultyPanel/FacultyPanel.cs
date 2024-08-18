@@ -20,7 +20,7 @@ public class FacultyPanel : BasePanel
     public Button AddTo;
     public Button Refresh;
 
-    private List<FacultyInfo> m_faculiesInfo = new List<FacultyInfo>();
+    public List<FacultyInfo> m_faculiesInfo = new List<FacultyInfo>();
 
     private List<GameObject> m_itemList = new List<GameObject>();
 

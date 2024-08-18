@@ -95,4 +95,10 @@ public static class TCPHelper
         string body = JsonMapper.ToJson(inf);
         TCP.SendAsync(body, EventType.ReviseFacInfoEvent);
     }
+
+    public static void DeleteFacInfo(FacultyInfo inf)
+    {
+        string body = JsonMapper.ToJson(inf);
+        TCP.SendAsync(body, EventType.DeleteFacInfoEvent); 
+    }
 }

@@ -9,6 +9,7 @@ public class AddFacAction : PD_BaseAction
         // Debug.Log("AddFacAction");
         FacPropertyDialog.instance.Clear();
         FacPropertyDialog.instance.RegisterTime.enabled = false;
+        FacPropertyDialog.instance.ID.enabled = false;
     }
 
     public override void Action(params object[] inf)
@@ -16,7 +17,13 @@ public class AddFacAction : PD_BaseAction
         base.Action(inf);
 
         FacultyInfo info = inf[0] as FacultyInfo;
-        info.id = Tools.SpawnRandom().ToString();
+
+        List<int> id = new List<int>();
+        foreach (var item in FacultyPanel.instance.m_faculiesInfo)
+        {
+            id.Add(int.Parse(item.id));
+        }
+        info.id = Tools.SpawnRandom(id).ToString();
         TCPHelper.AddFacInfo(info);
     }
 }
