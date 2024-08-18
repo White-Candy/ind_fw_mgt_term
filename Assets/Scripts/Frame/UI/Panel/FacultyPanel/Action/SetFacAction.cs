@@ -7,6 +7,7 @@ public class SetFacAction : PD_BaseAction
         FacultyInfo info = inf[0] as FacultyInfo;
         FacPropertyDialog.instance.Loading(info);
         FacPropertyDialog.instance.RegisterTime.enabled = false;
+        FacPropertyDialog.instance.ID.enabled = false;
     }
 
     public override void Action(params object[] inf)

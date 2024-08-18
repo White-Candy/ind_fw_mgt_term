@@ -1,6 +1,7 @@
 
 using Cysharp.Threading.Tasks;
 using System;
+using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using UnityEngine;
 
@@ -78,12 +79,23 @@ public static class Tools
 
 
     /// <summary>
-    /// 生成一个随机数
+    /// 生成一个不在list中重复的随机数
     /// </summary>
     /// <returns></returns>
-    public static int SpawnRandom()
+    public static int SpawnRandom(List<int> live_id)
     {
-       return UnityEngine.Random.Range(0, 10000);
-        
+        List<int> random = new List<int>();
+        for (int i = 1; i <= 10000; ++i)
+        {
+            if (live_id.Exists(x => x == i))
+            {
+                continue;
+            }    
+            random.Add(i);
+        }
+
+        int idx = UnityEngine.Random.Range(0, random.Count);
+
+        return random[idx]; 
     }
 }

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class FacultyItem : MonoBehaviour
 {
+    public GameObject Id;
     public GameObject Faculty;
     public GameObject ReigsterTime;
     public GameObject TeacherName;
@@ -18,7 +19,8 @@ public class FacultyItem : MonoBehaviour
     {
         Delete.OnClickAsObservable().Subscribe(_ => 
         {
-            
+            MessageDialog dialog = DialogHelper.Instance.CreateMessDialog("MessageDialog");
+            dialog.Init("学院信息的删除", "是否删除学院信息？", new ItemPackage("确定", ConfirmDelete), new ItemPackage("取消", null));    
         });
 
         Revise.OnClickAsObservable().Subscribe(_ => 
@@ -36,10 +38,19 @@ public class FacultyItem : MonoBehaviour
     {
         m_info = info;
         
+        Id.GetComponentInChildren<TextMeshProUGUI>().text = info.id;
         Faculty.GetComponentInChildren<TextMeshProUGUI>().text = info.Name;
         ReigsterTime.GetComponentInChildren<TextMeshProUGUI>().text = info.RegisterTime;
         TeacherName.GetComponentInChildren<TextMeshProUGUI>().text = info.TeacherName;
 
         gameObject.SetActive(true);
+    }
+
+    /// <summary>
+    /// 确认删除
+    /// </summary>
+    public void ConfirmDelete()
+    {
+        TCPHelper.DeleteFacInfo(m_info);
     }
 }

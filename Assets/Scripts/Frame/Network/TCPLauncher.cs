@@ -12,7 +12,7 @@ public class TCPLauncher : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(instance);
 
-        TCP.Connect("192.168.3.34", 5800);
+        TCP.Connect("127.0.0.1", 5800);
     }
 
     public void Update()

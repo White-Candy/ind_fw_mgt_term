@@ -9,6 +9,7 @@ public class FacPropertyDialog : BasePanel
 
     public Button OK;
     public Button Cancel;
+    public TMP_InputField ID;
     public TMP_InputField FacultyName;
     public TMP_InputField RegisterTime;
     public TMP_InputField TeacherName;
@@ -54,6 +55,7 @@ public class FacPropertyDialog : BasePanel
     public void Loading(FacultyInfo inf)
     {
         // Debug.Log($"{inf.Name} || {inf.RegisterTime} || {inf.TeacherName}");
+        ID.text = inf.id;
         FacultyName.text = inf.Name;
         RegisterTime.text = inf.RegisterTime;
         TeacherName.text = inf.TeacherName;
@@ -67,6 +69,7 @@ public class FacPropertyDialog : BasePanel
     {
         FacultyInfo inf = new FacultyInfo
         {
+            id = ID.text,
             Name = FacultyName.text,
             RegisterTime = RegisterTime.text,
             TeacherName = TeacherName.text
@@ -89,6 +92,7 @@ public class FacPropertyDialog : BasePanel
     /// </summary>
     public void Clear()
     {
+        ID.text = "";
         FacultyName.text = "";
         RegisterTime.text = Tools.GetCurrLocalTime();
         TeacherName.text = "";
