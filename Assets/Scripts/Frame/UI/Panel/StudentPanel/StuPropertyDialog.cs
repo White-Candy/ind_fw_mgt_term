@@ -28,7 +28,7 @@ public class StuPropertyDialog : BasePanel
     public TMP_InputField m_NameIpt;
 
     [HideInInspector]
-    public TMP_InputField m_Gender;
+    public TMP_Dropdown m_Gender;
 
     [HideInInspector]
     public TMP_InputField m_Age;
@@ -66,7 +66,7 @@ public class StuPropertyDialog : BasePanel
         m_Verify = GameObject.Find("verifyIpt").GetComponent<TMP_InputField>();
 
         m_NameIpt = GameObject.Find("NameIpt").GetComponent<TMP_InputField>();
-        m_Gender = GameObject.Find("GenderIpt").GetComponent<TMP_InputField>();
+        m_Gender = GameObject.Find("GenderDrop").GetComponent<TMP_Dropdown>();
         m_Age = GameObject.Find("AgeIpt").GetComponent<TMP_InputField>();
         m_IdCard = GameObject.Find("IdCardIpt").GetComponent<TMP_InputField>();
         m_Contact = GameObject.Find("ContactIpt").GetComponent<TMP_InputField>();
@@ -113,7 +113,7 @@ public class StuPropertyDialog : BasePanel
         m_Pwd.text = "";
         m_Verify.text = "";
         m_NameIpt.text = "";
-        m_Gender.text = "";
+        m_Gender.value = 0;
         m_Age.text = "";
         m_IdCard.text = "";
         m_Contact.text = "";
@@ -132,7 +132,7 @@ public class StuPropertyDialog : BasePanel
         m_Verify.text = inf.password;
 
         m_NameIpt.text = inf.Name;
-        m_Gender.text = inf.Gender;
+        m_Gender.value = GlobalData.m_StuGenderDic[inf.Gender];
         m_Age.text = inf.Age;
         m_IdCard.text = inf.idCoder;
         m_Contact.text = inf.Contact;
@@ -152,7 +152,7 @@ public class StuPropertyDialog : BasePanel
             password = m_Pwd.text,
 
             Name = m_NameIpt.text,
-            Gender = m_Gender.text,
+            Gender = m_Gender.options[m_Gender.value].text,
             Age = m_Age.text,
             idCoder = m_IdCard.text,
             Contact = m_Contact.text,

@@ -26,7 +26,7 @@ public static class Tools
     /// <typeparam name="T"></typeparam>
     /// <param name="name"></param>
     /// <returns></returns>
-    static public T CreateObject<T>(string name) where T : class
+    public static T CreateObject<T>(string name) where T : class
     {
         // Debug.Log(name);
         object obj = null;

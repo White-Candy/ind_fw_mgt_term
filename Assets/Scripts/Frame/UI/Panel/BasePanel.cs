@@ -43,5 +43,7 @@ public enum PropertyType
     PT_STU_ADDTO, // 学生添加
     PT_STU_SET, // 学生修改
     PT_FAC_ADDTO, // 学院添加
-    PT_FAC_SET  // 学院修改
+    PT_FAC_SET,  // 学院修改
+    PT_MAJ_ADDTO, // 专业添加
+    PT_MAJ_SET  // 专业修改
 }

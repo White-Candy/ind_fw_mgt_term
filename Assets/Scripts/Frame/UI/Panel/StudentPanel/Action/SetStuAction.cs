@@ -29,6 +29,6 @@ public class SetStuAction : PD_BaseAction
         base.Action(info);
 
         UserInfo inf = info[0] as UserInfo;
-        TCPHelper.ReviseUserInfo(inf);
+        TCPHelper.ReviseInfo<TCPStuHelper>(inf);
     }
 }

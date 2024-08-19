@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+
 public class GetStuInfoEvent : BaseEvent
 {
     public override async void OnEvent(params object[] args)
@@ -6,5 +8,7 @@ public class GetStuInfoEvent : BaseEvent
 
         StudentPanel panel = UITools.FindPanel<StudentPanel>();
         panel.Show(mp.ret);
+
+        await UniTask.Yield();
     }
 }

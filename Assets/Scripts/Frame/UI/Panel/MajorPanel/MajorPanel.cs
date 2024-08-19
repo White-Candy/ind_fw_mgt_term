@@ -6,21 +6,21 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FacultyPanel : BasePanel
+public class MajorPanel : BasePanel
 {
     // 学院信息列表
-    public List<FacultyInfo> m_facultiesInfo = new List<FacultyInfo>();
+    public List<MajorInfo> m_facultiesInfo = new List<MajorInfo>();
     
     public GameObject m_itemTemp;
 
     public Transform m_tempParent;
 
-    public static FacultyPanel instance;
+    public static MajorPanel instance;
 
     public Button AddTo;
     public Button Refresh;
 
-    public List<FacultyInfo> m_faculiesInfo = new List<FacultyInfo>();
+    public List<MajorInfo> m_majorInfo = new List<MajorInfo>();
 
     private List<GameObject> m_itemList = new List<GameObject>();
 
@@ -36,14 +36,14 @@ public class FacultyPanel : BasePanel
     {
         AddTo.OnClickAsObservable().Subscribe(_ => 
         {
-            FacPropertyDialog.instance.Init(null, PropertyType.PT_FAC_ADDTO);
-            FacPropertyDialog.instance.Active(true);
+            MajorPropertyDialog.instance.Init(null, PropertyType.PT_MAJ_ADDTO);
+            MajorPropertyDialog.instance.Active(true);
         });
     }
 
     public void Init()
     {
-        TCPHelper.GetInfoReq<TCPFacHelper>();
+        TCPHelper.GetInfoReq<TCPMajorHelper>();
     }
 
     /// <summary>
@@ -55,8 +55,8 @@ public class FacultyPanel : BasePanel
         Clear();
 
         string ret = objs[0] as string;
-        m_faculiesInfo = JsonMapper.ToObject<List<FacultyInfo>>(ret);
-        foreach (FacultyInfo inf in m_faculiesInfo)
+        m_majorInfo = JsonMapper.ToObject<List<MajorInfo>>(ret);
+        foreach (MajorInfo inf in m_majorInfo)
         {
             CloneItem(inf);
         }
@@ -66,11 +66,11 @@ public class FacultyPanel : BasePanel
     /// Item的clone
     /// </summary>
     /// <param name="inf"></param>
-    public void CloneItem(FacultyInfo inf)
+    public void CloneItem(MajorInfo inf)
     {
         // Debug.Log($"Clone Item: {inf.Name} || {inf.TeacherName} || {inf.RegisterTime}");
         GameObject clone = Instantiate(m_itemTemp, m_tempParent);
-        var item = clone.GetComponent<FacultyItem>();
+        var item = clone.GetComponent<MajorItem>();
         item.Init(inf);
         m_itemList.Add(clone);
     }
@@ -90,7 +90,7 @@ public class FacultyPanel : BasePanel
     /// </summary>
     public void Close()
     {
-        FacPropertyDialog.instance.Close();
+        MajorPropertyDialog.instance.Close();
         Active(false);
 
         Clear();
@@ -98,12 +98,13 @@ public class FacultyPanel : BasePanel
 }
 
 /// <summary>
-///  学院信息包
+///  专业信息包
 /// </summary>
-public class FacultyInfo
+public class MajorInfo
 {
     public string id;
-    public string Name;
+    public string MajorName;
     public string RegisterTime;
+    public string FacultyName;
     public string TeacherName;
 }

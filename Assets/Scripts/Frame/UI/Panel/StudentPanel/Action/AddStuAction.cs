@@ -31,6 +31,6 @@ public class AddStuAction : PD_BaseAction
             inf
         };
   
-        TCPHelper.AddUsersInfo(single);
+        TCPHelper.AddInfo<TCPStuHelper>(single);
     }
 }

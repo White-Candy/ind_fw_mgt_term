@@ -2,28 +2,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TextCore;
 
-public class AddFacAction : PD_BaseAction
+public class AddMajAction : PD_BaseAction
 {
     public override void Init(params object[] inf)
     {
         // Debug.Log("AddFacAction");
-        FacPropertyDialog.instance.Clear();
-        FacPropertyDialog.instance.RegisterTime.enabled = false;
-        FacPropertyDialog.instance.ID.enabled = false;
+        MajorPropertyDialog.instance.Clear();
+        MajorPropertyDialog.instance.RegisterTime.enabled = false;
+        MajorPropertyDialog.instance.ID.enabled = false;
     }
 
     public override void Action(params object[] inf)
     {
         base.Action(inf);
 
-        FacultyInfo info = inf[0] as FacultyInfo;
+        MajorInfo info = inf[0] as MajorInfo;
 
         List<int> id = new List<int>();
-        foreach (var item in FacultyPanel.instance.m_faculiesInfo)
+        foreach (var item in MajorPanel.instance.m_majorInfo)
         {
             id.Add(int.Parse(item.id));
         }
         info.id = Tools.SpawnRandom(id).ToString();
-        TCPHelper.AddInfo<TCPFacHelper>(info);
+        TCPHelper.AddInfo<TCPMajorHelper>(info);
     }
 }
