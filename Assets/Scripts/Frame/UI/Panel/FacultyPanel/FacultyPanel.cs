@@ -39,11 +39,17 @@ public class FacultyPanel : BasePanel
             FacPropertyDialog.instance.Init(null, PropertyType.PT_FAC_ADDTO);
             FacPropertyDialog.instance.Active(true);
         });
+
+        Refresh.OnClickAsObservable().Subscribe(_ => 
+        {
+            TCPHelper.GetInfoReq<UserInfo>(EventType.FacultyEvent);
+        });
     }
 
     public void Init()
     {
-        TCPHelper.GetInfoReq<TCPFacHelper>();
+        // TCPHelper.GetInfoReq<TCPFacHelper>();
+        TCPHelper.GetInfoReq<FacultyInfo>(EventType.FacultyEvent);
     }
 
     /// <summary>
@@ -100,7 +106,7 @@ public class FacultyPanel : BasePanel
 /// <summary>
 ///  学院信息包
 /// </summary>
-public class FacultyInfo
+public class FacultyInfo : BaseInfo
 {
     public string id;
     public string Name;

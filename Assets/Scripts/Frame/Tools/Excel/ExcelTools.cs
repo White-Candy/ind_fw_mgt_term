@@ -6,7 +6,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public static class ExcelTools
+public class ExcelTools
 {
     // Excel表内容转成Userinfo格式的内存
     public static async UniTask<List<UserInfo>> Excel2UserInfos(string path)

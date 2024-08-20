@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class UITools
+public class UITools
 {
     public static Dictionary<string, BasePanel> PanelList = new Dictionary<string, BasePanel>();
 

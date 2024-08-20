@@ -39,11 +39,16 @@ public class MajorPanel : BasePanel
             MajorPropertyDialog.instance.Init(null, PropertyType.PT_MAJ_ADDTO);
             MajorPropertyDialog.instance.Active(true);
         });
+
+        Refresh.OnClickAsObservable().Subscribe(_ => 
+        {
+            TCPHelper.GetInfoReq<UserInfo>(EventType.MajorEvent);
+        });
     }
 
     public void Init()
     {
-        TCPHelper.GetInfoReq<TCPMajorHelper>();
+        TCPHelper.GetInfoReq<MajorInfo>(EventType.MajorEvent);
     }
 
     /// <summary>
@@ -100,7 +105,7 @@ public class MajorPanel : BasePanel
 /// <summary>
 ///  专业信息包
 /// </summary>
-public class MajorInfo
+public class MajorInfo : BaseInfo
 {
     public string id;
     public string MajorName;

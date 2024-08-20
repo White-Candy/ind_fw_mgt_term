@@ -7,6 +7,7 @@ public class GetMajorInfoEvent : BaseEvent
     {
         MessPackage mp = args[0] as MessPackage;
         MajorPanel panel = UITools.FindPanel<MajorPanel>();
+        Debug.Log("GetMajorInfoEvent : " + mp.ret);
         panel.Show(mp.ret);
 
         await UniTask.Yield();

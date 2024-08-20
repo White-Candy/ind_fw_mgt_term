@@ -47,3 +47,5 @@ public enum PropertyType
     PT_MAJ_ADDTO, // 专业添加
     PT_MAJ_SET  // 专业修改
 }
+
+public class BaseInfo {}

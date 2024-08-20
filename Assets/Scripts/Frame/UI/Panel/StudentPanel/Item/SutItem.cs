@@ -57,6 +57,6 @@ public class SutItem : MonoBehaviour
     /// </summary>
     public void ConfirmDelete()
     {
-        TCPHelper.DeleteInfo<TCPStuHelper>(m_inf);
+        TCPHelper.OperateInfo(m_inf, EventType.UserEvent, OperateType.DELETE);
     }
 }  

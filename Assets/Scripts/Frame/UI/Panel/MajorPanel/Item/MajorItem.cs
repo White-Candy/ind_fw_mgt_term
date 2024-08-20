@@ -52,7 +52,7 @@ public class MajorItem : MonoBehaviour
     /// 确认删除
     /// </summary>
     public void ConfirmDelete()
-    {
-        TCPHelper.DeleteInfo<TCPMajorHelper>(m_info);
+    { 
+        TCPHelper.OperateInfo(m_info, EventType.MajorEvent, OperateType.DELETE);
     }
 }

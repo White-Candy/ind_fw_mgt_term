@@ -3,7 +3,7 @@ using LitJson;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class TCPHelper
+public class TCPHelper
 {
     /// <summary>
     /// 登录请求。
@@ -17,50 +17,39 @@ public static class TCPHelper
         {
             userName = account,
             password = pwd,
-            level = level
         };
 
         string sJson = JsonMapper.ToJson(inf);
-        TCP.SendAsync(sJson, EventType.UserLoginEvent);
+        TCP.SendAsync(sJson, EventType.UserLoginEvent, OperateType.None);
     }
 
     /// <summary>
     /// 获取信息请求
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public static void GetInfoReq<T>() where T : TCPBaseHelper, new()
+    public static void GetInfoReq<T>(EventType type) where T : BaseInfo
     {
-        TCPBaseHelper helper = new T();
-        helper.GetInfReq();
+        // TCPBaseHelper helper = new T();
+        // helper.GetInfReq();
+
+        List<T> inf = new List<T>();       
+        string body = JsonMapper.ToJson(inf);
+        TCP.SendAsync(body, type, OperateType.GET);
     }
 
     /// <summary>
-    /// 添加信息请求
+    /// 操作数据请求
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public static void AddInfo<T>(object obj) where T : TCPBaseHelper, new() 
+    public static void OperateInfo<T>(T inf, EventType type, OperateType operateType) where T : BaseInfo
     {
-        TCPBaseHelper helper = new T();
-        helper.AddInfo(obj);
+        string body = JsonMapper.ToJson(inf);
+        TCP.SendAsync(body, type, operateType);
     }
 
-    /// <summary>
-    /// 修改信息请求
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public static void ReviseInfo<T>(object obj) where T : TCPBaseHelper, new() 
+    public static void OperateInfo<T>(List<T> inf, EventType type, OperateType operateType) where T : BaseInfo
     {
-        TCPBaseHelper helper = new T();
-        helper.ReviseInfo(obj);
-    }
-
-    /// <summary>
-    /// 删除信息请求
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public static void DeleteInfo<T>(object obj) where T : TCPBaseHelper, new() 
-    {
-        TCPBaseHelper helper = new T();
-        helper.DeleteInfo(obj);
+        string body = JsonMapper.ToJson(inf);
+        TCP.SendAsync(body, type, operateType);
     }
 }

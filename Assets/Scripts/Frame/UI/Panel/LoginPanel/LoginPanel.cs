@@ -39,7 +39,7 @@ public class LoginPanel : BasePanel
 /// 用户信息包
 /// </summary>
 [Serializable]
-public class UserInfo
+public class UserInfo : BaseInfo
 {
     public string userName;
     public string Name;
@@ -50,7 +50,6 @@ public class UserInfo
     public string HeadTeacher;
     public string className;
     public string password;
-    public int level;
     public bool login = false;
     public string hint = "";
 }

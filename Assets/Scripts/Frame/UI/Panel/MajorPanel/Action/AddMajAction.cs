@@ -24,6 +24,6 @@ public class AddMajAction : PD_BaseAction
             id.Add(int.Parse(item.id));
         }
         info.id = Tools.SpawnRandom(id).ToString();
-        TCPHelper.AddInfo<TCPMajorHelper>(info);
+        TCPHelper.OperateInfo(info, EventType.MajorEvent, OperateType.ADD);
     }
 }

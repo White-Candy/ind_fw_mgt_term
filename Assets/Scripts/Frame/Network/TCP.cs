@@ -101,9 +101,9 @@ public static class TCP
     /// </summary>
     /// <param name="mess">内容</param>
     /// <param name="event_type">事件类型</param>
-    public static async void SendAsync(string mess, EventType event_type)
+    public static async void SendAsync(string mess, EventType event_type, OperateType operateType)
     {
-        SendFrontPackage(mess, event_type);
+        SendFrontPackage(mess, event_type, operateType);
 
         await Tools.OnAwait(0.1f, () =>
         {
@@ -117,13 +117,14 @@ public static class TCP
     /// </summary>
     /// <param name="mess"></param>
     /// <param name="event_type"></param>
-    public static void SendFrontPackage(string mess, EventType event_type)
+    public static void SendFrontPackage(string mess, EventType event_type, OperateType operateType)
     {
         FrontMp mpinfo = new FrontMp()
         {
             ip = NetTools.GetIPForTypeIPV4(),
             length = mess.Count().ToString(),
-            event_type = event_type.ToSafeString()
+            event_type = event_type.ToSafeString(),
+            operate_type = operateType.ToSafeString()
         };
 
         string s_info = JsonMapper.ToJson(mpinfo);
@@ -208,4 +209,5 @@ public class FrontMp
     public string ip;
     public string length;
     public string event_type;
+    public string operate_type;
 }

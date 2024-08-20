@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-public static class FileApi
+public class FileApi
 {
     [DllImport("Comdlg32.dll", SetLastError = true, ThrowOnUnmappableChar = true, CharSet = CharSet.Auto)]
     public static extern bool GetOpenFileName([In, Out] OpenFileDlg ofd);

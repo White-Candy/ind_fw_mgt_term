@@ -30,7 +30,7 @@ public class AddStuAction : PD_BaseAction
         {
             inf
         };
-  
-        TCPHelper.AddInfo<TCPStuHelper>(single);
+    
+        TCPHelper.OperateInfo(single, EventType.UserEvent, OperateType.ADD);
     }
 }

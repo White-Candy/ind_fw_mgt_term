@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using UnityEngine;
 
-public static class Tools
+public class Tools
 {
     /// <summary>
     /// µÈ´ýÆ÷

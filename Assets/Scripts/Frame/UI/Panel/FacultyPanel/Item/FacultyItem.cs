@@ -1,6 +1,7 @@
 
 using TMPro;
 using UniRx;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -51,6 +52,6 @@ public class FacultyItem : MonoBehaviour
     /// </summary>
     public void ConfirmDelete()
     {
-        TCPHelper.DeleteInfo<TCPFacHelper>(m_info);
+        TCPHelper.OperateInfo(m_info, EventType.FacultyEvent, OperateType.DELETE);
     }
 }

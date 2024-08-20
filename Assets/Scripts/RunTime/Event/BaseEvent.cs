@@ -1,6 +1,7 @@
 
 using Cysharp.Threading.Tasks;
 using Unity.IO.LowLevel.Unsafe;
+using Unity.VisualScripting;
 
 public class BaseEvent
 {
@@ -17,6 +18,11 @@ public class BaseEvent
     public virtual async void OnEvent(params object[] args) { await UniTask.Yield(); }
 }
 
+public enum OperateType
+{
+    None = 0, GET, ADD, REVISE, DELETE,
+}
+
 public enum EventType
 {
     None = 0,
@@ -25,16 +31,7 @@ public enum EventType
     CheckEvent,
     UserLoginEvent,
     RegisterEvent,
-    GetStuInfoEvent,
-    AddStuInfoEvent,
-    ReviseStuInfoEvent,
-    DeleteStuInfoEvent,
-    GetFacInfoEvent,
-    AddFacInfoEvent,
-    ReviseFacInfoEvent,
-    DeleteFacInfoEvent,
-    GetMajorInfoEvent,
-    AddMajorInfoEvent,
-    ReviseMajorInfoEvent,
-    DeleteMajorInfoEvent
+    UserEvent,
+    MajorEvent,
+    FacultyEvent,
 }
