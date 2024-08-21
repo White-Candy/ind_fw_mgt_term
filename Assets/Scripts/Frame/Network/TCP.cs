@@ -55,21 +55,18 @@ public static class TCP
         {
             string mess = Encoding.Unicode.GetString(buffer, 0, length);
             Array.Clear(buffer, 0, buffer.Length);
-            //Debug.Log("+++++" + mess); // log message of front package
+            // Debug.Log(mess);
 
-            if (!mp.get_length)
+            string[] lengthSplit = mess.Split("|");
+            string totalLength = lengthSplit[0];
+            if (!mp.get_length && !string.IsNullOrEmpty(totalLength))
             {
-                JsonData data = JsonMapper.ToObject(mess);
-                // 前置包获取内容包的总长度和事件类型
-                mp.length = int.Parse(data["length"].ToString());
-                mp.event_type = data["event_type"].ToString();
-                mp.operate_type = data["operate_type"].ToString();
+                mp.length = int.Parse(totalLength);
                 mp.get_length = true;
-              
-                FrontMp fp = new FrontMp();
-                fp.event_type = data["event_type"].ToString();
-                percent = 0.0f; // 在准备队列填装之前 清空上一次消息留下的百分比
-                m_FrontQueue.Enqueue(fp);
+                mp.ret += lengthSplit[1];
+                totalLength = "";
+
+                checkParcent(mp);
             }
             else
             {
@@ -78,19 +75,48 @@ public static class TCP
                     mp.ret += mess;
                 }
 
-                percent = (float)mp.ret.Count() * 1.0f / (float)mp.length * 1.0f * 100.0f;
-                // Debug.Log("----------" + percent + " || " + mess);  // Add message package for queue.
-
-                if (percent >= 100.0f)
-                {
-                    mp.finish = true;
-
-                    MessQueueAdd(mp);
-                    mp.Clear();
-                }
+                checkParcent(mp);
             }
-
             m_Socket.BeginReceive(buffer, 0, buf_length, 0, ReviceAsyncCallback, mp);
+
+            // string mess = Encoding.Unicode.GetString(buffer, 0, length);
+            // Array.Clear(buffer, 0, buffer.Length);
+            // Debug.Log("+++++" + mess); // log message of front package
+
+            // if (!mp.get_length)
+            // {
+            //     JsonData data = JsonMapper.ToObject(mess);
+            //     // 前置包获取内容包的总长度和事件类型
+            //     mp.length = int.Parse(data["length"].ToString());
+            //     mp.event_type = data["event_type"].ToString();
+            //     mp.operate_type = data["operate_type"].ToString();
+            //     mp.get_length = true;
+              
+            //     FrontMp fp = new FrontMp();
+            //     fp.event_type = data["event_type"].ToString();
+            //     percent = 0.0f; // 在准备队列填装之前 清空上一次消息留下的百分比
+            //     m_FrontQueue.Enqueue(fp);
+            // }
+            // else
+            // {
+            //     if (mp.length > mp.ret.Count())
+            //     {
+            //         mp.ret += mess;
+            //     }
+
+            //     percent = (float)mp.ret.Count() * 1.0f / (float)mp.length * 1.0f * 100.0f;
+            //     // Debug.Log("----------" + percent + " || " + mess);  // Add message package for queue.
+
+            //     if (percent >= 100.0f)
+            //     {
+            //         mp.finish = true;
+
+            //         MessQueueAdd(mp);
+            //         mp.Clear();
+            //     }
+            // }
+
+            // m_Socket.BeginReceive(buffer, 0, buf_length, 0, ReviceAsyncCallback, mp);
         }
         catch
         {
@@ -111,7 +137,7 @@ public static class TCP
             string totalInfoPkg = $"|{front}#{mess}-end";
             long totalLength = totalInfoPkg.Count();
             string finalPkg = totalLength.ToString() + totalInfoPkg;
-            Debug.Log(finalPkg);
+            // Debug.Log(finalPkg);
 
             var outputBuffer = Encoding.Unicode.GetBytes(finalPkg);
             m_Socket.BeginSend(outputBuffer, 0, outputBuffer.Length, SocketFlags.None, SendAsyncCbk, null);
@@ -166,6 +192,49 @@ public static class TCP
     {
         MessPackage pkg = new MessPackage(mp);
         m_MessQueue.Enqueue(pkg);
+    }
+
+    /// <summary>
+    /// 前置包和内容包解析
+    /// </summary>
+    /// <param name="pkg"></param>
+    public static void ParsingThePackageBody(string package, MessPackage mp)
+    {
+        string[] frontSplit = package.Split("#");
+        string front = frontSplit[0];
+
+        string[] mainSplit = frontSplit[1].Split("-");
+        string main = mainSplit[0];
+
+        JsonData data = JsonMapper.ToObject(front);
+
+        // 前置包获取内容包的总长度和事件类型
+        mp.ip = data["ip"].ToString();
+        mp.length = int.Parse(data["length"].ToString());
+        mp.event_type = data["event_type"].ToString();
+        mp.operate_type = data["operate_type"].ToString();
+        // Debug.Log($"ParsingThePackageBody: {mp.event_type} || {mp.operate_type} ");
+        mp.get_length = true;
+
+        mp.ret = main;
+        MessQueueAdd(mp);
+        mp.Clear();
+    }
+
+    /// <summary>
+    /// 进度检查
+    /// </summary>
+    /// <param name="pkg"></param>
+    public static void checkParcent(MessPackage mp)
+    {
+        float percent = (float)(mp.ret.Count() + 1)* 1.0f / (float)mp.length * 1.0f * 100.0f;
+        Debug.Log("----------" +  mp.ip + " | " + percent + "%");  // Add message package for queue.
+
+        if (percent >= 100.0f)
+        {
+            mp.finish = true;
+            ParsingThePackageBody(mp.ret, mp);
+        }
     }
 }
 

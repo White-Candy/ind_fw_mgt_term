@@ -77,7 +77,7 @@ public class StudentPanel : BasePanel
     public void Init(params object[] objs)
     {
         // TCPHelper.GetInfoReq<TCPStuHelper>();
-        // TCPHelper.GetInitReq();
+        TCPHelper.GetInitReq();
         TCPHelper.GetInfoReq<UserInfo>(EventType.UserEvent);
     }
 
@@ -90,6 +90,7 @@ public class StudentPanel : BasePanel
         Clear();
 
         string ret = objs[0] as string;
+        Debug.Log("show: " + ret);
         m_UsersInfo = JsonMapper.ToObject<List<UserInfo>>(ret);
         foreach (UserInfo inf in m_UsersInfo)
         {

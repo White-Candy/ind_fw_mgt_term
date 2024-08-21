@@ -9,6 +9,7 @@ public class GetEvent : BaseEvent
     {        
         JsonData jd = JsonMapper.ToObject(mp.ret);
         GlobalData.facultiesList = JsonMapper.ToObject<List<string>>(jd["facultiesList"].ToString());
+        Debug.Log("GetEvent: " + GlobalData.facultiesList.Count);
 
         await UniTask.Yield();
     }
