@@ -20,7 +20,17 @@ public class TCPHelper
         };
 
         string sJson = JsonMapper.ToJson(inf);
-        TCP.SendAsync(sJson, EventType.UserLoginEvent, OperateType.None);
+        TCP.SendAsync(sJson, EventType.UserLoginEvent, OperateType.NONE);
+    }
+
+    /// <summary>
+    /// 获取初始化信息请求
+    /// </summary>
+    public static void GetInitReq()
+    {
+        List<string> inf = new List<string>();
+        string body = JsonMapper.ToJson(inf);
+        TCP.SendAsync(body, EventType.GetEvent, OperateType.NONE);
     }
 
     /// <summary>

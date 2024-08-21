@@ -9,8 +9,6 @@ public static class GlobalData
         {PropertyType.PT_MAJ_ADDTO, "AddMajAction"}, {PropertyType.PT_MAJ_SET, "SetMajAction"}
     };
 
-    public static Dictionary<string, int> m_StuGenderDic = new Dictionary<string, int>()
-    {
-        {"男", 0}, {"女", 1}
-    };
+    public static List<string> teachersList = new List<string>();
+    public static List<string> facultiesList = new List<string>();
 }

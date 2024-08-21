@@ -49,6 +49,7 @@ public class FacultyPanel : BasePanel
     public void Init()
     {
         // TCPHelper.GetInfoReq<TCPFacHelper>();
+        TCPHelper.GetInitReq();
         TCPHelper.GetInfoReq<FacultyInfo>(EventType.FacultyEvent);
     }
 

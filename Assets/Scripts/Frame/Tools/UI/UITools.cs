@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class UITools
@@ -23,5 +24,17 @@ public class UITools
     {
         //Debug.Log($"AddPanel:{panelName}");
         PanelList.Add(panelName, panel);
+    }
+
+    /// <summary>
+    /// 获取下拉列表item的索引
+    /// </summary>
+    /// <param name="dropdwon"></param>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    public static int GetDropDownOptionIndex(TMP_Dropdown dropdwon, string text)
+    {
+        int idx = dropdwon.options.FindIndex(x => x.text == text);
+        return idx  >= 0 ? idx : 0;
     }
 }

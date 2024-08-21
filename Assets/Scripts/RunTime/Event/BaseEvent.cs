@@ -15,12 +15,16 @@ public class BaseEvent
     /// </summary>
     /// <param name="module_name"></param>
     /// <param name="args"></param>
-    public virtual async void OnEvent(params object[] args) { await UniTask.Yield(); }
+    public virtual async void OnEvent(MessPackage pkg) { await UniTask.Yield(); }
+    public virtual async void GetInfoEvent(MessPackage pkg) { await UniTask.Yield(); }
+    public virtual async void AddEvent(MessPackage pkg) { await UniTask.Yield(); }
+    public virtual async void ReviseInfoEvent(MessPackage pkg) { await UniTask.Yield(); }
+    public virtual async void DeleteInfoEvent(MessPackage pkg) { await UniTask.Yield(); }
 }
 
 public enum OperateType
 {
-    None = 0, GET, ADD, REVISE, DELETE,
+    NONE = 0, GET, ADD, REVISE, DELETE,
 }
 
 public enum EventType
@@ -34,4 +38,5 @@ public enum EventType
     UserEvent,
     MajorEvent,
     FacultyEvent,
+    GetEvent,
 }

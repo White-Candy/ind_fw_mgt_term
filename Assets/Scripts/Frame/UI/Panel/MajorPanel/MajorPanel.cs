@@ -42,12 +42,13 @@ public class MajorPanel : BasePanel
 
         Refresh.OnClickAsObservable().Subscribe(_ => 
         {
-            TCPHelper.GetInfoReq<UserInfo>(EventType.MajorEvent);
+            TCPHelper.GetInfoReq<MajorInfo>(EventType.MajorEvent);
         });
     }
 
     public void Init()
     {
+        TCPHelper.GetInitReq();
         TCPHelper.GetInfoReq<MajorInfo>(EventType.MajorEvent);
     }
 

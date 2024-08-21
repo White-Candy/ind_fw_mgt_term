@@ -132,7 +132,7 @@ public class StuPropertyDialog : BasePanel
         m_Verify.text = inf.password;
 
         m_NameIpt.text = inf.Name;
-        m_Gender.value = GlobalData.m_StuGenderDic[inf.Gender];
+        m_Gender.value = UITools.GetDropDownOptionIndex(m_Gender, inf.Gender);
         m_Age.text = inf.Age;
         m_IdCard.text = inf.idCoder;
         m_Contact.text = inf.Contact;

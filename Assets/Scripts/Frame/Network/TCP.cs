@@ -9,6 +9,7 @@ using System.Text;
 using LitJson;
 using Unity.VisualScripting;
 using UnityEditor;
+using Cysharp.Threading.Tasks;
 
 public static class TCP
 {
@@ -62,6 +63,7 @@ public static class TCP
                 // 前置包获取内容包的总长度和事件类型
                 mp.length = int.Parse(data["length"].ToString());
                 mp.event_type = data["event_type"].ToString();
+                mp.operate_type = data["operate_type"].ToString();
                 mp.get_length = true;
               
                 FrontMp fp = new FrontMp();
@@ -103,21 +105,25 @@ public static class TCP
     /// <param name="event_type">事件类型</param>
     public static async void SendAsync(string mess, EventType event_type, OperateType operateType)
     {
-        SendFrontPackage(mess, event_type, operateType);
-
-        await Tools.OnAwait(0.1f, () =>
+        await UniTask.RunOnThreadPool(() => 
         {
-            var outputBuffer = Encoding.Unicode.GetBytes(mess);
+            string front = FrontPackage(mess, event_type, operateType);
+            string totalInfoPkg = $"|{front}#{mess}-end";
+            long totalLength = totalInfoPkg.Count();
+            string finalPkg = totalLength.ToString() + totalInfoPkg;
+            Debug.Log(finalPkg);
+
+            var outputBuffer = Encoding.Unicode.GetBytes(finalPkg);
             m_Socket.BeginSend(outputBuffer, 0, outputBuffer.Length, SocketFlags.None, SendAsyncCbk, null);
         });
     }
 
     /// <summary>
-    /// 发送前置包
+    /// 前置包
     /// </summary>
     /// <param name="mess"></param>
     /// <param name="event_type"></param>
-    public static void SendFrontPackage(string mess, EventType event_type, OperateType operateType)
+    public static string FrontPackage(string mess, EventType event_type, OperateType operateType)
     {
         FrontMp mpinfo = new FrontMp()
         {
@@ -128,8 +134,9 @@ public static class TCP
         };
 
         string s_info = JsonMapper.ToJson(mpinfo);
-        var outputBuffer = Encoding.Unicode.GetBytes(s_info);
-        m_Socket.BeginSend(outputBuffer, 0, outputBuffer.Length, SocketFlags.None, SendAsyncCbk, null);
+        return s_info;
+        // var outputBuffer = Encoding.Unicode.GetBytes(s_info);
+        // m_Socket.BeginSend(outputBuffer, 0, outputBuffer.Length, SocketFlags.None, SendAsyncCbk, null);
     }
 
     /// <summary>
@@ -171,6 +178,7 @@ public class MessPackage
     // public Socket socket = default; // 发送信息的soket
     public string ip = ""; // 他的ip
     public string ret = ""; // 他发送的信息
+    public string operate_type = "";
     public string event_type = ""; // 这个信息属于什么类型
     public int length = 0; // 这个包的总长度
     public bool finish = false; // 是否完全收包
@@ -195,6 +203,7 @@ public class MessPackage
         ip = mp.ip;
         ret = mp.ret;
         event_type = mp.event_type;
+        operate_type = mp.operate_type;
         length = mp.length;
         finish = mp.finish;
         get_length = mp.get_length;

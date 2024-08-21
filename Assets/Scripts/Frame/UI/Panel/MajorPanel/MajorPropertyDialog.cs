@@ -1,8 +1,8 @@
-
-
+using UnityEngine;
 using TMPro;
 using UniRx;
 using UnityEngine.UI;
+using static TMPro.TMP_Dropdown;
 
 public class MajorPropertyDialog : BasePanel
 {
@@ -13,8 +13,8 @@ public class MajorPropertyDialog : BasePanel
     public TMP_InputField ID;
     public TMP_InputField MajorName;
     public TMP_InputField RegisterTime;
-    public TMP_InputField FacultyName;
-    public TMP_InputField TeacherName;
+    public TMP_Dropdown FacultyName;
+    public TMP_Dropdown TeacherName;
 
     private PD_BaseAction m_Action;
 
@@ -47,8 +47,11 @@ public class MajorPropertyDialog : BasePanel
     /// <param name="type"></param>
     public void Init(MajorInfo info, PropertyType type)
     {
+        FacultyName.AddOptions(GlobalData.facultiesList);
+        TeacherName.AddOptions(GlobalData.teachersList);
+
         m_Action = Tools.CreateObject<PD_BaseAction>(GlobalData.m_Enum2Type[type]);
-        m_Action.Init(info);
+        m_Action.Init(info);      
     }
 
     /// <summary>
@@ -59,9 +62,9 @@ public class MajorPropertyDialog : BasePanel
         // Debug.Log($"{inf.Name} || {inf.RegisterTime} || {inf.TeacherName}");
         ID.text = inf.id;
         MajorName.text = inf.MajorName;
-        FacultyName.text = inf.FacultyName;
+        FacultyName.value = UITools.GetDropDownOptionIndex(FacultyName, inf.FacultyName);
         RegisterTime.text = inf.RegisterTime;
-        TeacherName.text = inf.TeacherName;
+        TeacherName.value = UITools.GetDropDownOptionIndex(TeacherName, inf.TeacherName);
     }
 
     /// <summary>
@@ -74,9 +77,9 @@ public class MajorPropertyDialog : BasePanel
         {
             id = ID.text,
             MajorName = MajorName.text,
-            FacultyName = FacultyName.text,
+            FacultyName = FacultyName.options[FacultyName.value].text,
             RegisterTime = RegisterTime.text,
-            TeacherName = TeacherName.text
+            TeacherName = TeacherName.options[TeacherName.value].text
         };
         
         return inf;
@@ -98,8 +101,8 @@ public class MajorPropertyDialog : BasePanel
     {
         ID.text = "";
         MajorName.text = "";
-        FacultyName.text = "";
+        FacultyName.value = 0;
         RegisterTime.text = Tools.GetCurrLocalTime();
-        TeacherName.text = "";
+        TeacherName.value = 0;
     }
 }

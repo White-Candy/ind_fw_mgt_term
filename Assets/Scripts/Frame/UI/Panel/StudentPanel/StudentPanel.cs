@@ -77,6 +77,7 @@ public class StudentPanel : BasePanel
     public void Init(params object[] objs)
     {
         // TCPHelper.GetInfoReq<TCPStuHelper>();
+        // TCPHelper.GetInitReq();
         TCPHelper.GetInfoReq<UserInfo>(EventType.UserEvent);
     }
 
