@@ -24,6 +24,7 @@ public class AddFacAction : PD_BaseAction
             id.Add(int.Parse(item.id));
         }
         info.id = Tools.SpawnRandom(id).ToString();
-        TCPHelper.AddFacInfo(info);
+
+        TCPHelper.OperateInfo(info, EventType.FacultyEvent, OperateType.ADD);
     }
 }

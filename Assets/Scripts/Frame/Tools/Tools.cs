@@ -3,9 +3,10 @@ using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public static class Tools
+public class Tools
 {
     /// <summary>
     /// µÈ´ýÆ÷
@@ -26,7 +27,7 @@ public static class Tools
     /// <typeparam name="T"></typeparam>
     /// <param name="name"></param>
     /// <returns></returns>
-    static public T CreateObject<T>(string name) where T : class
+    public static T CreateObject<T>(string name) where T : class
     {
         // Debug.Log(name);
         object obj = null;
@@ -97,5 +98,17 @@ public static class Tools
         int idx = UnityEngine.Random.Range(0, random.Count);
 
         return random[idx]; 
+    }
+
+
+    /// <summary>
+    /// ¼ì²éÈÝÆ÷ÊÇ·ñ OutRange
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="vct"></param>
+    /// <returns></returns>
+    public static bool checkList<T>(List<T> vct, int index)
+    {
+        return vct.Count > index;
     }
 }

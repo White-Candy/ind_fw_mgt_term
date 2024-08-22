@@ -6,7 +6,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public static class ExcelTools
+public class ExcelTools
 {
     // Excel表内容转成Userinfo格式的内存
     public static async UniTask<List<UserInfo>> Excel2UserInfos(string path)
@@ -41,9 +41,9 @@ public static class ExcelTools
                         Gender = sheet.Cells[i, 3].Value?.ToString(),
                         idCoder = sheet.Cells[i, 4].Value?.ToString(),
                         Age = sheet.Cells[i, 5].Value?.ToString(),
-                        Contact = sheet.Cells[i, 6].Value?.ToString(),
-                        HeadTeacher = sheet.Cells[i, 7].Value?.ToString(),
-                        className = sheet.Cells[i, 8].Value?.ToString()
+                        Identity = sheet.Cells[i, 6].Value?.ToString(),
+                        Contact = sheet.Cells[i, 7].Value?.ToString(),
+                        // className = sheet.Cells[i, 8].Value?.ToString()
                     };
                     list.Add(inf);
                 }
@@ -90,7 +90,7 @@ public static class ExcelTools
                 List<string> title = new List<string>()
                 { 
                     "用户名", "姓名", "性别", "身份证号",
-                    "年龄", "联系方式", "班主任", "班级名称"
+                    "年龄",  "身份", "联系方式"
                 };
                 for (int col = 1; col <= 8; ++col)
                     sheet.Cells[1, col].Value = title[col - 1];
@@ -103,9 +103,9 @@ public static class ExcelTools
                     sheet.Cells[i + 2, 3].Value = inf.Gender;
                     sheet.Cells[i + 2, 4].Value = inf.idCoder;
                     sheet.Cells[i + 2, 5].Value = inf.Age;
-                    sheet.Cells[i + 2, 6].Value = inf.Contact;
-                    sheet.Cells[i + 2, 7].Value = inf.HeadTeacher;
-                    sheet.Cells[i + 2, 8].Value = inf.className;
+                    sheet.Cells[i + 2, 6].Value = inf.Identity;
+                    sheet.Cells[i + 2, 7].Value = inf.Contact;
+                    // sheet.Cells[i + 2, 8].Value = inf.className;
                 }
 
                 excelPkg.Save();

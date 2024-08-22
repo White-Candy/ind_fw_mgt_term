@@ -3,7 +3,7 @@ using LitJson;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class TCPHelper
+public class TCPHelper
 {
     /// <summary>
     /// 登录请求。
@@ -17,88 +17,49 @@ public static class TCPHelper
         {
             userName = account,
             password = pwd,
-            level = level
         };
 
         string sJson = JsonMapper.ToJson(inf);
-        TCP.SendAsync(sJson, EventType.UserLoginEvent);
+        TCP.SendAsync(sJson, EventType.UserLoginEvent, OperateType.NONE);
     }
 
     /// <summary>
-    /// 获取学生信息请求
+    /// 获取初始化信息请求
     /// </summary>
-    public static void GetStuInfReq()
+    public static void GetInitReq()
     {
-        List<UserInfo> inf = new List<UserInfo>();
-        
+        List<string> inf = new List<string>();
         string body = JsonMapper.ToJson(inf);
-        TCP.SendAsync(body, EventType.GetStuInfoEvent);
+        TCP.SendAsync(body, EventType.GetEvent, OperateType.NONE);
     }
 
     /// <summary>
-    /// 添加用户信息
+    /// 获取信息请求
     /// </summary>
-    /// <param name="inf"></param>
-    public static void AddUsersInfo(List<UserInfo> inf)
+    /// <typeparam name="T"></typeparam>
+    public static void GetInfoReq<T>(EventType type) where T : BaseInfo
     {
+        // TCPBaseHelper helper = new T();
+        // helper.GetInfReq();
+
+        List<T> inf = new List<T>();       
         string body = JsonMapper.ToJson(inf);
-        TCP.SendAsync(body, EventType.AddStuInfoEvent);
+        TCP.SendAsync(body, type, OperateType.GET);
     }
 
     /// <summary>
-    /// 修改用户信息
+    /// 操作数据请求
     /// </summary>
-    /// <param name="inf"></param>
-    public static void ReviseUserInfo(UserInfo inf)
+    /// <typeparam name="T"></typeparam>
+    public static void OperateInfo<T>(T inf, EventType type, OperateType operateType) where T : BaseInfo
     {
         string body = JsonMapper.ToJson(inf);
-        TCP.SendAsync(body, EventType.ReviseStuInfoEvent);
+        TCP.SendAsync(body, type, operateType);
     }
 
-    /// <summary>
-    /// 删除用户信息
-    /// </summary>
-    /// <param name="inf"></param>
-    public static void DeleteUserInfo(UserInfo inf)
+    public static void OperateInfo<T>(List<T> inf, EventType type, OperateType operateType) where T : BaseInfo
     {
         string body = JsonMapper.ToJson(inf);
-        TCP.SendAsync(body, EventType.DeleteStuInfoEvent);
-    }
-
-    /// <summary>
-    /// 获取学院信息
-    /// </summary>
-    public static void GetFacInfoReq()
-    {
-        List<FacultyInfo> faculiesList = new List<FacultyInfo>();
-
-        string body = JsonMapper.ToJson(faculiesList);
-        TCP.SendAsync(body, EventType.GetFacInfoEvent);
-    }
-
-    /// <summary>
-    /// 添加学院信息
-    /// </summary>
-    /// <param name="inf"></param>
-    public static void AddFacInfo(FacultyInfo inf)
-    {
-        string body = JsonMapper.ToJson(inf);
-        TCP.SendAsync(body, EventType.AddFacInfoEvent);
-    }
-
-    /// <summary>
-    /// 修改学院信息
-    /// </summary>
-    /// <param name="inf"></param>
-    public static void ReviseFacInfo(FacultyInfo inf)
-    {
-        string body = JsonMapper.ToJson(inf);
-        TCP.SendAsync(body, EventType.ReviseFacInfoEvent);
-    }
-
-    public static void DeleteFacInfo(FacultyInfo inf)
-    {
-        string body = JsonMapper.ToJson(inf);
-        TCP.SendAsync(body, EventType.DeleteFacInfoEvent); 
+        TCP.SendAsync(body, type, operateType);
     }
 }

@@ -12,7 +12,7 @@ public class FacPropertyDialog : BasePanel
     public TMP_InputField ID;
     public TMP_InputField FacultyName;
     public TMP_InputField RegisterTime;
-    public TMP_InputField TeacherName;
+    public TMP_Dropdown TeacherName;
 
     private PD_BaseAction m_Action;
 
@@ -45,6 +45,8 @@ public class FacPropertyDialog : BasePanel
     /// <param name="type"></param>
     public void Init(FacultyInfo info, PropertyType type)
     {
+        UITools.AddDropDownOptions(TeacherName, GlobalData.deanList);
+
         m_Action = Tools.CreateObject<PD_BaseAction>(GlobalData.m_Enum2Type[type]);
         m_Action.Init(info);
     }
@@ -58,7 +60,7 @@ public class FacPropertyDialog : BasePanel
         ID.text = inf.id;
         FacultyName.text = inf.Name;
         RegisterTime.text = inf.RegisterTime;
-        TeacherName.text = inf.TeacherName;
+        TeacherName.value = UITools.GetDropDownOptionIndex(TeacherName, inf.TeacherName);
     }
 
     /// <summary>
@@ -72,16 +74,18 @@ public class FacPropertyDialog : BasePanel
             id = ID.text,
             Name = FacultyName.text,
             RegisterTime = RegisterTime.text,
-            TeacherName = TeacherName.text
         };
-        
+
+        if (Tools.checkList(TeacherName.options, TeacherName.value)) 
+            inf.TeacherName = TeacherName.options[TeacherName.value].text;
+
         return inf;
     }
 
     /// <summary>
     /// 关闭
     /// </summary>
-    public void Close()
+    public override void Close()
     {
         Active(false);
         Clear();
@@ -95,6 +99,6 @@ public class FacPropertyDialog : BasePanel
         ID.text = "";
         FacultyName.text = "";
         RegisterTime.text = Tools.GetCurrLocalTime();
-        TeacherName.text = "";
+        TeacherName.value = 0;
     }
 }

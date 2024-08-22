@@ -10,7 +10,7 @@ public class MenuControl : MonoBehaviour
 {
     private List<Button> btnList = new List<Button>();
 
-    private BaseAction m_currAction = new BaseAction();
+    private PanelAction m_currAction = null;
 
     private void Awake()
     {
@@ -19,7 +19,7 @@ public class MenuControl : MonoBehaviour
         {
             btn.onClick.AddListener(() =>
             {
-                BaseAction action = Tools.CreateObject<BaseAction>($"{btn.name}Action");
+                PanelAction action = new PanelAction($"{btn.name}Panel");
                 if (m_currAction != null)
                 {
                     m_currAction.Close();

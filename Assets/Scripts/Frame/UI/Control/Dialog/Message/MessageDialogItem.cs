@@ -24,7 +24,7 @@ public class MessageDialogItem : MonoBehaviour
         onClick = clicked;
         m_item.OnClickAsObservable().Subscribe(_ => 
         {
-            Debug.Log($"item clicked: {this.transform.name}");
+            // Debug.Log($"item clicked: {this.transform.name}");
             onClick();
         });
     }
