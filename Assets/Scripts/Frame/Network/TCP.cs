@@ -228,7 +228,7 @@ public static class TCP
     public static void checkParcent(MessPackage mp)
     {
         float percent = (float)(mp.ret.Count() + 1)* 1.0f / (float)mp.length * 1.0f * 100.0f;
-        Debug.Log("----------" +  mp.ip + " | " + percent + "%");  // Add message package for queue.
+        // Debug.Log("----------" +  mp.ip + " | " + percent + "%");  // Add message package for queue.
 
         if (percent >= 100.0f)
         {

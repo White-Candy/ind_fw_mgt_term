@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 using TMPro;
 using UnityEngine;
 
@@ -20,6 +21,13 @@ public class UITools
         return null;
     }
 
+    public static BasePanel FindPanel(string name)
+    {
+        BasePanel basePanel;
+        PanelList.TryGetValue(name, out basePanel);
+        return basePanel != null ? basePanel : null;
+    }
+
     public static void AddPanel(string panelName, BasePanel panel)
     {
         //Debug.Log($"AddPanel:{panelName}");
@@ -36,5 +44,16 @@ public class UITools
     {
         int idx = dropdwon.options.FindIndex(x => x.text == text);
         return idx  >= 0 ? idx : 0;
+    }
+
+    /// <summary>
+    /// 对Dropdown控件重新添加新的Options
+    /// </summary>
+    /// <param name="dropDown"></param>
+    /// <param name=""></param>
+    public static void AddDropDownOptions(TMP_Dropdown dropDown, List<string> options)
+    {
+        dropDown.ClearOptions();
+        dropDown.AddOptions(options);
     }
 }

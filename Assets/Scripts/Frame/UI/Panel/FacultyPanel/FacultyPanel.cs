@@ -46,7 +46,7 @@ public class FacultyPanel : BasePanel
         });
     }
 
-    public void Init()
+    public override void Init()
     {
         // TCPHelper.GetInfoReq<TCPFacHelper>();
         TCPHelper.GetInitReq();
@@ -95,7 +95,7 @@ public class FacultyPanel : BasePanel
     /// <summary>
     /// 关闭
     /// </summary>
-    public void Close()
+    public override void Close()
     {
         FacPropertyDialog.instance.Close();
         Active(false);

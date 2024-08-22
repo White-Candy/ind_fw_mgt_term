@@ -46,7 +46,7 @@ public class MajorPanel : BasePanel
         });
     }
 
-    public void Init()
+    public override void Init()
     {
         TCPHelper.GetInitReq();
         TCPHelper.GetInfoReq<MajorInfo>(EventType.MajorEvent);
@@ -94,7 +94,7 @@ public class MajorPanel : BasePanel
     /// <summary>
     /// 关闭
     /// </summary>
-    public void Close()
+    public override void Close()
     {
         MajorPropertyDialog.instance.Close();
         Active(false);

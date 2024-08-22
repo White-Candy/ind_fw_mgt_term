@@ -7,7 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StuPropertyDialog : BasePanel
+public class UserPropertyDialog : BasePanel
 {
     [HideInInspector]
     public Button OK;
@@ -34,18 +34,21 @@ public class StuPropertyDialog : BasePanel
     public TMP_InputField m_Age;
 
     [HideInInspector]
+    public TMP_Dropdown m_Identity;
+
+    [HideInInspector]
     public TMP_InputField m_IdCard;
 
     [HideInInspector]
     public TMP_InputField m_Contact;
 
     [HideInInspector]
-    public TMP_InputField m_HeadTeacher;
+    public TMP_Dropdown m_ClassName;
 
     [HideInInspector]
-    public TMP_InputField m_ClassName;
+    public GameObject m_StudentLayout; // 专属于学生的控件
 
-    public static StuPropertyDialog instance;
+    public static UserPropertyDialog instance;
     
     [HideInInspector]
     public PropertyType m_Type = PropertyType.PT_None; 
@@ -68,11 +71,14 @@ public class StuPropertyDialog : BasePanel
         m_NameIpt = GameObject.Find("NameIpt").GetComponent<TMP_InputField>();
         m_Gender = GameObject.Find("GenderDrop").GetComponent<TMP_Dropdown>();
         m_Age = GameObject.Find("AgeIpt").GetComponent<TMP_InputField>();
+        m_Identity = GameObject.Find("IdentityrDrop").GetComponent<TMP_Dropdown>();
         m_IdCard = GameObject.Find("IdCardIpt").GetComponent<TMP_InputField>();
         m_Contact = GameObject.Find("ContactIpt").GetComponent<TMP_InputField>();
-        m_HeadTeacher = GameObject.Find("HTIpt").GetComponent<TMP_InputField>();
-        m_ClassName = GameObject.Find("CNIpt").GetComponent<TMP_InputField>();
+        m_ClassName = GameObject.Find("ClassDrop").GetComponent<TMP_Dropdown>();
 
+        m_StudentLayout = GameObject.Find("StudentLayout").gameObject;
+
+        m_StudentLayout.SetActive(false);
         Active(false);
     }
 
@@ -91,6 +97,11 @@ public class StuPropertyDialog : BasePanel
             Active(false);
             Clear();
         });
+
+        m_Identity?.onValueChanged.AddListener((idx) => 
+        {
+            checkIdentity(idx);
+        });
     }
 
     /// <summary>
@@ -100,8 +111,12 @@ public class StuPropertyDialog : BasePanel
     /// <param name="t"></param>
     public void Init(UserInfo inf, PropertyType t)
     {
+        UITools.AddDropDownOptions(m_ClassName, GlobalData.classesList);
+
         m_Action = Tools.CreateObject<PD_BaseAction>(GlobalData.m_Enum2Type[t]);
         m_Action.Init(inf);
+
+        checkIdentity(m_Identity.value);
     }
 
     /// <summary>
@@ -115,10 +130,10 @@ public class StuPropertyDialog : BasePanel
         m_NameIpt.text = "";
         m_Gender.value = 0;
         m_Age.text = "";
+        m_Identity.value = 0;
         m_IdCard.text = "";
         m_Contact.text = "";
-        m_HeadTeacher.text = "";
-        m_ClassName.text = "";
+        m_ClassName.value = 0;
     }
 
     /// <summary>
@@ -135,9 +150,9 @@ public class StuPropertyDialog : BasePanel
         m_Gender.value = UITools.GetDropDownOptionIndex(m_Gender, inf.Gender);
         m_Age.text = inf.Age;
         m_IdCard.text = inf.idCoder;
+        m_Identity.value = UITools.GetDropDownOptionIndex(m_Identity, inf.Identity);
         m_Contact.text = inf.Contact;
-        m_HeadTeacher.text = inf.HeadTeacher;
-        m_ClassName.text = inf.className;
+        m_ClassName.value = UITools.GetDropDownOptionIndex(m_ClassName, inf.className);
     }
 
     /// <summary>
@@ -153,13 +168,31 @@ public class StuPropertyDialog : BasePanel
 
             Name = m_NameIpt.text,
             Gender = m_Gender.options[m_Gender.value].text,
+            Identity = m_Identity.options[m_Identity.value].text,
             Age = m_Age.text,
             idCoder = m_IdCard.text,
             Contact = m_Contact.text,
-            HeadTeacher = m_HeadTeacher.text,
-            className = m_ClassName.text
         };
+
+        if (Tools.checkList(m_ClassName.options, m_ClassName.value))
+            inf.className = m_ClassName.options[m_ClassName.value].text;
         
         return inf;
+    }
+
+
+    /// <summary>
+    /// 检查身份，不同的身份显示不同的UI控件。
+    /// </summary>
+    public void checkIdentity(int identityVal)
+    {
+        if (identityVal == 0)
+        {
+            m_StudentLayout.gameObject.SetActive(true);
+        }
+        else
+        {
+            m_StudentLayout.gameObject.SetActive(false);
+        }
     }
 }

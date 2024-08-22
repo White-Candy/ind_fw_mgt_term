@@ -47,8 +47,8 @@ public class MajorPropertyDialog : BasePanel
     /// <param name="type"></param>
     public void Init(MajorInfo info, PropertyType type)
     {
-        FacultyName.AddOptions(GlobalData.facultiesList);
-        TeacherName.AddOptions(GlobalData.teachersList);
+        UITools.AddDropDownOptions(FacultyName, GlobalData.facultiesList);  
+        UITools.AddDropDownOptions(TeacherName, GlobalData.directorsList);
 
         m_Action = Tools.CreateObject<PD_BaseAction>(GlobalData.m_Enum2Type[type]);
         m_Action.Init(info);      
@@ -77,18 +77,22 @@ public class MajorPropertyDialog : BasePanel
         {
             id = ID.text,
             MajorName = MajorName.text,
-            FacultyName = FacultyName.options[FacultyName.value].text,
             RegisterTime = RegisterTime.text,
-            TeacherName = TeacherName.options[TeacherName.value].text
         };
-        
+
+        if (Tools.checkList(FacultyName.options, FacultyName.value)) 
+            inf.FacultyName = FacultyName.options[FacultyName.value].text;
+
+        if (Tools.checkList(TeacherName.options, TeacherName.value)) 
+            inf.TeacherName = TeacherName.options[TeacherName.value].text;    
+
         return inf;
     }
 
     /// <summary>
     /// 关闭
     /// </summary>
-    public void Close()
+    public override void Close()
     {
         Active(false);
         Clear();

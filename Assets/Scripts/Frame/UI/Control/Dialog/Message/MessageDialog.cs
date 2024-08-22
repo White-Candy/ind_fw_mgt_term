@@ -61,7 +61,7 @@ public class MessageDialog : MonoBehaviour
             MessageDialogItem item = m_Pool.Create(name);
             item.Init(name, onClicked);
         }
-        Debug.Log($"This is Dialog Panel Init, And params count is: {packages.Count()}");
+        // Debug.Log($"This is Dialog Panel Init, And params count is: {packages.Count()}");
     }
 
     /// <summary>

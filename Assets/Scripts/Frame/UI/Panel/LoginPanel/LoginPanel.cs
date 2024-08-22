@@ -34,22 +34,3 @@ public class LoginPanel : BasePanel
         });
     }
 }
-
-/// <summary>
-/// 用户信息包
-/// </summary>
-[Serializable]
-public class UserInfo : BaseInfo
-{
-    public string userName;
-    public string Name;
-    public string Gender;
-    public string idCoder;
-    public string Age;
-    public string Contact;
-    public string HeadTeacher;
-    public string className;
-    public string password;
-    public bool login = false;
-    public string hint = "";
-}

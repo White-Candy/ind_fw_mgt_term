@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Tools
@@ -97,5 +98,17 @@ public class Tools
         int idx = UnityEngine.Random.Range(0, random.Count);
 
         return random[idx]; 
+    }
+
+
+    /// <summary>
+    /// ¼ì²éÈÝÆ÷ÊÇ·ñ OutRange
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="vct"></param>
+    /// <returns></returns>
+    public static bool checkList<T>(List<T> vct, int index)
+    {
+        return vct.Count > index;
     }
 }

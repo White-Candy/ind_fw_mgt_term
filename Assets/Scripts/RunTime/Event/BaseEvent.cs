@@ -35,8 +35,9 @@ public enum EventType
     CheckEvent,
     UserLoginEvent,
     RegisterEvent,
+    GetEvent,
     UserEvent,
     MajorEvent,
     FacultyEvent,
-    GetEvent,
+    ClassEvent
 }

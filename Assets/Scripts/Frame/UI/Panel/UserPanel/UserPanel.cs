@@ -1,10 +1,11 @@
 using LitJson;
+using System;
 using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StudentPanel : BasePanel
+public class UserPanel : BasePanel
 {
     public GameObject itemTemp;
     public Transform TempParent;
@@ -14,7 +15,7 @@ public class StudentPanel : BasePanel
     public Button AddTo;
     public Button Refresh;
 
-    public static StudentPanel instance;
+    public static UserPanel instance;
 
     private List<GameObject> itemList = new List<GameObject>();
 
@@ -30,7 +31,7 @@ public class StudentPanel : BasePanel
 
     public void Start()
     {
-        // 学生信息导入
+        // 信息导入
         Import.OnClickAsObservable().Subscribe(async x =>
         {
             string filePath = FileTools.OpenFileDialog();
@@ -56,11 +57,11 @@ public class StudentPanel : BasePanel
             await ExcelTools.WriteUserinfo2Excel(m_UsersInfo, savePath);
         });
 
-        // 添加学生信息。
+        // 添加信息。
         AddTo.OnClickAsObservable().Subscribe(x => 
         {
-            StuPropertyDialog.instance.Init(default, PropertyType.PT_STU_ADDTO);
-            StuPropertyDialog.instance.Active(true);
+            UserPropertyDialog.instance.Init(default, PropertyType.PT_USER_ADDTO);
+            UserPropertyDialog.instance.Active(true);
         });
 
         // 刷新学生信息。
@@ -74,9 +75,10 @@ public class StudentPanel : BasePanel
     /// <summary>
     /// 初始化
     /// </summary>
-    public void Init(params object[] objs)
+    public override void Init()
     {
         // TCPHelper.GetInfoReq<TCPStuHelper>();
+
         TCPHelper.GetInitReq();
         TCPHelper.GetInfoReq<UserInfo>(EventType.UserEvent);
     }
@@ -101,7 +103,7 @@ public class StudentPanel : BasePanel
     public void CloneItem(UserInfo inf)
     {
         GameObject clone = Instantiate(itemTemp, TempParent);
-        var item = clone.GetComponent<SutItem>();
+        var item = clone.GetComponent<UserItem>();
         item.Init(inf);
         itemList.Add(clone);
     }
@@ -119,9 +121,28 @@ public class StudentPanel : BasePanel
     /// <summary>
     /// 关闭
     /// </summary>
-    public void Close()
+    public override void Close()
     {
         Active(false);
         Clear();
     }
+}
+
+
+/// <summary>
+/// 用户信息包
+/// </summary>
+public class UserInfo : BaseInfo
+{
+    public string userName;
+    public string password;
+    public string Name;
+    public string Gender;
+    public string Age;
+    public string Identity;
+    public string idCoder;
+    public string Contact;
+    public string className;
+    public bool login = false;
+    public string hint = "";
 }
