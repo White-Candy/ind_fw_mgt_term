@@ -43,7 +43,7 @@ public class UITools
     public static int GetDropDownOptionIndex(TMP_Dropdown dropdwon, string text)
     {
         int idx = dropdwon.options.FindIndex(x => x.text == text);
-        return idx  >= 0 ? idx : 0;
+        return idx  >= 0 ? idx : -1;
     }
 
     /// <summary>
