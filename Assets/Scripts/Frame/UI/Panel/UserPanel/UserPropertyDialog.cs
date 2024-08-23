@@ -175,7 +175,11 @@ public class UserPropertyDialog : BasePanel
         };
 
         if (Tools.checkList(m_ClassName.options, m_ClassName.value))
-            inf.className = m_ClassName.options[m_ClassName.value].text;
+        {
+            inf.className = m_Identity.value == 0 ? 
+                m_ClassName.options[m_ClassName.value].text : "";
+        }
+            
         
         return inf;
     }

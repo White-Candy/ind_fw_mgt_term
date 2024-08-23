@@ -46,7 +46,7 @@ public class ClassItem : MonoBehaviour
         ReigsterTime.GetComponentInChildren<TextMeshProUGUI>().text = info.RegisterTime;
         Faculty.GetComponentInChildren<TextMeshProUGUI>().text = info.Faculty;
         Teacher.GetComponentInChildren<TextMeshProUGUI>().text = info.Teacher;
-        Number.GetComponentInChildren<TextMeshProUGUI>().text = info.Number;
+        Number.GetComponentInChildren<TextMeshProUGUI>().text = info.Number.ToString();
 
         gameObject.SetActive(true);
     }

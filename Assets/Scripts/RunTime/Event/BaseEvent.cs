@@ -39,5 +39,6 @@ public enum EventType
     UserEvent,
     MajorEvent,
     FacultyEvent,
-    ClassEvent
+    ClassEvent,
+    ColumnsEvent,
 }

@@ -5,29 +5,28 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FacultyItem : MonoBehaviour
+public class ColumnsItem : MonoBehaviour
 {
     public GameObject Id;
-    public GameObject Faculty;
+    public GameObject Columns;
     public GameObject ReigsterTime;
-    public GameObject TeacherName;
     public Button Revise;
     public Button Delete;
 
-    private FacultyInfo m_info = new FacultyInfo();
+    private ColumnsInfo m_info = new ColumnsInfo();
 
     public void Start()
     {
         Delete.OnClickAsObservable().Subscribe(_ => 
         {
             MessageDialog dialog = DialogHelper.Instance.CreateMessDialog("MessageDialog");
-            dialog.Init("学院信息的删除", "是否删除学院信息？", new ItemPackage("确定", ConfirmDelete), new ItemPackage("取消", null));    
+            dialog.Init("栏目信息的删除", "是否删除栏目信息？", new ItemPackage("确定", ConfirmDelete), new ItemPackage("取消", null));    
         });
 
         Revise.OnClickAsObservable().Subscribe(_ => 
         {
-            FacPropertyDialog.instance.Init(m_info, PropertyType.PT_FAC_SET);
-            FacPropertyDialog.instance.Active(true);
+            ColPropertyDialog.instance.Init(m_info, PropertyType.PT_COL_SET);
+            ColPropertyDialog.instance.Active(true);
         });
     }
 
@@ -35,12 +34,12 @@ public class FacultyItem : MonoBehaviour
     /// 初始化
     /// </summary>
     /// <param name="info"></param>
-    public void Init(FacultyInfo info)
+    public void Init(ColumnsInfo info)
     {
         m_info = info;
         
         Id.GetComponentInChildren<TextMeshProUGUI>().text = info.id;
-        Faculty.GetComponentInChildren<TextMeshProUGUI>().text = info.Name;
+        Columns.GetComponentInChildren<TextMeshProUGUI>().text = info.Name;
         ReigsterTime.GetComponentInChildren<TextMeshProUGUI>().text = info.RegisterTime;
 
         gameObject.SetActive(true);
@@ -51,6 +50,6 @@ public class FacultyItem : MonoBehaviour
     /// </summary>
     public void ConfirmDelete()
     {
-        TCPHelper.OperateInfo(m_info, EventType.FacultyEvent, OperateType.DELETE);
+        TCPHelper.OperateInfo(m_info, EventType.ColumnsEvent, OperateType.DELETE);
     }
 }

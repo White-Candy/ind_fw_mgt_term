@@ -60,6 +60,8 @@ public enum PropertyType
     PT_MAJ_SET,  // 专业修改
     PT_CLASS_ADDTO, // 添加班级
     PT_CLASS_SET, // 班级修改
+    PT_COL_ADDTO, // 添加栏目
+    PT_COL_SET, // 栏目修改
 }
 
 public class BaseInfo {}

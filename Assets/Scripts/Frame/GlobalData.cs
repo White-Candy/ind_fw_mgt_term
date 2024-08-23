@@ -8,6 +8,7 @@ public static class GlobalData
         {PropertyType.PT_FAC_ADDTO, "AddFacAction"}, {PropertyType.PT_FAC_SET, "SetFacAction"},
         {PropertyType.PT_MAJ_ADDTO, "AddMajAction"}, {PropertyType.PT_MAJ_SET, "SetMajAction"},
         {PropertyType.PT_CLASS_ADDTO, "AddClassAction"}, {PropertyType.PT_CLASS_SET, "SetClassAction"},
+        {PropertyType.PT_COL_ADDTO, "AddColAction"}, {PropertyType.PT_COL_SET, "SetColAction"},
     };
 
     public static List<string> facultiesList = new List<string>(); // 学院

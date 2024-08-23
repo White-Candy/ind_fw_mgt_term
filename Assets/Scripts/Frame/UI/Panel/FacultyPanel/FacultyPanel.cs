@@ -42,7 +42,7 @@ public class FacultyPanel : BasePanel
 
         Refresh.OnClickAsObservable().Subscribe(_ => 
         {
-            TCPHelper.GetInfoReq<UserInfo>(EventType.FacultyEvent);
+            TCPHelper.GetInfoReq<FacultyInfo>(EventType.FacultyEvent);
         });
     }
 

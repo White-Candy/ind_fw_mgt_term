@@ -52,7 +52,7 @@ public class ClassPropertyDialog : BasePanel
     {
         UITools.AddDropDownOptions(FacultyName, GlobalData.facultiesList);
         UITools.AddDropDownOptions(Major, GlobalData.majorList);  
-        UITools.AddDropDownOptions(TeacherName, GlobalData.directorsList);
+        UITools.AddDropDownOptions(TeacherName, GlobalData.teachersList);
 
         m_Action = Tools.CreateObject<PD_BaseAction>(GlobalData.m_Enum2Type[type]);
         m_Action.Init(info);      
@@ -70,7 +70,7 @@ public class ClassPropertyDialog : BasePanel
         FacultyName.value = UITools.GetDropDownOptionIndex(FacultyName, inf.Faculty);
         Major.value = UITools.GetDropDownOptionIndex(Major, inf.Major);
         TeacherName.value = UITools.GetDropDownOptionIndex(TeacherName, inf.Teacher);
-        Number.text = inf.Number;
+        Number.text = inf.Number.ToString();
     }
 
     /// <summary>
@@ -84,7 +84,7 @@ public class ClassPropertyDialog : BasePanel
             id = ID.text,
             Class = Class.text,
             RegisterTime = RegisterTime.text,
-            Number = Number.text,
+            Number = int.Parse(Number.text),
         };
 
         if (Tools.checkList(FacultyName.options, FacultyName.value)) 
