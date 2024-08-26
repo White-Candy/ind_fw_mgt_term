@@ -20,7 +20,7 @@ public class AddClassAction : PD_BaseAction
 
         ClassInfo info = inf[0] as ClassInfo;
         List<int> id = new List<int>();
-        foreach (var item in ClassPanel.instance.m_classInfo)
+        foreach (var item in ClassPanel.m_classInfo)
         {
             id.Add(int.Parse(item.id));
         }

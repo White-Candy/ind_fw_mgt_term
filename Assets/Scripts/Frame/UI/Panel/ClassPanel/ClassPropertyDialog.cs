@@ -84,7 +84,7 @@ public class ClassPropertyDialog : BasePanel
             id = ID.text,
             Class = Class.text,
             RegisterTime = RegisterTime.text,
-            Number = int.Parse(Number.text),
+            Number = int.Parse(Number.text == "" ? "0" : Number.text),
         };
 
         if (Tools.checkList(FacultyName.options, FacultyName.value)) 

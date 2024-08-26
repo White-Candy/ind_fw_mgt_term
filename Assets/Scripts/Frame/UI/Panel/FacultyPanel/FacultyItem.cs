@@ -20,7 +20,8 @@ public class FacultyItem : MonoBehaviour
     {
         Delete.OnClickAsObservable().Subscribe(_ => 
         {
-            MessageDialog dialog = DialogHelper.Instance.CreateMessDialog("MessageDialog");
+            DialogHelper helper = new DialogHelper();
+            MessageDialog dialog = helper.CreateMessDialog("MessageDialog");
             dialog.Init("学院信息的删除", "是否删除学院信息？", new ItemPackage("确定", ConfirmDelete), new ItemPackage("取消", null));    
         });
 

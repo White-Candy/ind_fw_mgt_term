@@ -9,6 +9,7 @@ public static class GlobalData
         {PropertyType.PT_MAJ_ADDTO, "AddMajAction"}, {PropertyType.PT_MAJ_SET, "SetMajAction"},
         {PropertyType.PT_CLASS_ADDTO, "AddClassAction"}, {PropertyType.PT_CLASS_SET, "SetClassAction"},
         {PropertyType.PT_COL_ADDTO, "AddColAction"}, {PropertyType.PT_COL_SET, "SetColAction"},
+        {PropertyType.PT_COR_ADDTO, "AddCourseAction"}, {PropertyType.PT_COR_SET, "SetCourseAction"},
     };
 
     public static List<string> facultiesList = new List<string>(); // 学院
@@ -17,4 +18,5 @@ public static class GlobalData
     public static List<string> directorsList = new List<string>(); // 主任
     public static List<string> deanList = new List<string>(); // 院长
     public static List<string> teachersList = new List<string>(); // 老师
+    public static List<string> columnsList = new List<string>(); // 栏目
 }

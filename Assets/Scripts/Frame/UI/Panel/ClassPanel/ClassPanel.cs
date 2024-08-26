@@ -15,12 +15,12 @@ public class ClassPanel : BasePanel
 
     public Transform m_tempParent;
 
-    public static ClassPanel instance;
+    // public static ClassPanel instance;
 
     public Button AddTo;
     public Button Refresh;
 
-    public List<ClassInfo> m_classInfo = new List<ClassInfo>();
+    public static List<ClassInfo> m_classInfo = new List<ClassInfo>();
 
     private List<GameObject> m_itemList = new List<GameObject>();
 
@@ -28,7 +28,7 @@ public class ClassPanel : BasePanel
     {
         base.Awake();
 
-        instance = this;
+        // instance = this;
         Active(false);
     }
     

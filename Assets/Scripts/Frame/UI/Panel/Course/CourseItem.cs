@@ -1,19 +1,18 @@
-
 using TMPro;
 using UniRx;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ColumnsItem : MonoBehaviour
+public class CourseItem : MonoBehaviour
 {
     public GameObject Id;
+    public GameObject Course;
+    public GameObject RegisterTime;
     public GameObject Columns;
-    public GameObject ReigsterTime;
     public Button Revise;
     public Button Delete;
 
-    private ColumnsInfo m_info = new ColumnsInfo();
+    private CourseInfo m_info = new CourseInfo();
 
     public void Start()
     {
@@ -21,13 +20,13 @@ public class ColumnsItem : MonoBehaviour
         {
             DialogHelper helper = new DialogHelper();
             MessageDialog dialog = helper.CreateMessDialog("MessageDialog");
-            dialog.Init("栏目信息的删除", "是否删除栏目信息？", new ItemPackage("确定", ConfirmDelete), new ItemPackage("取消", null));    
+            dialog.Init("课程信息的删除", "是否删除该课程信息？", new ItemPackage("确定", ConfirmDelete), new ItemPackage("取消", null));    
         });
 
         Revise.OnClickAsObservable().Subscribe(_ => 
         {
-            ColPropertyDialog.instance.Init(m_info, PropertyType.PT_COL_SET);
-            ColPropertyDialog.instance.Active(true);
+            CoursePropertyDialog.instance.Init(m_info, PropertyType.PT_COR_SET);
+            CoursePropertyDialog.instance.Active(true);
         });
     }
 
@@ -35,13 +34,14 @@ public class ColumnsItem : MonoBehaviour
     /// 初始化
     /// </summary>
     /// <param name="info"></param>
-    public void Init(ColumnsInfo info)
+    public void Init(CourseInfo info)
     {
         m_info = info;
         
         Id.GetComponentInChildren<TextMeshProUGUI>().text = info.id;
-        Columns.GetComponentInChildren<TextMeshProUGUI>().text = info.Name;
-        ReigsterTime.GetComponentInChildren<TextMeshProUGUI>().text = info.RegisterTime;
+        Course.GetComponentInChildren<TextMeshProUGUI>().text = info.CourseName;
+        Columns.GetComponentInChildren<TextMeshProUGUI>().text = info.Columns;
+        RegisterTime.GetComponentInChildren<TextMeshProUGUI>().text = info.RegisterTime;
 
         gameObject.SetActive(true);
     }
@@ -50,7 +50,7 @@ public class ColumnsItem : MonoBehaviour
     /// 确认删除
     /// </summary>
     public void ConfirmDelete()
-    {
-        TCPHelper.OperateInfo(m_info, EventType.ColumnsEvent, OperateType.DELETE);
+    { 
+        TCPHelper.OperateInfo(m_info, EventType.CourseEvent, OperateType.DELETE);
     }
 }

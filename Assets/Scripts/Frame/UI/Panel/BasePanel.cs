@@ -62,6 +62,8 @@ public enum PropertyType
     PT_CLASS_SET, // 班级修改
     PT_COL_ADDTO, // 添加栏目
     PT_COL_SET, // 栏目修改
+    PT_COR_ADDTO, // 添加课程
+    PT_COR_SET, // 栏目修改
 }
 
 public class BaseInfo {}

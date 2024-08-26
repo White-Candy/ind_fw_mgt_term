@@ -30,7 +30,8 @@ public class UserItem : MonoBehaviour
         // 信息删除
         Delete.OnClickAsObservable().Subscribe(x => 
         {
-            MessageDialog dialog = DialogHelper.Instance.CreateMessDialog("MessageDialog");
+            DialogHelper helper = new DialogHelper();
+            MessageDialog dialog = helper.CreateMessDialog("MessageDialog");
             dialog.Init("用户信息删除", "是否删除用户信息？", new ItemPackage("确定", ConfirmDelete), new ItemPackage("取消", null));     
         });
     }

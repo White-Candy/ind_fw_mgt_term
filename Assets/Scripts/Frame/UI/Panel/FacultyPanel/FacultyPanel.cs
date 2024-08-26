@@ -15,12 +15,12 @@ public class FacultyPanel : BasePanel
 
     public Transform m_tempParent;
 
-    public static FacultyPanel instance;
+    // public static FacultyPanel instance;
 
     public Button AddTo;
     public Button Refresh;
 
-    public List<FacultyInfo> m_faculiesInfo = new List<FacultyInfo>();
+    public static List<FacultyInfo> m_faculiesInfo = new List<FacultyInfo>();
 
     private List<GameObject> m_itemList = new List<GameObject>();
 
@@ -28,7 +28,7 @@ public class FacultyPanel : BasePanel
     {
         base.Awake();
 
-        instance = this;
+        // instance = this;
         Active(false);
     }
     
