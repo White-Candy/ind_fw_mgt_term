@@ -30,7 +30,7 @@ public class ObjectPool<T> where T : Component
         else
         {
             T t = onInstance();
-            t.gameObject.SetActive(true);
+            t?.gameObject.SetActive(true);
             System.Random rand = new System.Random();
             t.transform.name =  $"{name}-{rand.Next(10000)}";;
             return t;

@@ -27,17 +27,11 @@ public class MenuControl : MonoBehaviour
                 m_currAction = action;
                 m_currAction?.OnEvent();
             });
-
         }
     }
 
-    void Start()
+    public void Destroy()
     {
-        
-    }
-
-    void Update()
-    {
-        
+        m_currAction.Close();
     }
 }

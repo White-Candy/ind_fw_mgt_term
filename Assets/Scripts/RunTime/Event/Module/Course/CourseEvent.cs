@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using LitJson;
 
-public class CourseEvent : BaseEvent
+public class FacultyEvent : BaseEvent
 {
     public override async void GetInfoEvent(MessPackage mp)
     {
-        CoursePanel panel = UITools.FindPanel<CoursePanel>();
+        FacultyPanel panel = UITools.FindPanel<FacultyPanel>();
         panel.Show(mp.ret);
 
         await UniTask.Yield();
@@ -14,7 +14,7 @@ public class CourseEvent : BaseEvent
 
     public override async void AddEvent(MessPackage mp)
     {
-        CoursePanel panel = UITools.FindPanel<CoursePanel>();
+        FacultyPanel panel = UITools.FindPanel<FacultyPanel>();
         panel.Show(mp.ret);
 
         await UniTask.Yield();
@@ -22,7 +22,7 @@ public class CourseEvent : BaseEvent
 
     public override async void ReviseInfoEvent(MessPackage mp)
     {
-        CoursePanel panel = UITools.FindPanel<CoursePanel>();
+        FacultyPanel panel = UITools.FindPanel<FacultyPanel>();
         panel.Show(mp.ret);
 
         await UniTask.Yield();
@@ -30,7 +30,7 @@ public class CourseEvent : BaseEvent
 
     public override async void DeleteInfoEvent(MessPackage mp)
     {
-        CoursePanel panel = UITools.FindPanel<CoursePanel>();
+        FacultyPanel panel = UITools.FindPanel<FacultyPanel>();
         panel.Show(mp.ret);
 
         await UniTask.Yield();

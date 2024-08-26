@@ -14,12 +14,12 @@ public class LoginPanel : BasePanel
     private TMP_InputField m_Account;
     private TMP_InputField m_Pwd;
 
-    public static LoginPanel instance;
+    // public static LoginPanel instance;
 
     public override void Awake()
     {
         base.Awake();
-        instance = this;
+        // instance = this;
 
         m_Login = GameObject.Find("Login").GetComponent<Button>();
         m_Account = GameObject.Find("inputAccount").GetComponent<TMP_InputField>();

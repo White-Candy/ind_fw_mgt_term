@@ -1,24 +1,23 @@
+
 using System.Collections.Generic;
 using LitJson;
 using UniRx;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ColumnsPanel : BasePanel
-{
-    // 学院信息列表
-    public List<ColumnsInfo> m_facultiesInfo = new List<ColumnsInfo>();
-    
+public class CoursePanel : BasePanel
+{    
     public GameObject m_itemTemp;
 
     public Transform m_tempParent;
 
-    // public static ColumnsPanel instance;
+    // public static CoursePanel instance;
 
     public Button AddTo;
     public Button Refresh;
 
-    public static List<ColumnsInfo> m_columnsInfo = new List<ColumnsInfo>();
+    public static List<CourseInfo> m_courseInfo = new List<CourseInfo>();
 
     private List<GameObject> m_itemList = new List<GameObject>();
 
@@ -34,21 +33,20 @@ public class ColumnsPanel : BasePanel
     {
         AddTo.OnClickAsObservable().Subscribe(_ => 
         {
-            ColPropertyDialog.instance.Init(null, PropertyType.PT_COL_ADDTO);
-            ColPropertyDialog.instance.Active(true);
+            CoursePropertyDialog.instance.Init(null, PropertyType.PT_COR_ADDTO);
+            CoursePropertyDialog.instance.Active(true);
         });
 
         Refresh.OnClickAsObservable().Subscribe(_ => 
         {
-            TCPHelper.GetInfoReq<ColumnsInfo>(EventType.ColumnsEvent);
+            TCPHelper.GetInfoReq<CourseInfo>(EventType.CourseEvent);
         });
     }
 
     public override void Init()
     {
-        // TCPHelper.GetInfoReq<TCPFacHelper>();
         TCPHelper.GetInitReq();
-        TCPHelper.GetInfoReq<ColumnsInfo>(EventType.ColumnsEvent);
+        TCPHelper.GetInfoReq<CourseInfo>(EventType.CourseEvent);
     }
 
     /// <summary>
@@ -60,8 +58,8 @@ public class ColumnsPanel : BasePanel
         Clear();
 
         string ret = objs[0] as string;
-        m_columnsInfo = JsonMapper.ToObject<List<ColumnsInfo>>(ret);
-        foreach (ColumnsInfo inf in m_columnsInfo)
+        m_courseInfo = JsonMapper.ToObject<List<CourseInfo>>(ret);
+        foreach (CourseInfo inf in m_courseInfo)
         {
             CloneItem(inf);
         }
@@ -71,11 +69,11 @@ public class ColumnsPanel : BasePanel
     /// Item的clone
     /// </summary>
     /// <param name="inf"></param>
-    public void CloneItem(ColumnsInfo inf)
+    public void CloneItem(CourseInfo inf)
     {
         // Debug.Log($"Clone Item: {inf.Name} || {inf.TeacherName} || {inf.RegisterTime}");
         GameObject clone = Instantiate(m_itemTemp, m_tempParent);
-        var item = clone.GetComponent<ColumnsItem>();
+        var item = clone.GetComponent<CourseItem>();
         item.Init(inf);
         m_itemList.Add(clone);
     }
@@ -95,7 +93,7 @@ public class ColumnsPanel : BasePanel
     /// </summary>
     public override void Close()
     {
-        ColPropertyDialog.instance.Close();
+        CoursePropertyDialog.instance.Close();
         Active(false);
 
         Clear();
@@ -103,11 +101,14 @@ public class ColumnsPanel : BasePanel
 }
 
 /// <summary>
-///  栏目信息包
+///  课程信息包
 /// </summary>
-public class ColumnsInfo : BaseInfo
+public class CourseInfo : BaseInfo
 {
     public string id;
-    public string Name;
+    public string CourseName;
+    public string Columns;
+    public string Working;
+    public string Content;
     public string RegisterTime;
 }

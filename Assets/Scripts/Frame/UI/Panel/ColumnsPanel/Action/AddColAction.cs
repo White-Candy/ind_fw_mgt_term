@@ -17,7 +17,7 @@ public class AddColAction : PD_BaseAction
         ColumnsInfo info = inf[0] as ColumnsInfo;
 
         List<int> id = new List<int>();
-        foreach (var item in ColumnsPanel.instance.m_columnsInfo)
+        foreach (var item in ColumnsPanel.m_columnsInfo)
         {
             id.Add(int.Parse(item.id));
         }

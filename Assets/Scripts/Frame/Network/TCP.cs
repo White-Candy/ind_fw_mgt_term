@@ -134,7 +134,7 @@ public static class TCP
         await UniTask.RunOnThreadPool(() => 
         {
             string front = FrontPackage(mess, event_type, operateType);
-            string totalInfoPkg = $"|{front}#{mess}-end";
+            string totalInfoPkg = $"|{front}#{mess}";
             long totalLength = totalInfoPkg.Count();
             string finalPkg = totalLength.ToString() + totalInfoPkg;
             // Debug.Log(finalPkg);
@@ -200,11 +200,9 @@ public static class TCP
     /// <param name="pkg"></param>
     public static void ParsingThePackageBody(string package, MessPackage mp)
     {
-        string[] frontSplit = package.Split("#");
-        string front = frontSplit[0];
-
-        string[] mainSplit = frontSplit[1].Split("-");
-        string main = mainSplit[0];
+        string[] Split = package.Split("#");
+        string front = Split[0];
+        string main = Split[1];
 
         JsonData data = JsonMapper.ToObject(front);
 

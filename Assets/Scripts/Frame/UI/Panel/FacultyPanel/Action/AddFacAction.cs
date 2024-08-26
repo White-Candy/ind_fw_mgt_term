@@ -19,7 +19,7 @@ public class AddFacAction : PD_BaseAction
         FacultyInfo info = inf[0] as FacultyInfo;
 
         List<int> id = new List<int>();
-        foreach (var item in FacultyPanel.instance.m_faculiesInfo)
+        foreach (var item in FacultyPanel.m_faculiesInfo)
         {
             id.Add(int.Parse(item.id));
         }

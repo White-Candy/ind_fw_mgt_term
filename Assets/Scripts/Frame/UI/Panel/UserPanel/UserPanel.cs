@@ -15,7 +15,7 @@ public class UserPanel : BasePanel
     public Button AddTo;
     public Button Refresh;
 
-    public static UserPanel instance;
+    // public static UserPanel instance;
 
     private List<GameObject> itemList = new List<GameObject>();
 
@@ -24,7 +24,7 @@ public class UserPanel : BasePanel
     public override void Awake()
     {
         base.Awake();
-        instance = this;
+        // instance = this;
         
         Active(false);
     }

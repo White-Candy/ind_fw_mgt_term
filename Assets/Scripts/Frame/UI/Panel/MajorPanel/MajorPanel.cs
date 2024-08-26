@@ -7,20 +7,17 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class MajorPanel : BasePanel
-{
-    // 学院信息列表
-    public List<MajorInfo> m_facultiesInfo = new List<MajorInfo>();
-    
+{    
     public GameObject m_itemTemp;
 
     public Transform m_tempParent;
 
-    public static MajorPanel instance;
+    // public static MajorPanel instance;
 
     public Button AddTo;
     public Button Refresh;
 
-    public List<MajorInfo> m_majorInfo = new List<MajorInfo>();
+    public static List<MajorInfo> m_majorInfo = new List<MajorInfo>();
 
     private List<GameObject> m_itemList = new List<GameObject>();
 
@@ -28,7 +25,7 @@ public class MajorPanel : BasePanel
     {
         base.Awake();
 
-        instance = this;
+        // instance = this;
         Active(false);
     }
     
