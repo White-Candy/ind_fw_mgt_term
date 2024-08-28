@@ -34,10 +34,16 @@ public class UserPanel : BasePanel
         // 信息导入
         Import.OnClickAsObservable().Subscribe(async x =>
         {
-            string filePath = FileTools.OpenFileDialog();
-            // Debug.Log("Import: " + filePath);
-
-            var list = await ExcelTools.Excel2UserInfos(filePath);
+            List<string> filesPath = FileHelper.OpenFileDialog("Excel文件(*.xlsx)" + '\0' + "*.xlsx", "选择Excel文件", "XLSX");
+            if (filesPath.Count > 0)
+            {
+                DialogHelper helper = new DialogHelper();
+                MessageDialog dialog = helper.CreateMessDialog("MessageDialog");
+                dialog.Init("课程信息的删除", "是否删除该课程信息？", new ItemPackage("确定", null));    
+                return;
+            }
+            
+            var list = await ExcelTools.Excel2UserInfos(filesPath[0]);
 
             // 请求把新导入的学生信息保存到服务器中
             if (list != null)
@@ -49,7 +55,7 @@ public class UserPanel : BasePanel
         // 导出按钮。
         Export.OnClickAsObservable().Subscribe(async x => 
         {
-            string savePath = FileTools.SaveFileDialog();
+            string savePath = FileHelper.SaveFileDialog("Excel文件(*.xlsx)" + '\0' + "*.xlsx\0\0", "选择Excel文件", "XLSX");
             //Debug.Log("savepath : " + savePath);
 
             await ExcelTools.CreateExcelFile(savePath);

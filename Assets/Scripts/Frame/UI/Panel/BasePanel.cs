@@ -19,7 +19,7 @@ public class BasePanel : MonoBehaviour, IPanel
     {
         m_NameP = this.GetType().ToString();
         m_Visible = m_Content == null ? false : m_Content.activeSelf;
-        UITools.AddPanel(m_NameP, this);
+        UIHelper.AddPanel(m_NameP, this);
     }
 
     /// <summary>

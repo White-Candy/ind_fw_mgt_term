@@ -33,7 +33,7 @@ public class ClassPropertyDialog : BasePanel
     {
         OK.OnClickAsObservable().Subscribe(_=> 
         {
-            m_Action.Action(Output());
+            m_Action.Action(inf:Output());
             Close();
         });
 
@@ -50,9 +50,9 @@ public class ClassPropertyDialog : BasePanel
     /// <param name="type"></param>
     public void Init(ClassInfo info, PropertyType type)
     {
-        UITools.AddDropDownOptions(FacultyName, GlobalData.facultiesList);
-        UITools.AddDropDownOptions(Major, GlobalData.majorList);  
-        UITools.AddDropDownOptions(TeacherName, GlobalData.teachersList);
+        UIHelper.AddDropDownOptions(FacultyName, GlobalData.facultiesList);
+        UIHelper.AddDropDownOptions(Major, GlobalData.majorList);  
+        UIHelper.AddDropDownOptions(TeacherName, GlobalData.teachersList);
 
         m_Action = Tools.CreateObject<PD_BaseAction>(GlobalData.m_Enum2Type[type]);
         m_Action.Init(info);      
@@ -67,9 +67,9 @@ public class ClassPropertyDialog : BasePanel
         ID.text = inf.id;
         Class.text = inf.Class;
         RegisterTime.text = inf.RegisterTime;
-        FacultyName.value = UITools.GetDropDownOptionIndex(FacultyName, inf.Faculty);
-        Major.value = UITools.GetDropDownOptionIndex(Major, inf.Major);
-        TeacherName.value = UITools.GetDropDownOptionIndex(TeacherName, inf.Teacher);
+        FacultyName.value = UIHelper.GetDropDownOptionIndex(FacultyName, inf.Faculty);
+        Major.value = UIHelper.GetDropDownOptionIndex(Major, inf.Major);
+        TeacherName.value = UIHelper.GetDropDownOptionIndex(TeacherName, inf.Teacher);
         Number.text = inf.Number.ToString();
     }
 

@@ -4,7 +4,7 @@ using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 using TMPro;
 using UnityEngine;
 
-public class UITools
+public class UIHelper
 {
     public static Dictionary<string, BasePanel> PanelList = new Dictionary<string, BasePanel>();
 
@@ -55,5 +55,16 @@ public class UITools
     {
         dropDown.ClearOptions();
         dropDown.AddOptions(options);
+    }
+
+    /// <summary>
+    /// 场景中的UI控件获取
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public static T GetComponentInScene<T> (string name)
+    {
+        return GameObject.Find(name).GetComponentInChildren<T>();
     }
 }

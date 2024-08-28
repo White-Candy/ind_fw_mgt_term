@@ -30,7 +30,7 @@ public class MajorPropertyDialog : BasePanel
     {
         OK.OnClickAsObservable().Subscribe(_=> 
         {
-            m_Action.Action(Output());
+            m_Action.Action(inf:Output());
             Close();
         });
 
@@ -47,8 +47,8 @@ public class MajorPropertyDialog : BasePanel
     /// <param name="type"></param>
     public void Init(MajorInfo info, PropertyType type)
     {
-        UITools.AddDropDownOptions(FacultyName, GlobalData.facultiesList);  
-        UITools.AddDropDownOptions(TeacherName, GlobalData.directorsList);
+        UIHelper.AddDropDownOptions(FacultyName, GlobalData.facultiesList);  
+        UIHelper.AddDropDownOptions(TeacherName, GlobalData.directorsList);
 
         m_Action = Tools.CreateObject<PD_BaseAction>(GlobalData.m_Enum2Type[type]);
         m_Action.Init(info);      
@@ -62,9 +62,9 @@ public class MajorPropertyDialog : BasePanel
         // Debug.Log($"{inf.Name} || {inf.RegisterTime} || {inf.TeacherName}");
         ID.text = inf.id;
         MajorName.text = inf.MajorName;
-        FacultyName.value = UITools.GetDropDownOptionIndex(FacultyName, inf.FacultyName);
+        FacultyName.value = UIHelper.GetDropDownOptionIndex(FacultyName, inf.FacultyName);
         RegisterTime.text = inf.RegisterTime;
-        TeacherName.value = UITools.GetDropDownOptionIndex(TeacherName, inf.TeacherName);
+        TeacherName.value = UIHelper.GetDropDownOptionIndex(TeacherName, inf.TeacherName);
     }
 
     /// <summary>

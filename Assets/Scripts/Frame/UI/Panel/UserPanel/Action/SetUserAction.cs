@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class SetUserAction : PD_BaseAction
@@ -24,9 +25,9 @@ public class SetUserAction : PD_BaseAction
         UserPropertyDialog.instance.Loading(inf);      
     }
 
-    public override void Action(params object[] info)
+    public override void Action(Action append, params object[] info)
     {
-        base.Action(info);
+        base.Action(inf:info);
 
         UserInfo inf = info[0] as UserInfo;
 

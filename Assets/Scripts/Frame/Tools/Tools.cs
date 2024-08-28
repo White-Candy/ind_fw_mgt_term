@@ -14,7 +14,7 @@ public class Tools
     /// <param name="sec"> ÃëÊý ex: 1Ãë => 1.0f </param>
     /// <param name="callback"> CallBack Action </param>
     /// <returns></returns>
-    public static async UniTask OnAwait(float sec, Action callback)
+    public static async UniTask OnAwait(float sec, Action callback = default)
     {
         int duration = (int)(sec * 1000);
         await UniTask.Delay(duration);

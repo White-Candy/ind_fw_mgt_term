@@ -86,7 +86,7 @@ public class UserPropertyDialog : BasePanel
     {
         OK?.OnClickAsObservable().Subscribe(x => 
         {        
-            m_Action.Action(Output());
+            m_Action.Action(inf:Output());
 
             Active(false);
             Clear();
@@ -111,7 +111,7 @@ public class UserPropertyDialog : BasePanel
     /// <param name="t"></param>
     public void Init(UserInfo inf, PropertyType t)
     {
-        UITools.AddDropDownOptions(m_ClassName, GlobalData.classesList);
+        UIHelper.AddDropDownOptions(m_ClassName, GlobalData.classesList);
 
         m_Action = Tools.CreateObject<PD_BaseAction>(GlobalData.m_Enum2Type[t]);
         m_Action.Init(inf);
@@ -147,12 +147,12 @@ public class UserPropertyDialog : BasePanel
         m_Verify.text = inf.password;
 
         m_NameIpt.text = inf.Name;
-        m_Gender.value = UITools.GetDropDownOptionIndex(m_Gender, inf.Gender);
+        m_Gender.value = UIHelper.GetDropDownOptionIndex(m_Gender, inf.Gender);
         m_Age.text = inf.Age;
         m_IdCard.text = inf.idCoder;
-        m_Identity.value = UITools.GetDropDownOptionIndex(m_Identity, inf.Identity);
+        m_Identity.value = UIHelper.GetDropDownOptionIndex(m_Identity, inf.Identity);
         m_Contact.text = inf.Contact;
-        m_ClassName.value = UITools.GetDropDownOptionIndex(m_ClassName, inf.className);
+        m_ClassName.value = UIHelper.GetDropDownOptionIndex(m_ClassName, inf.className);
     }
 
     /// <summary>

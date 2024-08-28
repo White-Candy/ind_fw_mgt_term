@@ -9,7 +9,7 @@ public class PanelAction
 
     public PanelAction(string name)
     {
-        m_Panel = UITools.FindPanel(name);
+        m_Panel = UIHelper.FindPanel(name);
     }
 
     public void OnEvent(params object[] objs)
