@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,9 +22,9 @@ public class AddUserAction : PD_BaseAction
         UserPropertyDialog.instance.m_ClassName.enabled = true;
     }
 
-    public override void Action(params object[] info)
+    public override void Action(Action append = default, params object[] info)
     {
-        base.Action(info);
+        base.Action(inf:info);
 
         UserInfo inf = info[0] as UserInfo;
         List<UserInfo> single = new List<UserInfo>

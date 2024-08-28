@@ -27,7 +27,7 @@ public class ColPropertyDialog : BasePanel
     {
         OK.OnClickAsObservable().Subscribe(_=> 
         {
-            m_Action.Action(Output());
+            m_Action.Action(inf:Output());
             Close();
         });
 

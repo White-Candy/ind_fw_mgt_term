@@ -28,7 +28,7 @@ public class FacPropertyDialog : BasePanel
     {
         OK.OnClickAsObservable().Subscribe(_=> 
         {
-            m_Action.Action(Output());
+            m_Action.Action(inf:Output());
             Close();
         });
 
@@ -45,7 +45,7 @@ public class FacPropertyDialog : BasePanel
     /// <param name="type"></param>
     public void Init(FacultyInfo info, PropertyType type)
     {
-        UITools.AddDropDownOptions(TeacherName, GlobalData.deanList);
+        UIHelper.AddDropDownOptions(TeacherName, GlobalData.deanList);
 
         m_Action = Tools.CreateObject<PD_BaseAction>(GlobalData.m_Enum2Type[type]);
         m_Action.Init(info);
@@ -60,7 +60,7 @@ public class FacPropertyDialog : BasePanel
         ID.text = inf.id;
         FacultyName.text = inf.Name;
         RegisterTime.text = inf.RegisterTime;
-        TeacherName.value = UITools.GetDropDownOptionIndex(TeacherName, inf.TeacherName);
+        TeacherName.value = UIHelper.GetDropDownOptionIndex(TeacherName, inf.TeacherName);
     }
 
     /// <summary>

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class SetCourseAction : PD_BaseAction
@@ -9,11 +10,13 @@ public class SetCourseAction : PD_BaseAction
         CoursePropertyDialog.instance.ID.enabled = false;
     }
 
-    public override void Action(params object[] inf)
+    public override void Action(Action append = default, params object[] inf)
     {
-        base.Action(inf);
+        base.Action(inf:inf);
 
         CourseInfo info = inf[0] as CourseInfo;
         TCPHelper.OperateInfo(info, EventType.CourseEvent, OperateType.REVISE);  
+
+        append();
     }
 }

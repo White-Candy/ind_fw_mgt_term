@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class SetMajAction : PD_BaseAction
@@ -10,9 +11,9 @@ public class SetMajAction : PD_BaseAction
         MajorPropertyDialog.instance.ID.enabled = false;
     }
 
-    public override void Action(params object[] inf)
+    public override void Action(Action append = default, params object[] inf)
     {
-        base.Action(inf);
+        base.Action(inf:inf);
 
         MajorInfo info = inf[0] as MajorInfo;
         TCPHelper.OperateInfo(info, EventType.MajorEvent, OperateType.REVISE);  

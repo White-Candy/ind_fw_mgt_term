@@ -1,4 +1,5 @@
 
+using Cysharp.Threading.Tasks;
 using LitJson;
 using System.Collections.Generic;
 using UnityEngine;
@@ -61,5 +62,23 @@ public class TCPHelper
     {
         string body = JsonMapper.ToJson(inf);
         TCP.SendAsync(body, type, operateType);
+    }
+
+    /// <summary>
+    /// 资源上传到服务器的请求
+    /// </summary>
+    /// <param name="list"></param>
+    public static async void UploadFile(FilePackage fileInfo)
+    {
+        string bodymessage = await JsonHelper.AsyncToJson(fileInfo);
+        TCP.SendAsync(bodymessage, EventType.UploadEvent, OperateType.NONE);
+    }
+
+    public static void UploadFile(List<FilePackage> fileList)
+    {
+        foreach (var inf in fileList)
+        {
+            UploadFile(inf);        
+        }
     }
 }

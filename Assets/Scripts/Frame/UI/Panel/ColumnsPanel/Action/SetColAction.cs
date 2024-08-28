@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class SetColAction : PD_BaseAction
@@ -10,9 +11,9 @@ public class SetColAction : PD_BaseAction
         ColPropertyDialog.instance.ID.enabled = false;
     }
 
-    public override void Action(params object[] inf)
+    public override void Action(Action append = default, params object[] inf)
     {
-        base.Action(inf);
+        base.Action(inf:inf);
 
         ColumnsInfo info = inf[0] as ColumnsInfo;
 

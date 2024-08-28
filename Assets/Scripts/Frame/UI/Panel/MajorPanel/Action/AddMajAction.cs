@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TextCore;
@@ -12,9 +13,9 @@ public class AddMajAction : PD_BaseAction
         MajorPropertyDialog.instance.ID.enabled = false;
     }
 
-    public override void Action(params object[] inf)
+    public override void Action(Action append = default, params object[] inf)
     {
-        base.Action(inf);
+        base.Action(inf:inf);
 
         MajorInfo info = inf[0] as MajorInfo;
 

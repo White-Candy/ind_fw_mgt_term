@@ -6,7 +6,7 @@ public class FacultyEvent : BaseEvent
 {
     public override async void GetInfoEvent(MessPackage mp)
     {
-        FacultyPanel panel = UITools.FindPanel<FacultyPanel>();
+        FacultyPanel panel = UIHelper.FindPanel<FacultyPanel>();
         panel.Show(mp.ret);
 
         await UniTask.Yield();
@@ -14,7 +14,7 @@ public class FacultyEvent : BaseEvent
 
     public override async void AddEvent(MessPackage mp)
     {
-        FacultyPanel panel = UITools.FindPanel<FacultyPanel>();
+        FacultyPanel panel = UIHelper.FindPanel<FacultyPanel>();
         panel.Show(mp.ret);
 
         await UniTask.Yield();
@@ -22,7 +22,7 @@ public class FacultyEvent : BaseEvent
 
     public override async void ReviseInfoEvent(MessPackage mp)
     {
-        FacultyPanel panel = UITools.FindPanel<FacultyPanel>();
+        FacultyPanel panel = UIHelper.FindPanel<FacultyPanel>();
         panel.Show(mp.ret);
 
         await UniTask.Yield();
@@ -30,7 +30,7 @@ public class FacultyEvent : BaseEvent
 
     public override async void DeleteInfoEvent(MessPackage mp)
     {
-        FacultyPanel panel = UITools.FindPanel<FacultyPanel>();
+        FacultyPanel panel = UIHelper.FindPanel<FacultyPanel>();
         panel.Show(mp.ret);
 
         await UniTask.Yield();
