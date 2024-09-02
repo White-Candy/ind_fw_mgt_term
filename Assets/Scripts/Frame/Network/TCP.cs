@@ -161,10 +161,11 @@ public static class TCP
     /// <param name="pkg"></param>
     public static void check(MessPackage mp)
     {
-        float percent = (mp.ret.Count() + 2) * 1.0f / mp.length * 1.0f * 100.0f;
+        int retLength = mp.ret.Count() + 2;
+        float percent = retLength * 1.0f / mp.length * 1.0f * 100.0f;
         // Debug.Log("----------" +  mp.ip + " | " + percent + "%");  // Add message package for queue.
 
-        if (percent >= 100.0f)
+        if (percent == 100.0f)
         {
             mp.finish = true;
             ParsingThePackageBody(mp.ret, mp);
