@@ -4,18 +4,15 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MajorPanel : BasePanel
+public class ExaminePanel : BasePanel
 {    
     public GameObject m_itemTemp;
 
     public Transform m_tempParent;
 
-    // public static MajorPanel instance;
-
     public Button AddTo;
-    public Button Refresh;
 
-    public static List<MajorInfo> m_majorInfo = new List<MajorInfo>();
+    public static List<ExamineInfo> m_ExamineesInfo = new List<ExamineInfo>();
 
     private List<GameObject> m_itemList = new List<GameObject>();
 
@@ -23,7 +20,6 @@ public class MajorPanel : BasePanel
     {
         base.Awake();
 
-        // instance = this;
         Active(false);
     }
     
@@ -31,13 +27,8 @@ public class MajorPanel : BasePanel
     {
         AddTo.OnClickAsObservable().Subscribe(_ => 
         {
-            MajorPropertyDialog.instance.Init(null, PropertyType.PT_MAJ_ADDTO);
-            MajorPropertyDialog.instance.Active(true);
-        });
-
-        Refresh.OnClickAsObservable().Subscribe(_ => 
-        {
-            TCPHelper.GetInfoReq<MajorInfo>(EventType.MajorEvent);
+            ExamineDialog.instance.Init(null, PropertyType.PT_THE_ADDTO, ActionType.ADD); // Dialog窗口打开默认是 理论窗口
+            ExamineDialog.instance.Active(true);
         });
     }
 
@@ -56,8 +47,8 @@ public class MajorPanel : BasePanel
         Clear();
 
         string ret = objs[0] as string;
-        m_majorInfo = JsonMapper.ToObject<List<MajorInfo>>(ret);
-        foreach (MajorInfo inf in m_majorInfo)
+        m_ExamineesInfo = JsonMapper.ToObject<List<ExamineInfo>>(ret);
+        foreach (ExamineInfo inf in m_ExamineesInfo)
         {
             CloneItem(inf);
         }
@@ -67,11 +58,11 @@ public class MajorPanel : BasePanel
     /// Item的clone
     /// </summary>
     /// <param name="inf"></param>
-    public void CloneItem(MajorInfo inf)
+    public void CloneItem(ExamineInfo inf)
     {
         // Debug.Log($"Clone Item: {inf.Name} || {inf.TeacherName} || {inf.RegisterTime}");
         GameObject clone = Instantiate(m_itemTemp, m_tempParent);
-        var item = clone.GetComponent<MajorItem>();
+        var item = clone.GetComponent<ExamineItem>();
         item.Init(inf);
         m_itemList.Add(clone);
     }
@@ -91,7 +82,7 @@ public class MajorPanel : BasePanel
     /// </summary>
     public override void Close()
     {
-        MajorPropertyDialog.instance.Close();
+        ExamineDialog.instance.Close();
         Active(false);
 
         Clear();
@@ -99,13 +90,56 @@ public class MajorPanel : BasePanel
 }
 
 /// <summary>
-///  专业信息包
+///  考核信息包
 /// </summary>
-public class MajorInfo : BaseInfo
+public class ExamineInfo : BaseInfo
 {
     public string id;
-    public string MajorName;
+    public string ColumnsName;
+    public string CourseName;
     public string RegisterTime;
-    public string FacultyName;
-    public string TeacherName;
+    public bool Status;
+    public int ClassNum;
+    public int SingleNum;
+    public int MulitNum;
+    public string TOFNum;
+    public List<SingleChoice> SingleChoices;
+    public List<MulitChoice> MulitChoices;
+    public List<TOFChoice> TOFChoices;
 }
+
+/// <summary>
+/// 单选题包
+/// </summary>
+public class SingleChoice : BaseChoice
+{
+    public string Topic;
+    public string toA;
+    public string toB;
+    public string toC;
+    public string toD;
+    public string Answer;
+}
+
+/// <summary>
+/// 多选
+/// </summary>
+public class MulitChoice : BaseChoice
+{
+    public string Topic;
+    public Dictionary<string, string> Options; // {{"A", "xxxxx"}, {"B", "xxxxxxx"}}
+    public string Answer;
+}
+
+/// <summary>
+/// 判断题
+/// </summary>
+public class TOFChoice : BaseChoice
+{
+    public string Topic;
+    public string toA;
+    public string toB;
+    public string Answer;
+}
+
+public class BaseChoice {}
