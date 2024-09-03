@@ -13,5 +13,5 @@ public class BaseExamineItem : MonoBehaviour
     /// 打包输出
     /// </summary>
     /// <returns></returns>
-    public virtual BaseChoice Output() { return new BaseChoice(); }
+    // public virtual BaseChoice Output() { return new BaseChoice(); }
 }

@@ -1,4 +1,7 @@
 
+using System;
+using System.Collections.Generic;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Information;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -20,9 +23,20 @@ public class TheoryPanel : BasePanel
     
     public static TheoryPanel inst;
 
+    [HideInInspector]
+    public List<MulitChoice> mulitChoices = new List<MulitChoice>();
+
+    [HideInInspector]
+    public List<TOFChoice> tofChoices = new List<TOFChoice>();
+
     public override void Awake()
     {
         inst = this;
+
+        // 默认是单选题的界面
+        m_SinglePanel.Active(true);
+        m_MulitPanel.Active(false);
+        m_TOFPanel.Active(false);
     }
 
     public void Start()
@@ -47,7 +61,44 @@ public class TheoryPanel : BasePanel
             m_MulitPanel.Active(false);
             m_TOFPanel.Active(true);
         });
+
+        SingleNumber.onValueChanged.AddListener((text) => 
+        {
+            int number = 0;
+            bool result = int.TryParse(text, out number);
+            if (result)
+            {
+                SinglePanel.inst.Init(number);
+            }
+        });
+
+        MulitNumber.onValueChanged.AddListener((text) => 
+        {
+            // TODO..
+            
+            // int number = 0;
+            // bool result = int.TryParse(text, out number);
+            // if (result)
+            // {
+            //     SinglePanel.inst.Init(number);
+            // }
+        });
+
+
+        TOFNumber.onValueChanged.AddListener((text) => 
+        {
+            // TODO..
+
+            // int number = 0;
+            // bool result = int.TryParse(text, out number);
+            // if (result)
+            // {
+            //     SinglePanel.inst.Init(number);
+            // }
+        });
     }
+
+
 
     /// <summary>
     /// 清空

@@ -15,7 +15,7 @@ public class MulitItem : BaseExamineItem
     public TMP_InputField m_TopicContent;
     public TMP_InputField m_Score;
     public TMP_Dropdown m_ChoiceNum;
-    public GameObject m_ChoiceItem;
+    public ChoiceItem m_ChoiceItem;
     public Transform m_ParentTrans;
-    private Dictionary<string, GameObject> m_ChoicesItem = new Dictionary<string, GameObject>();
+    private Dictionary<string, ChoiceItem> m_ChoicesItem = new Dictionary<string, ChoiceItem>();
 }

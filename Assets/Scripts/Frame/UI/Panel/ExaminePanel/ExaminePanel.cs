@@ -27,19 +27,19 @@ public class ExaminePanel : BasePanel
     {
         AddTo.OnClickAsObservable().Subscribe(_ => 
         {
-            ExamineDialog.instance.Init(null, PropertyType.PT_THE_ADDTO, ActionType.ADD); // Dialogçª—å£æ‰“å¼€é»˜è®¤æ˜¯ ç†è®ºçª—å£
+            ExamineDialog.instance.Init(null, PropertyType.PT_THE_ADDTO, ActionType.ADD); // Dialog´°¿Ú´ò¿ªÄ¬ÈÏÊÇ ÀíÂÛ´°¿Ú
             ExamineDialog.instance.Active(true);
         });
     }
 
     public override void Init()
     {
-        TCPHelper.GetInitReq();
-        TCPHelper.GetInfoReq<MajorInfo>(EventType.MajorEvent);
+        // TCPHelper.GetInitReq();
+        // TCPHelper.GetInfoReq<ExamineInfo>(EventType.ExamineEvent);
     }
 
     /// <summary>
-    /// æ˜¾ç¤ºæ•°æ®åˆ°ä¸»é¢æ¿ä¸Š
+    /// ÏÔÊ¾Êı¾İµ½Ö÷Ãæ°åÉÏ
     /// </summary>
     /// <param name="objs"></param>
     public void Show(params object[] objs)
@@ -55,7 +55,7 @@ public class ExaminePanel : BasePanel
     }
 
     /// <summary>
-    /// Itemçš„clone
+    /// ItemµÄclone
     /// </summary>
     /// <param name="inf"></param>
     public void CloneItem(ExamineInfo inf)
@@ -78,7 +78,7 @@ public class ExaminePanel : BasePanel
     }
 
     /// <summary>
-    /// å…³é—­
+    /// ¹Ø±Õ
     /// </summary>
     public override void Close()
     {
@@ -90,7 +90,7 @@ public class ExaminePanel : BasePanel
 }
 
 /// <summary>
-///  è€ƒæ ¸ä¿¡æ¯åŒ…
+///  ¿¼ºËĞÅÏ¢°ü
 /// </summary>
 public class ExamineInfo : BaseInfo
 {
@@ -102,14 +102,14 @@ public class ExamineInfo : BaseInfo
     public int ClassNum;
     public int SingleNum;
     public int MulitNum;
-    public string TOFNum;
+    public int TOFNum;
     public List<SingleChoice> SingleChoices;
     public List<MulitChoice> MulitChoices;
     public List<TOFChoice> TOFChoices;
 }
 
 /// <summary>
-/// å•é€‰é¢˜åŒ…
+/// µ¥Ñ¡Ìâ°ü
 /// </summary>
 public class SingleChoice : BaseChoice
 {
@@ -119,20 +119,22 @@ public class SingleChoice : BaseChoice
     public string toC;
     public string toD;
     public string Answer;
+    public int Score = 0;
 }
 
 /// <summary>
-/// å¤šé€‰
+/// ¶àÑ¡
 /// </summary>
 public class MulitChoice : BaseChoice
 {
     public string Topic;
     public Dictionary<string, string> Options; // {{"A", "xxxxx"}, {"B", "xxxxxxx"}}
     public string Answer;
+    public int Score;
 }
 
 /// <summary>
-/// åˆ¤æ–­é¢˜
+/// ÅĞ¶ÏÌâ
 /// </summary>
 public class TOFChoice : BaseChoice
 {
@@ -140,6 +142,7 @@ public class TOFChoice : BaseChoice
     public string toA;
     public string toB;
     public string Answer;
+    public int Score;
 }
 
 public class BaseChoice {}

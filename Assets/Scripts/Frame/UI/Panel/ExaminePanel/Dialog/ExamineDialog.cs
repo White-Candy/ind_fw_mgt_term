@@ -28,6 +28,10 @@ public class ExamineDialog : BasePanel
 
         instance = this;
         Active(false);
+
+        // 默认显示理论界面
+        TheoryPanel.inst.Active(true);
+        TrainingPanel.inst.Active(false);
     }
 
     public void Start()
@@ -101,9 +105,13 @@ public class ExamineDialog : BasePanel
     public ExamineInfo Output()
     {
         ExamineInfo inf = new ExamineInfo()
-        {
-            
-            
+        {           
+            Status = TrainingPanel.inst.m_Item.m_Toggle.isOn,
+            ClassNum = 0,
+            SingleNum = int.Parse(TheoryPanel.inst.SingleNumber.text),
+            MulitNum = int.Parse(TheoryPanel.inst.MulitNumber.text),
+            TOFNum = int.Parse(TheoryPanel.inst.TOFNumber.text),
+            SingleChoices = SinglePanel.inst.Output(),
         };
 
         if (Tools.checkList(TheoryPanel.inst.Columns.options, TheoryPanel.inst.Columns.value)) 
@@ -129,11 +137,7 @@ public class ExamineDialog : BasePanel
     /// </summary>
     public void Clear()
     {
-        // ID.text = "";
-        // MajorName.text = "";
-        // FacultyName.value = 0;
-        // RegisterTime.text = Tools.GetCurrLocalTime();
-        // TeacherName.value = 0;
+        
     }
 }
 
