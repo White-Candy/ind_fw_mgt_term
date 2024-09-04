@@ -32,6 +32,7 @@ public class SinglePanel : BasePanel
         {
             SingleItem item = Instantiate(m_SingleItem, m_SingleTrans);
             item.Init(new SingleChoice(), i);
+            item.gameObject.SetActive(true);
             itemList.Add(item);
         }
     }
@@ -73,9 +74,9 @@ public class SinglePanel : BasePanel
         foreach (var item in itemList)
         {
             item.Clear();
+            item.gameObject.SetActive(false);
             Destroy(item);
         }
         itemList.Clear();
     }
-
 }

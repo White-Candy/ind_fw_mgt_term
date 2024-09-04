@@ -3,28 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TextCore;
 
-public class AddTheoryAction : PD_BaseAction
+public class AddExamineAction : PD_BaseAction
 {
-    private ExamineInfo m_inf = new ExamineInfo();
-
     public override void Init(params object[] inf)
     {
-        m_inf = inf[0] as ExamineInfo;
-        TheoryPanel.inst.Clear();
+        // Debug.Log("AddFacAction");
+        ExamineDialog.instance.Clear();
     }
 
-    public override void Action(Action append = default, params object[] inf)
+    public override void Action(Action append, params object[] inf)
     {
         base.Action(inf:inf);
 
         ExamineInfo info = inf[0] as ExamineInfo;
 
         List<int> id = new List<int>();
-        foreach (var item in MajorPanel.m_majorInfo)
+        foreach (var item in ExaminePanel.m_ExamineesInfo)
         {
             id.Add(int.Parse(item.id));
         }
         info.id = Tools.SpawnRandom(id).ToString();
-        TCPHelper.OperateInfo(info, EventType.MajorEvent, OperateType.ADD);        
+        info.RegisterTime = Tools.GetCurrLocalTime_YMD();
+
+        TCPHelper.OperateInfo(info, EventType.ExamineEvent, OperateType.ADD);
     }
 }

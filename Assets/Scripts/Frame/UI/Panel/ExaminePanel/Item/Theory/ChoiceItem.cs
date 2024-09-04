@@ -7,8 +7,21 @@ using UnityEngine.UI;
 /// </summary>
 public class ChoiceItem : MonoBehaviour
 {
+    public TextMeshProUGUI Serial;
     public TMP_InputField m_Content;
     public Toggle m_toggle;
+
+    public void Init(string serial)
+    {
+        Serial.text = serial;
+    }
+
+    public void Init(string serial, string content, bool ison)
+    {
+        Serial.text = serial;
+        m_Content.text = content;
+        m_toggle.isOn = ison;
+    }
 
     public void Clear()
     {

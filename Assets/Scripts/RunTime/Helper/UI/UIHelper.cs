@@ -23,7 +23,7 @@ public class UIHelper
 
     public static BasePanel FindPanel(string name)
     {
-        Debug.Log("FindPanel: " + name);
+        // Debug.Log("FindPanel: " + name);
         BasePanel basePanel;
         PanelList.TryGetValue(name, out basePanel);
         return basePanel != null ? basePanel : null;

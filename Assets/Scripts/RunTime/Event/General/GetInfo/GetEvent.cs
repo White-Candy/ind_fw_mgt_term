@@ -16,6 +16,7 @@ public class GetEvent : BaseEvent
         GlobalData.teachersList = JsonMapper.ToObject<List<string>>(jd["teachersList"].ToString());
         GlobalData.majorList = JsonMapper.ToObject<List<string>>(jd["majorList"].ToString());
         GlobalData.columnsList = JsonMapper.ToObject<List<string>>(jd["columnsList"].ToString());
+        GlobalData.coursesList = JsonMapper.ToObject<List<CourseInfo>>(jd["coursesList"].ToString());
         await UniTask.Yield();
     }
 }

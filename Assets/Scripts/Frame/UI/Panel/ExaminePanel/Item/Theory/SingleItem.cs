@@ -23,10 +23,10 @@ public class SingleItem : BaseExamineItem
         m_SerialNum.text = idx.ToString();
         m_Score.text = choice?.Score.ToString();
         m_TopicContent.text = choice?.Topic;
-        m_toA.m_Content.text = choice?.toA;
-        m_toB.m_Content.text = choice?.toB;
-        m_toC.m_Content.text = choice?.toC;
-        m_toD.m_Content.text = choice?.toD;
+        m_toA.m_Content.text = choice?.toA.m_content;
+        m_toB.m_Content.text = choice?.toB.m_content;
+        m_toC.m_Content.text = choice?.toC.m_content;
+        m_toD.m_Content.text = choice?.toD.m_content;
     }
 
     public SingleChoice Output()
@@ -34,10 +34,10 @@ public class SingleItem : BaseExamineItem
         SingleChoice singleChoice = new SingleChoice()
         {
             Topic = m_TopicContent.text,
-            toA = m_toA.m_Content.text,
-            toB = m_toB.m_Content.text,
-            toC = m_toC.m_Content.text,
-            toD = m_toD.m_Content.text,
+            toA = new ItemChoice(m_toA.m_Content.text, m_toA.m_toggle.isOn), 
+            toB = new ItemChoice(m_toB.m_Content.text, m_toB.m_toggle.isOn), 
+            toC = new ItemChoice(m_toC.m_Content.text, m_toC.m_toggle.isOn), 
+            toD = new ItemChoice(m_toD.m_Content.text, m_toD.m_toggle.isOn), 
             Score = int.Parse(m_Score.text)
         };
 
@@ -61,5 +61,5 @@ public class SingleItem : BaseExamineItem
         m_toB.Clear();
         m_toC.Clear();
         m_toD.Clear();
-;    }
+    }
 }
