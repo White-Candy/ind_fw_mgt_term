@@ -14,6 +14,25 @@ public class TOFItem : MonoBehaviour
     public ChoiceItem toA;
     public ChoiceItem toB;
 
+    private ExamineDialog m_parentPanel;
+
+    public void Start()
+    {
+        Delete.onClick.AddListener(() => 
+        {
+            m_parentPanel = UIHelper.FindPanel<ExamineDialog>();
+
+            int idx = -1;
+            int.TryParse(SerialNum.text, out idx);
+            if (idx != -1 && idx - 1 < m_parentPanel.m_info.TOFChoices.Count)
+            {
+                m_parentPanel.m_info.TOFChoices.RemoveAt(idx - 1);
+                m_parentPanel.m_info.TOFNum--;
+                m_parentPanel.Loading(m_parentPanel.m_info);
+            }
+        });
+    }
+
     public void Init(TOFChoice choice, int idx)
     {
         SerialNum.text = idx.ToString();

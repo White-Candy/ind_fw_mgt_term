@@ -18,6 +18,25 @@ public class SingleItem : MonoBehaviour
     public ChoiceItem m_toC;
     public ChoiceItem m_toD;
 
+    private ExamineDialog m_parentPanel;
+
+    public void Start()
+    {
+        Delete.onClick.AddListener(() => 
+        {
+            m_parentPanel = UIHelper.FindPanel<ExamineDialog>();
+
+            int idx = -1;
+            int.TryParse(m_SerialNum.text, out idx);
+            if (idx != -1 && idx - 1 < m_parentPanel.m_info.SingleChoices.Count)
+            {
+                m_parentPanel.m_info.SingleChoices.RemoveAt(idx - 1);
+                m_parentPanel.m_info.SingleNum--;
+                m_parentPanel.Loading(m_parentPanel.m_info);
+            }
+        });
+    }
+
     public void Init(SingleChoice choice, int idx)
     {
         m_SerialNum.text = idx.ToString();

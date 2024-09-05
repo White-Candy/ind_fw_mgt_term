@@ -68501,7 +68501,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1275642269}
-  - component: {fileID: 1275642270}
   m_Layer: 5
   m_Name: Editor
   m_TagString: Untagged
@@ -68533,25 +68532,6 @@ RectTransform:
   m_AnchoredPosition: {x: -0.0074157715, y: 48.72997}
   m_SizeDelta: {x: 1669.5, y: 743.74}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1275642270
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1275642268}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8179debabbf1e564e8351313be973c48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_NameP: 
-  m_Content: {fileID: 1275642268}
-  columns: {fileID: 510256104}
-  m_item: {fileID: 432595289}
-  m_Parent: {fileID: 523061309}
-  okButton: {fileID: 685603713}
-  cancelButton: {fileID: 441531500}
 --- !u!1 &1277463260
 GameObject:
   m_ObjectHideFlags: 0

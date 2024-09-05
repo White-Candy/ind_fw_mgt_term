@@ -22,12 +22,28 @@ public class MulitItem : MonoBehaviour
     private List<MulitChoiceItem> choicesItemInfo = new List<MulitChoiceItem>();
     private MulitChoice m_mulitChoice = new MulitChoice();
 
+    private ExamineDialog m_parentPanel;
+
     public void Start()
     {
         ChoiceNum.onValueChanged.AddListener((val) => 
         {
             InitItem(int.Parse(ChoiceNum.options[ChoiceNum.value].text));
         });
+
+        Delete.onClick.AddListener(() => 
+        {
+            m_parentPanel = UIHelper.FindPanel<ExamineDialog>();
+
+            int idx = -1;
+            int.TryParse(SerialNum.text, out idx);
+            if (idx != -1 && idx - 1 < m_parentPanel.m_info.MulitChoices.Count)
+            {
+                m_parentPanel.m_info.MulitChoices.RemoveAt(idx - 1);
+                m_parentPanel.m_info.MulitNum--;
+                m_parentPanel.Loading(m_parentPanel.m_info);
+            }
+        });        
     }
 
     /// <summary>

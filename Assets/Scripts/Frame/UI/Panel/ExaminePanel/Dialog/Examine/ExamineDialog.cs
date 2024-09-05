@@ -27,7 +27,7 @@ public class ExamineDialog : BasePanel
     public TOFPanel tofPanel;
 
     private PD_BaseAction m_Action;
-    private ExamineInfo m_info;
+    public ExamineInfo m_info = new ExamineInfo();
 
     public override void Awake()
     {
@@ -194,6 +194,7 @@ public class ExamineDialog : BasePanel
     {
         columns.value = 0;
         course.value = 0;
+        trainingScore.text = "";
         singleNumber.text = "";
         mulitNumber.text = "";
         tofNumber.text = "";
