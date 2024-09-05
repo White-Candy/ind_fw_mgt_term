@@ -62,7 +62,7 @@ public class Tools
 
 
     /// <summary>
-    /// 获取
+    /// 获取本地时间
     /// </summary>
     /// <returns></returns>
     public static string GetCurrLocalTime()
@@ -78,6 +78,18 @@ public class Tools
         return $"{year}/{month}/{day} {hour}:{min}:{sec}";
     }
 
+    /// <summary>
+    /// 获取本地时间
+    /// </summary>
+    /// <returns></returns>
+    public static string GetCurrLocalTime_YMD()
+    {
+        string year = DateTime.Now.Year.ToString();
+        string month = DateTime.Now.Month.ToString();
+        string day = DateTime.Now.Day.ToString();
+        
+        return $"{year}/{month}/{day}";
+    }
 
     /// <summary>
     /// 生成一个不在list中重复的随机数

@@ -45,7 +45,7 @@ public class FacPropertyDialog : BasePanel
     /// <param name="type"></param>
     public void Init(FacultyInfo info, PropertyType type)
     {
-        UIHelper.AddDropDownOptions(TeacherName, GlobalData.deanList);
+        UIHelper.AddDropDownOptions(ref TeacherName, GlobalData.deanList);
 
         m_Action = Tools.CreateObject<PD_BaseAction>(GlobalData.m_Enum2Type[type]);
         m_Action.Init(info);

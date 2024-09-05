@@ -111,7 +111,7 @@ public class UserPropertyDialog : BasePanel
     /// <param name="t"></param>
     public void Init(UserInfo inf, PropertyType t)
     {
-        UIHelper.AddDropDownOptions(m_ClassName, GlobalData.classesList);
+        UIHelper.AddDropDownOptions(ref m_ClassName, GlobalData.classesList);
 
         m_Action = Tools.CreateObject<PD_BaseAction>(GlobalData.m_Enum2Type[t]);
         m_Action.Init(inf);

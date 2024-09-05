@@ -23,6 +23,7 @@ public class UIHelper
 
     public static BasePanel FindPanel(string name)
     {
+        // Debug.Log("FindPanel: " + name);
         BasePanel basePanel;
         PanelList.TryGetValue(name, out basePanel);
         return basePanel != null ? basePanel : null;
@@ -51,7 +52,7 @@ public class UIHelper
     /// </summary>
     /// <param name="dropDown"></param>
     /// <param name=""></param>
-    public static void AddDropDownOptions(TMP_Dropdown dropDown, List<string> options)
+    public static void AddDropDownOptions(ref TMP_Dropdown dropDown, List<string> options)
     {
         dropDown.ClearOptions();
         dropDown.AddOptions(options);
@@ -67,4 +68,18 @@ public class UIHelper
     {
         return GameObject.Find(name).GetComponentInChildren<T>();
     }
+
+    /// <summary>
+    /// 设置dropdown
+    /// </summary>
+    /// <param name="dropdown"></param>
+    /// <param name="text"></param>
+    public static void SetDropDown(ref TMP_Dropdown dropdown, string text)
+    {
+        int i = dropdown.options.FindIndex(x => x.text == text);
+        if (i != -1)
+        {
+            dropdown.value = i;
+        }
+    }  
 }
