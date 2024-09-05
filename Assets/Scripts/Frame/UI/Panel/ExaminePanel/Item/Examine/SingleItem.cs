@@ -7,7 +7,7 @@ using UnityEngine.UI;
 /// <summary>
 ///  单选题题目Item
 /// </summary>
-public class SingleItem : BaseExamineItem
+public class SingleItem : MonoBehaviour
 {
     public TextMeshProUGUI m_SerialNum;
     public Button Delete;
@@ -27,6 +27,7 @@ public class SingleItem : BaseExamineItem
         m_toB.m_Content.text = choice?.toB.m_content;
         m_toC.m_Content.text = choice?.toC.m_content;
         m_toD.m_Content.text = choice?.toD.m_content;
+        gameObject.SetActive(true);
     }
 
     public SingleChoice Output()

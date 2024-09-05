@@ -1,23 +1,19 @@
-
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MulitPanel : BasePanel
+public class TOFPanel : BasePanel
 {
-    public MulitItem m_MulitItem; 
-    public Transform m_MulitTrans;       
+    public TOFItem m_TOFItem;   
+    public Transform m_TOFTrans; 
 
     [HideInInspector]
-    public List<MulitChoice> mulitChoices = new List<MulitChoice>();
+    public List<TOFChoice> tofChoices = new List<TOFChoice>();
 
-    private List<MulitItem> itemList = new List<MulitItem>();
-    
-    public static MulitPanel inst;
+    private List<TOFItem> itemList = new List<TOFItem>();
 
     public override void Awake()
     {
         base.Awake();
-        inst = this;
     }
     
     /// <summary>
@@ -29,8 +25,8 @@ public class MulitPanel : BasePanel
         Clear();
         for(int i = 1; i <= number; ++i)
         {
-            MulitItem item = Instantiate(m_MulitItem, m_MulitTrans);
-            item.Init(i);
+            TOFItem item = Instantiate(m_TOFItem, m_TOFTrans);
+            item.Init(new TOFChoice(), i);
             itemList.Add(item);
         }
     }
@@ -39,12 +35,12 @@ public class MulitPanel : BasePanel
     /// 修改操作时，初始化Item应该为该课程的题库内容
     /// </summary>
     /// <param name="number"></param>
-    public void Init(List<MulitChoice> choices)
+    public void Init(List<TOFChoice> choices)
     {   
         Clear();
         for (int i = 0; i < choices.Count; ++i)
         {
-            MulitItem item = Instantiate(m_MulitItem, m_MulitTrans);
+            TOFItem item = Instantiate(m_TOFItem, m_TOFTrans);
             item.Init(choices[i], i + 1);
             itemList.Add(item);
         }
@@ -54,14 +50,14 @@ public class MulitPanel : BasePanel
     /// 把所有的题目打包
     /// </summary>
     /// <returns></returns>
-    public List<MulitChoice> Output()
+    public List<TOFChoice> Output()
     {
-        List<MulitChoice> mulitChoices = new List<MulitChoice>();
+        List<TOFChoice> tofChoices = new List<TOFChoice>();
         foreach (var item in itemList)
         {
-            mulitChoices.Add(item.Output());
+            tofChoices.Add(item.Output());
         }
-        return mulitChoices;
+        return tofChoices;
     }
 
     /// <summary>
@@ -76,5 +72,5 @@ public class MulitPanel : BasePanel
             Destroy(item);
         }
         itemList.Clear();
-    }
+    }    
 }

@@ -78,7 +78,7 @@ public static class TCP
             string totalInfoPkg = $"|{front}#{mess}@";
             long totalLength = totalInfoPkg.Count();
             string finalPkg = totalLength.ToString() + totalInfoPkg;
-            Debug.Log("================ SendAsync : " + finalPkg);
+            // Debug.Log("================ SendAsync : " + finalPkg);
 
             var outputBuffer = Encoding.Default.GetBytes(finalPkg);
             m_Socket.BeginSend(outputBuffer, 0, outputBuffer.Length, SocketFlags.None, SendAsyncCbk, null);

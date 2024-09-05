@@ -7,11 +7,11 @@ using UnityEngine.UI;
 /// <summary>
 /// 实训考核 课程Item
 /// </summary>
-public class TrainingCourseItem : MonoBehaviour
+public class ActivationItem : MonoBehaviour
 {
-    public TextMeshProUGUI m_name;
-    public TMP_InputField m_score;
-    public Toggle m_toggle;
+    public TextMeshProUGUI courseName;
+    public TextMeshProUGUI registerTime;
+    public Toggle toggle;
 
     /// <summary>
     /// 初始化
@@ -19,16 +19,16 @@ public class TrainingCourseItem : MonoBehaviour
     /// <param name="inf"></param>
     public void Init(ExamineInfo info)
     {
-        m_name.text = info.CourseName;
-        m_score.text = info.TrainingScore.ToString();
-        m_toggle.isOn = info.Status;
+        courseName.text = info.CourseName;
+        registerTime.text = info.RegisterTime.ToString();
+        toggle.isOn = info.Status;
         gameObject.SetActive(true);
     }
 
     public void Clear()
     {
-        m_name.text = "";
-        m_score.text = "";
-        m_toggle.isOn = false;
+        courseName.text = "";
+        registerTime.text = "";
+        toggle.isOn = false;
     }
 }

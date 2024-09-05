@@ -1,26 +1,25 @@
+
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TOFPanel : BasePanel
+public class SinglePanel : BasePanel
 {
-    public TOFItem m_TOFItem;   
-    public Transform m_TOFTrans; 
+    public SingleItem m_SingleItem;
+    public Transform m_SingleTrans;
 
     [HideInInspector]
-    public List<TOFChoice> tofChoices = new List<TOFChoice>();
+    public List<SingleChoice> singleChoices = new List<SingleChoice>();
 
-    private List<TOFItem> itemList = new List<TOFItem>();
-    
-    public static TOFPanel inst;
+    private List<SingleItem> itemList = new List<SingleItem>();
 
     public override void Awake()
     {
         base.Awake();
-        inst = this;
     }
     
     /// <summary>
-    /// æ·»åŠ æ“ä½œæ—¶ï¼Œåˆå§‹åŒ–çš„Itemåº”è¯¥ä¸ºç©ºçš„
+    /// Ìí¼Ó²Ù×÷Ê±£¬³õÊ¼»¯µÄItemÓ¦¸ÃÎª¿ÕµÄ
     /// </summary>
     /// <param name="number"></param>
     public void Init(int number)
@@ -28,43 +27,44 @@ public class TOFPanel : BasePanel
         Clear();
         for(int i = 1; i <= number; ++i)
         {
-            TOFItem item = Instantiate(m_TOFItem, m_TOFTrans);
-            item.Init(new TOFChoice(), i);
+            SingleItem item = Instantiate(m_SingleItem, m_SingleTrans);
+            item.Init(new SingleChoice(), i);
+            item.gameObject.SetActive(true);
             itemList.Add(item);
         }
     }
 
     /// <summary>
-    /// ä¿®æ”¹æ“ä½œæ—¶ï¼Œåˆå§‹åŒ–Itemåº”è¯¥ä¸ºè¯¥è¯¾ç¨‹çš„é¢˜åº“å†…å®¹
+    /// ĞŞ¸Ä²Ù×÷Ê±£¬³õÊ¼»¯ItemÓ¦¸ÃÎª¸Ã¿Î³ÌµÄÌâ¿âÄÚÈİ
     /// </summary>
     /// <param name="number"></param>
-    public void Init(List<TOFChoice> choices)
+    public void Init(List<SingleChoice> choices)
     {   
         Clear();
         for (int i = 0; i < choices.Count; ++i)
         {
-            TOFItem item = Instantiate(m_TOFItem, m_TOFTrans);
+            SingleItem item = Instantiate(m_SingleItem, m_SingleTrans);
             item.Init(choices[i], i + 1);
             itemList.Add(item);
         }
     }
 
     /// <summary>
-    /// æŠŠæ‰€æœ‰çš„é¢˜ç›®æ‰“åŒ…
+    /// °ÑËùÓĞµÄÌâÄ¿´ò°ü
     /// </summary>
     /// <returns></returns>
-    public List<TOFChoice> Output()
+    public List<SingleChoice> Output()
     {
-        List<TOFChoice> tofChoices = new List<TOFChoice>();
+        List<SingleChoice> singleChoices = new List<SingleChoice>();
         foreach (var item in itemList)
         {
-            tofChoices.Add(item.Output());
+            singleChoices.Add(item.Output());
         }
-        return tofChoices;
+        return singleChoices;
     }
 
     /// <summary>
-    /// æ¸…ç©º
+    /// Çå¿Õ
     /// </summary>
     public void Clear()
     {
@@ -75,5 +75,5 @@ public class TOFPanel : BasePanel
             Destroy(item);
         }
         itemList.Clear();
-    }    
+    }
 }

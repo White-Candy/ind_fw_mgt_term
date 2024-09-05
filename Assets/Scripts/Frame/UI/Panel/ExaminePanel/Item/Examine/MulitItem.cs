@@ -8,7 +8,7 @@ using UnityEngine.UI;
 /// <summary>
 /// 多选窗口题目Item
 /// </summary>
-public class MulitItem : BaseExamineItem
+public class MulitItem : MonoBehaviour
 {
     public TextMeshProUGUI SerialNum;
     public Button Delete;
@@ -18,7 +18,8 @@ public class MulitItem : BaseExamineItem
     public ChoiceItem ChoiceItem;
     public Transform ParentTrans;
 
-    private Dictionary<string, ChoiceItem> choicesItem = new Dictionary<string, ChoiceItem>();
+    private List<ChoiceItem> choicesItem = new List<ChoiceItem>();
+    private List<MulitChoiceItem> choicesItemInfo = new List<MulitChoiceItem>();
     private MulitChoice m_mulitChoice = new MulitChoice();
 
     public void Start()
@@ -53,6 +54,7 @@ public class MulitItem : BaseExamineItem
         Score.text = choice?.Score.ToString();
         TopicContent.text = choice?.Topic;
         LoadInitItem(m_mulitChoice.Options.Count);
+        gameObject.SetActive(true);
     }
 
     /// <summary>
@@ -68,7 +70,9 @@ public class MulitItem : BaseExamineItem
             string serial = ((char)(65 + i)).ToString();
             item.Init(serial + ".");
             item.gameObject.SetActive(true);
-            choicesItem.Add(serial, item);
+
+            choicesItem.Add(item);
+            choicesItemInfo.Add(new MulitChoiceItem(serial, item.m_Content.text, item.m_toggle.isOn));
         }
     }
 
@@ -79,38 +83,41 @@ public class MulitItem : BaseExamineItem
     public void LoadInitItem(int choicesNum)
     {
         choicesClear();
+        UIHelper.SetDropDown(ref ChoiceNum, choicesNum.ToString());
         for (int i = 0; i < choicesNum; ++i)
         {
+            string serial = m_mulitChoice.Options[i].Serial;
+            string content = m_mulitChoice.Options[i].Content;
+            bool isOn = m_mulitChoice.Options[i].isOn;
+
             ChoiceItem item = Instantiate(ChoiceItem, ParentTrans);
-            string serial = ((char)(65 + i)).ToString();
-            item.Init(serial + ".", m_mulitChoice.Options[serial].m_content, m_mulitChoice.Options[serial].m_isOn);
+            item.Init(serial, content, isOn);
             item.gameObject.SetActive(true);
-            choicesItem.Add(serial, item);
+
+            choicesItem.Add(item);
+            choicesItemInfo.Add(new MulitChoiceItem(serial, content, isOn));
         }        
     }
 
     public MulitChoice Output()
     {
-        MulitChoice singleChoice = new MulitChoice()
+        MulitChoice mulitChoice = new MulitChoice()
         {
             Topic = TopicContent.text,
             Score = int.Parse(Score.text)
         };
 
         string answer = "";
-        foreach (var pair in choicesItem)
+        foreach (var item in choicesItem)
         {
-            ChoiceItem item = pair.Value;
-            ItemChoice itemChoice = new ItemChoice(item.m_Content.text, item.m_toggle.isOn);
-            singleChoice.Options.Add(pair.Key, itemChoice);
+            mulitChoice.Options.Add(new MulitChoiceItem(item.Serial.text, item.m_Content.text, item.m_toggle.isOn));
             if (item.m_toggle.isOn)
             {
-                answer += item.Serial;
+                answer += item.Serial.text;
             }
         }
-  
-        singleChoice.Answer = answer;
-        return singleChoice;
+        mulitChoice.Answer = answer;
+        return mulitChoice;
     }
 
     public void Clear()
@@ -118,21 +125,19 @@ public class MulitItem : BaseExamineItem
         SerialNum.text = "";
         Score.text = "";
         TopicContent.text = "";
-        foreach (var item in choicesItem.Values)
-        {
-            item.Clear();
-        }
         choicesItem.Clear();
+        choicesItemInfo.Clear();
     }    
 
     public void choicesClear()
     {
-        foreach (var item in choicesItem.Values)
+        foreach (var item in choicesItem)
         {
             item.Clear();
             item.gameObject.SetActive(false);
             Destroy(item);
         }
         choicesItem.Clear();
+        choicesItemInfo.Clear();
     }
 }

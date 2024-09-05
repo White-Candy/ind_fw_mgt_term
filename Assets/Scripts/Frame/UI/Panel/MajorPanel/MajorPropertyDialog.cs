@@ -47,8 +47,8 @@ public class MajorPropertyDialog : BasePanel
     /// <param name="type"></param>
     public void Init(MajorInfo info, PropertyType type)
     {
-        UIHelper.AddDropDownOptions(FacultyName, GlobalData.facultiesList);  
-        UIHelper.AddDropDownOptions(TeacherName, GlobalData.directorsList);
+        UIHelper.AddDropDownOptions(ref FacultyName, GlobalData.facultiesList);  
+        UIHelper.AddDropDownOptions(ref TeacherName, GlobalData.directorsList);
 
         m_Action = Tools.CreateObject<PD_BaseAction>(GlobalData.m_Enum2Type[type]);
         m_Action.Init(info);      

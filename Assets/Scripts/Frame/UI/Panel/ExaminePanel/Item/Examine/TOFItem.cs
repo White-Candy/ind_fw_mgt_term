@@ -1,10 +1,11 @@
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
 /// 判断题题目Item
 /// </summary>
-public class TOFItem : BaseExamineItem
+public class TOFItem : MonoBehaviour
 {
     public Button Delete;
     public TextMeshProUGUI SerialNum;

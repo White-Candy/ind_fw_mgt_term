@@ -1,28 +1,24 @@
 
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SinglePanel : BasePanel
+public class MulitPanel : BasePanel
 {
-    public SingleItem m_SingleItem;
-    public Transform m_SingleTrans;
+    public MulitItem m_MulitItem; 
+    public Transform m_MulitTrans;       
 
     [HideInInspector]
-    public List<SingleChoice> singleChoices = new List<SingleChoice>();
+    public List<MulitChoice> mulitChoices = new List<MulitChoice>();
 
-    private List<SingleItem> itemList = new List<SingleItem>();
-    
-    public static SinglePanel inst;
+    private List<MulitItem> itemList = new List<MulitItem>();
 
     public override void Awake()
     {
         base.Awake();
-        inst = this;
     }
     
     /// <summary>
-    /// Ìí¼Ó²Ù×÷Ê±£¬³õÊ¼»¯µÄItemÓ¦¸ÃÎª¿ÕµÄ
+    /// æ·»åŠ æ“ä½œæ—¶ï¼Œåˆå§‹åŒ–çš„Itemåº”è¯¥ä¸ºç©ºçš„
     /// </summary>
     /// <param name="number"></param>
     public void Init(int number)
@@ -30,44 +26,43 @@ public class SinglePanel : BasePanel
         Clear();
         for(int i = 1; i <= number; ++i)
         {
-            SingleItem item = Instantiate(m_SingleItem, m_SingleTrans);
-            item.Init(new SingleChoice(), i);
-            item.gameObject.SetActive(true);
+            MulitItem item = Instantiate(m_MulitItem, m_MulitTrans);
+            item.Init(i);
             itemList.Add(item);
         }
     }
 
     /// <summary>
-    /// ĞŞ¸Ä²Ù×÷Ê±£¬³õÊ¼»¯ItemÓ¦¸ÃÎª¸Ã¿Î³ÌµÄÌâ¿âÄÚÈİ
+    /// ä¿®æ”¹æ“ä½œæ—¶ï¼Œåˆå§‹åŒ–Itemåº”è¯¥ä¸ºè¯¥è¯¾ç¨‹çš„é¢˜åº“å†…å®¹
     /// </summary>
     /// <param name="number"></param>
-    public void Init(List<SingleChoice> choices)
+    public void Init(List<MulitChoice> choices)
     {   
         Clear();
         for (int i = 0; i < choices.Count; ++i)
         {
-            SingleItem item = Instantiate(m_SingleItem, m_SingleTrans);
+            MulitItem item = Instantiate(m_MulitItem, m_MulitTrans);
             item.Init(choices[i], i + 1);
             itemList.Add(item);
         }
     }
 
     /// <summary>
-    /// °ÑËùÓĞµÄÌâÄ¿´ò°ü
+    /// æŠŠæ‰€æœ‰çš„é¢˜ç›®æ‰“åŒ…
     /// </summary>
     /// <returns></returns>
-    public List<SingleChoice> Output()
+    public List<MulitChoice> Output()
     {
-        List<SingleChoice> singleChoices = new List<SingleChoice>();
+        List<MulitChoice> mulitChoices = new List<MulitChoice>();
         foreach (var item in itemList)
         {
-            singleChoices.Add(item.Output());
+            mulitChoices.Add(item.Output());
         }
-        return singleChoices;
+        return mulitChoices;
     }
 
     /// <summary>
-    /// Çå¿Õ
+    /// æ¸…ç©º
     /// </summary>
     public void Clear()
     {

@@ -115,7 +115,7 @@ public class CoursePropertyDialog : BasePanel
     /// <param name="type"></param>
     public void Init(CourseInfo info, PropertyType type)
     {
-        UIHelper.AddDropDownOptions(Columns, GlobalData.columnsList);  
+        UIHelper.AddDropDownOptions(ref Columns, GlobalData.columnsList);  
 
         m_Action = Tools.CreateObject<PD_BaseAction>(GlobalData.m_Enum2Type[type]);
         m_Action.Init(info);      

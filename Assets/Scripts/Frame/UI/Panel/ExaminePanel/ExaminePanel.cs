@@ -5,8 +5,12 @@ Hey! I'm the original developer.
  Please don't complain about the various problems in the code structure. 
  I feel very sorry, because the project is really tight and my ability is limited. 
  I can't think of a good code structure in a short time.
+    I wish you good luck in development!
+                                                    Author: Sugar
+                                                    -2024/09/03
+ call me: 287276293@qq.com
 */
-using System;
+
 using System.Collections.Generic;
 using LitJson;
 using UniRx;
@@ -21,30 +25,45 @@ public class ExaminePanel : BasePanel
 
     public Button AddTo;
 
-    public static List<ExamineInfo> m_ExamineesInfo = new List<ExamineInfo>();
+    public Button Activation;
+
+    public static List<ExamineInfo> m_examineesInfo = new List<ExamineInfo>();
 
     private List<GameObject> m_itemList = new List<GameObject>();
+
+    private ExamineDialog m_exmaineDialog;
+    private ActivationDialog m_activationDialog;
 
     public override void Awake()
     {
         base.Awake();
-
-        Active(false);
     }
     
     public void Start()
     {
+        m_exmaineDialog = UIHelper.FindPanel<ExamineDialog>();
         AddTo.OnClickAsObservable().Subscribe(_ => 
         {
-            ExamineDialog.instance.Init(null, PropertyType.PT_EXA_ADDTO); // Dialog窗口打开默认是 理论窗口
-            ExamineDialog.instance.Active(true);
+            m_exmaineDialog.Init(null, PropertyType.PT_EXA_ADDTO); // Dialog窗口打开默认是 理论窗口
+            m_exmaineDialog.Active(true);
+            m_activationDialog.Active(false);
         });
+
+        m_activationDialog = UIHelper.FindPanel<ActivationDialog>();
+        Activation.OnClickAsObservable().Subscribe(_ => 
+        {
+            m_activationDialog.Init();
+            m_activationDialog.Active(true);
+            m_exmaineDialog.Active(false);
+        });
+
+        Active(false);
     }
 
     public override void Init()
     {
         TCPHelper.GetInitReq();
-        // TCPHelper.GetInfoReq<ExamineInfo>(EventType.ExamineEvent);
+        TCPHelper.GetInfoReq<ExamineInfo>(EventType.ExamineEvent);
     }
 
     /// <summary>
@@ -56,8 +75,8 @@ public class ExaminePanel : BasePanel
         Clear();
 
         string ret = objs[0] as string;
-        m_ExamineesInfo = JsonMapper.ToObject<List<ExamineInfo>>(ret);
-        foreach (ExamineInfo inf in m_ExamineesInfo)
+        m_examineesInfo = JsonMapper.ToObject<List<ExamineInfo>>(ret);
+        foreach (ExamineInfo inf in m_examineesInfo)
         {
             CloneItem(inf);
         }
@@ -91,9 +110,8 @@ public class ExaminePanel : BasePanel
     /// </summary>
     public override void Close()
     {
-        ExamineDialog.instance.Close();
+        m_exmaineDialog.Close();
         Active(false);
-
         Clear();
     }
 }
@@ -112,7 +130,7 @@ public class ExamineInfo : BaseInfo
     public int SingleNum;
     public int MulitNum;
     public int TOFNum;
-    public bool Status;
+    public bool Status = false;
     public List<SingleChoice> SingleChoices = new List<SingleChoice>();
     public List<MulitChoice> MulitChoices = new List<MulitChoice>();
     public List<TOFChoice> TOFChoices = new List<TOFChoice>();
@@ -138,7 +156,7 @@ public class SingleChoice : BaseChoice
 public class MulitChoice : BaseChoice
 {
     public string Topic;
-    public Dictionary<string, ItemChoice> Options = new Dictionary<string, ItemChoice>(); // {{"A", {"xxxxx", true}}, {"B", {"xxxxxxx", false}}}
+    public List<MulitChoiceItem> Options = new List<MulitChoiceItem>(); // {{"A", "xxxxx", true}, {"B", "xxxxxxx", false}}
     public string Answer;
     public int Score;
 }
@@ -169,6 +187,24 @@ public class ItemChoice
     {
         m_content = content;
         m_isOn = ison;
+    }
+}
+
+/// <summary>
+/// 因为服务器端没有办法 序列化 字典类型，所以为了保存多选题的选项，需要自定义一个类
+/// </summary>
+public class MulitChoiceItem
+{
+    public string Serial = "A";
+    public string Content = "";
+    public bool isOn = false;
+
+    public MulitChoiceItem() {}
+    public MulitChoiceItem(string serial, string content, bool isOn)
+    {
+        Serial = serial;
+        Content = content;
+        this.isOn = isOn;
     }
 }
 
