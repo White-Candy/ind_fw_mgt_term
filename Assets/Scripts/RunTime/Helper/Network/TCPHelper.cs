@@ -81,4 +81,15 @@ public class TCPHelper
             UploadFile(inf);        
         }
     }
+
+
+
+    /// <summary>
+    /// πÿ±’¡¨Ω”
+    /// </summary>
+    public static bool Close()
+    {
+        TCP.Close();
+        return true;
+    }
 }

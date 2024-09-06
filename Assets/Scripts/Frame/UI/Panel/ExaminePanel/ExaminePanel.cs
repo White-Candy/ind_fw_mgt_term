@@ -12,6 +12,7 @@ Hey! I'm the original developer.
 */
 
 using System.Collections.Generic;
+using System.Data.Common;
 using LitJson;
 using UniRx;
 using UnityEngine;
@@ -134,6 +135,24 @@ public class ExamineInfo : BaseInfo
     public List<SingleChoice> SingleChoices = new List<SingleChoice>();
     public List<MulitChoice> MulitChoices = new List<MulitChoice>();
     public List<TOFChoice> TOFChoices = new List<TOFChoice>();
+
+    public ExamineInfo() {}
+    public ExamineInfo(ExamineInfo info)
+    {
+        id = info.id;
+        ColumnsName = info.ColumnsName;
+        CourseName = info.CourseName;
+        RegisterTime = info.RegisterTime;
+        TrainingScore = info.TrainingScore;
+        ClassNum = info.ClassNum;
+        SingleNum = info.SingleNum;
+        MulitNum = info.MulitNum;
+        TOFNum = info.TOFNum;
+        Status = info.Status;
+        SingleChoices = new List<SingleChoice>(info.SingleChoices);
+        MulitChoices = new List<MulitChoice>(info.MulitChoices);
+        TOFChoices = new List<TOFChoice>(info.TOFChoices);
+    }
 }
 
 /// <summary>

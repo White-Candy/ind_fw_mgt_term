@@ -13,7 +13,7 @@ using Cysharp.Threading.Tasks;
 
 public static class TCP
 {
-    public static Socket m_Socket;
+    private static Socket m_Socket;
 
     private static IPEndPoint m_Ipend;
 
@@ -69,20 +69,17 @@ public static class TCP
     /// </summary>
     /// <param name="mess">内容</param>
     /// <param name="event_type">事件类型</param>
-    public static async void SendAsync(string mess, EventType event_type, OperateType operateType)
+    public static void SendAsync(string mess, EventType event_type, OperateType operateType)
     {
-        await Tools.OnAwait(0.5f, () => {});      
-        await UniTask.RunOnThreadPool(() => 
-        {
-            string front = FrontPackage(mess, event_type, operateType);
-            string totalInfoPkg = $"|{front}#{mess}@";
-            long totalLength = totalInfoPkg.Count();
-            string finalPkg = totalLength.ToString() + totalInfoPkg;
-            // Debug.Log("================ SendAsync : " + finalPkg);
+        //await Tools.OnAwait(0.1f, () => {});      
+        string front = FrontPackage(mess, event_type, operateType);
+        string totalInfoPkg = $"|{front}#{mess}@";
+        long totalLength = totalInfoPkg.Count();
+        string finalPkg = totalLength.ToString() + totalInfoPkg;
+        //Debug.Log("================ SendAsync : " + finalPkg);
 
-            var outputBuffer = Encoding.Default.GetBytes(finalPkg);
-            m_Socket.BeginSend(outputBuffer, 0, outputBuffer.Length, SocketFlags.None, SendAsyncCbk, null);
-        });
+        var outputBuffer = Encoding.Default.GetBytes(finalPkg);
+        m_Socket.BeginSend(outputBuffer, 0, outputBuffer.Length, SocketFlags.None, SendAsyncCbk, null);
     }
 
     /// <summary>
@@ -181,7 +178,7 @@ public static class TCP
     {
         if (string.IsNullOrEmpty(mess) || mess.Count() == 0) return;
 
-        Debug.Log("===========  mess : " + mess);
+        // Debug.Log("===========  mess : " + mess);
         string[] lengthSplit = mess.Split("|");
         string totalLength = lengthSplit[0];
         if (!mp.get_length && !string.IsNullOrEmpty(totalLength))
@@ -200,6 +197,14 @@ public static class TCP
         check(mp);
     }
 
+    /// <summary>
+    /// 关闭请求
+    /// </summary>
+    public static void Close()
+    {
+        var outputBuffer = Encoding.Default.GetBytes("Close");
+        m_Socket.BeginSend(outputBuffer, 0, outputBuffer.Length, SocketFlags.None, SendAsyncCbk, null);
+    }
 }
 
 

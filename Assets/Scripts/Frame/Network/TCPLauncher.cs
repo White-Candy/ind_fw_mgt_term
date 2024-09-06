@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -25,5 +26,10 @@ public class TCPLauncher : MonoBehaviour
             //Debug.Log(pkg.ret);
             m_dispatcher.Dispatcher(pkg);
         }
+    }
+
+    public async void OnDestroy()
+    {
+        await UniTask.WaitUntil(() => { return true == TCPHelper.Close(); });
     }
 }

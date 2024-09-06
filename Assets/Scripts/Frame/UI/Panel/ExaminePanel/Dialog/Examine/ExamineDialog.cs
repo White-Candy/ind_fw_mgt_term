@@ -140,10 +140,13 @@ public class ExamineDialog : BasePanel
     /// 信息打包
     /// </summary>
     /// <returns></returns>
-    public ExamineInfo Output()
+    public List<ExamineInfo> Output()
     {
+        List<ExamineInfo> list = new List<ExamineInfo>();
         ExamineInfo inf = new ExamineInfo()
         {
+            id = m_info?.id,
+            RegisterTime = m_info?.RegisterTime,
             TrainingScore = int.Parse(trainingScore.text),
             SingleNum = int.Parse(singleNumber.text),
             MulitNum = int.Parse(mulitNumber.text),
@@ -158,8 +161,8 @@ public class ExamineDialog : BasePanel
 
         if (course.value >= 0)
             inf.CourseName = course.options[course.value].text;
-        
-        return inf;
+        list.Add(inf);
+        return list;
     }
     
     /// <summary>
