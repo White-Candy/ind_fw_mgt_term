@@ -41,6 +41,9 @@ public class TOFItem : MonoBehaviour
         TopicContent.text = choice?.Topic;
         toA.m_Content.text = choice?.toA.m_content;
         toB.m_Content.text = choice?.toB.m_content;
+
+        toA.m_toggle.isOn = choice.toA.m_isOn;
+        toB.m_toggle.isOn = choice.toB.m_isOn;        
         gameObject.SetActive(true);
     }
 

@@ -46,6 +46,11 @@ public class SingleItem : MonoBehaviour
         m_toB.m_Content.text = choice?.toB.m_content;
         m_toC.m_Content.text = choice?.toC.m_content;
         m_toD.m_Content.text = choice?.toD.m_content;
+
+        m_toA.m_toggle.isOn = choice.toA.m_isOn;
+        m_toB.m_toggle.isOn = choice.toB.m_isOn;
+        m_toC.m_toggle.isOn = choice.toC.m_isOn;
+        m_toD.m_toggle.isOn = choice.toD.m_isOn;      
         gameObject.SetActive(true);
     }
 

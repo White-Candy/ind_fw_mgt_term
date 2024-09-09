@@ -158,7 +158,7 @@ public class ExamineInfo : BaseInfo
 /// <summary>
 /// 单选题包
 /// </summary>
-public class SingleChoice : BaseChoice
+public class SingleChoice
 {
     public string Topic;
     public ItemChoice toA = new ItemChoice();
@@ -172,7 +172,7 @@ public class SingleChoice : BaseChoice
 /// <summary>
 /// 多选
 /// </summary>
-public class MulitChoice : BaseChoice
+public class MulitChoice
 {
     public string Topic;
     public List<MulitChoiceItem> Options = new List<MulitChoiceItem>(); // {{"A", "xxxxx", true}, {"B", "xxxxxxx", false}}
@@ -183,7 +183,7 @@ public class MulitChoice : BaseChoice
 /// <summary>
 /// 判断题
 /// </summary>
-public class TOFChoice : BaseChoice
+public class TOFChoice
 {
     public string Topic;
     public ItemChoice toA = new ItemChoice();
