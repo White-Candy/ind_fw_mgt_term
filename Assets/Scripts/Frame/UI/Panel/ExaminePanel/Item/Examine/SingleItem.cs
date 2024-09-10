@@ -25,7 +25,7 @@ public class SingleItem : MonoBehaviour
         Delete.onClick.AddListener(() => 
         {
             m_examinePanel = UIHelper.FindPanel<ExamineDialog>();
-            ExamineInfo bufInfo = new ExamineInfo(m_examinePanel.m_info);
+            ExamineInfo bufInfo = m_examinePanel.m_info.Clone();
             int idx = -1;
             int.TryParse(m_SerialNum.text, out idx);
             if (idx != -1 && idx - 1 < bufInfo.SingleChoices.Count)
@@ -63,7 +63,7 @@ public class SingleItem : MonoBehaviour
             toB = new ItemChoice(m_toB.m_Content.text, m_toB.m_toggle.isOn), 
             toC = new ItemChoice(m_toC.m_Content.text, m_toC.m_toggle.isOn), 
             toD = new ItemChoice(m_toD.m_Content.text, m_toD.m_toggle.isOn), 
-            Score = int.Parse(m_Score.text)
+            Score = m_Score.text
         };
 
         string answer = "";

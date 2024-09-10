@@ -21,7 +21,7 @@ public class TOFItem : MonoBehaviour
         Delete.onClick.AddListener(() => 
         {
             m_examinePanel = UIHelper.FindPanel<ExamineDialog>();
-            ExamineInfo bufInfo = new ExamineInfo(m_examinePanel.m_info);
+            ExamineInfo bufInfo = m_examinePanel.m_info.Clone();
 
             int idx = -1;
             int.TryParse(SerialNum.text, out idx);
@@ -54,7 +54,7 @@ public class TOFItem : MonoBehaviour
             Topic = TopicContent.text,
             toA = new ItemChoice(toA.m_Content.text, toA.m_toggle.isOn), 
             toB = new ItemChoice(toB.m_Content.text, toB.m_toggle.isOn), 
-            Score = int.Parse(Score.text)
+            Score = Score.text
         };
 
         string answer = "";

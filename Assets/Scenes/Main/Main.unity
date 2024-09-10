@@ -59582,7 +59582,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1101240038}
-  - component: {fileID: 1101240039}
   m_Layer: 5
   m_Name: Property
   m_TagString: Untagged
@@ -59611,27 +59610,6 @@ RectTransform:
   m_AnchoredPosition: {x: -527.75824, y: -51.399963}
   m_SizeDelta: {x: 618.4835, y: 841.2}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1101240039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1101240037}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a89a1e5a405d2e4b90e5146aaf298b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_NameP: 
-  m_Content: {fileID: 1101240037}
-  OK: {fileID: 1888909279}
-  Cancel: {fileID: 258285779}
-  ID: {fileID: 0}
-  Course: {fileID: 0}
-  Columns: {fileID: 248133951}
-  Working: {fileID: 0}
-  Content: {fileID: 0}
 --- !u!1 &1101687085
 GameObject:
   m_ObjectHideFlags: 0
@@ -98918,7 +98896,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1835202810}
-  - component: {fileID: 1835202811}
   m_Layer: 5
   m_Name: Score
   m_TagString: Untagged
@@ -98947,24 +98924,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1674, y: 944}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1835202811
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1835202809}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 662db16aa7612b144be9272c1ea18ddc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_NameP: 
-  m_Content: {fileID: 492801058}
-  m_itemTemp: {fileID: 1725356784}
-  m_tempParent: {fileID: 866552200}
-  AddTo: {fileID: 1748655086}
-  Refresh: {fileID: 0}
 --- !u!1 &1837126211
 GameObject:
   m_ObjectHideFlags: 0

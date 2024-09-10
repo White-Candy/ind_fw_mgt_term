@@ -34,7 +34,7 @@ public class MulitItem : MonoBehaviour
         Delete.onClick.AddListener(() => 
         {
             m_examinePanel = UIHelper.FindPanel<ExamineDialog>();
-            ExamineInfo bufInfo = new ExamineInfo(m_examinePanel.m_info);
+            ExamineInfo bufInfo = m_examinePanel.m_info.Clone();
             int idx = -1;
             int.TryParse(SerialNum.text, out idx);
             if (idx != -1 && idx - 1 < bufInfo.MulitChoices.Count)
@@ -120,7 +120,7 @@ public class MulitItem : MonoBehaviour
         MulitChoice mulitChoice = new MulitChoice()
         {
             Topic = TopicContent.text,
-            Score = int.Parse(Score.text)
+            Score = Score.text
         };
 
         string answer = "";
@@ -129,7 +129,8 @@ public class MulitItem : MonoBehaviour
             mulitChoice.Options.Add(new MulitChoiceItem(item.Serial.text, item.m_Content.text, item.m_toggle.isOn));
             if (item.m_toggle.isOn)
             {
-                answer += item.Serial.text;
+                string[] split = item.Serial.text.Split(".");
+                answer += split[0];
             }
         }
         mulitChoice.Answer = answer;
