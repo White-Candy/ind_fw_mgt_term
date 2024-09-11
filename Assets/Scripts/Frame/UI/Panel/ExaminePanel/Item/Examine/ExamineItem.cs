@@ -10,8 +10,8 @@ public class ExamineItem : MonoBehaviour
     public GameObject Course;
     public GameObject Register;
     public GameObject Status;
-    public GameObject ClassNum;
-    public Button Revise;
+    public GameObject PNum;
+    //public Button Revise;
     public Button Delete;
 
     private ExamineInfo m_info = new ExamineInfo();
@@ -20,11 +20,11 @@ public class ExamineItem : MonoBehaviour
     public void Start()
     {
         m_examineDialog = UIHelper.FindPanel<ExamineDialog>();
-        Revise.OnClickAsObservable().Subscribe(_ => 
-        {
-            m_examineDialog.Init(m_info, PropertyType.PT_EXA_SET); // Dialog窗口打开默认是 理论窗口
-            m_examineDialog.Active(true);            
-        });
+        // Revise.OnClickAsObservable().Subscribe(_ => 
+        // {
+        //     m_examineDialog.Init(m_info, PropertyType.PT_EXA_SET); // Dialog窗口打开默认是 理论窗口
+        //     m_examineDialog.Active(true);            
+        // });
 
         Delete.OnClickAsObservable().Subscribe(_ => 
         {
@@ -42,7 +42,7 @@ public class ExamineItem : MonoBehaviour
         Course.GetComponentInChildren<TextMeshProUGUI>().text = inf.CourseName;
         Register.GetComponentInChildren<TextMeshProUGUI>().text = inf.RegisterTime;
         Status.GetComponentInChildren<TextMeshProUGUI>().text = inf.Status ? "开启" : "关闭";
-        ClassNum.GetComponentInChildren<TextMeshProUGUI>().text = inf.ClassNum.ToString();
+        PNum.GetComponentInChildren<TextMeshProUGUI>().text = inf.PNum.ToString();
         gameObject.SetActive(true);
     }
 

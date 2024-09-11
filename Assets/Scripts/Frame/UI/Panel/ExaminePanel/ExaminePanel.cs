@@ -28,6 +28,8 @@ public class ExaminePanel : BasePanel
 
     public Button Activation;
 
+    public Button Refresh;
+
     public static List<ExamineInfo> m_examineesInfo = new List<ExamineInfo>();
 
     private List<GameObject> m_itemList = new List<GameObject>();
@@ -56,6 +58,11 @@ public class ExaminePanel : BasePanel
             m_activationDialog.Init();
             m_activationDialog.Active(true);
             m_exmaineDialog.Active(false);
+        });
+        
+        Refresh.OnClickAsObservable().Subscribe(_ => 
+        {
+            TCPHelper.GetInfoReq<ExamineInfo>(EventType.ExamineEvent);
         });
 
         Active(false);
@@ -126,8 +133,10 @@ public class ExamineInfo : BaseInfo
     public string ColumnsName;
     public string CourseName;
     public string RegisterTime;
-    public int TrainingScore;
-    public int ClassNum;
+    public string TheoryTime = "5"; // ∑÷÷”
+    public string TrainingTime = "5"; // ∑÷÷”
+    public string TrainingScore;
+    public int PNum;
     public int SingleNum;
     public int MulitNum;
     public int TOFNum;
@@ -145,10 +154,12 @@ public class ExamineInfo : BaseInfo
         inf.CourseName = CourseName;
         inf.RegisterTime = RegisterTime;
         inf.TrainingScore = TrainingScore;
-        inf.ClassNum = ClassNum;
+        inf.PNum = PNum;
         inf.SingleNum = SingleNum;
         inf.MulitNum = MulitNum;
         inf.TOFNum = TOFNum;
+        inf.TheoryTime = TheoryTime;
+        inf.TrainingTime = TrainingTime;
         inf.Status = Status;
         foreach (var Option in SingleChoices) { inf.SingleChoices.Add(Option.Clone()); }
         foreach (var Option in MulitChoices) { inf.MulitChoices.Add(Option.Clone()); }
