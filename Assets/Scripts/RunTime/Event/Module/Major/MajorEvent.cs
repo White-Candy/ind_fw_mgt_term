@@ -35,4 +35,12 @@ public class MajorEvent : BaseEvent
 
         await UniTask.Yield();
     }
+
+    public override async void SearchInfoEvent(MessPackage mp)
+    {
+        MajorPanel panel = UIHelper.FindPanel<MajorPanel>();
+        panel.Show(mp.ret);
+
+        await UniTask.Yield();    
+    }
 }

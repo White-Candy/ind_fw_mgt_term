@@ -12,6 +12,7 @@ public class ScorePanel : BasePanel
 
     public Button Search;
     public Button Export;
+    public Button Refresh;
 
     public static List<ScoreInfo> m_scoresInfo = new List<ScoreInfo>();
 
@@ -45,6 +46,8 @@ public class ScorePanel : BasePanel
 
             await ExcelTools.WriteScoresInf2Excel(m_scoresInfo, savePath);
         });
+
+        Refresh.OnClickAsObservable().Subscribe(_ => { Init(); });
     }
 
     public override void Init()

@@ -33,4 +33,12 @@ public class UserEvent : BaseEvent
 
         await UniTask.Yield();
     }
+
+    public override async void SearchInfoEvent(MessPackage mp)
+    {
+        UserPanel panel = UIHelper.FindPanel<UserPanel>();
+        panel.Show(mp.ret);
+
+        await UniTask.Yield();    
+    }
 }

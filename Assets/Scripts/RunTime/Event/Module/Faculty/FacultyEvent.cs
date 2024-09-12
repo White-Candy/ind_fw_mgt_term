@@ -35,4 +35,12 @@ public class FacultyEvent : BaseEvent
 
         await UniTask.Yield();
     }
+
+    public override async void SearchInfoEvent(MessPackage mp)
+    {
+        FacultyPanel panel = UIHelper.FindPanel<FacultyPanel>();
+        panel.Show(mp.ret);
+
+        await UniTask.Yield();    
+    }
 }
