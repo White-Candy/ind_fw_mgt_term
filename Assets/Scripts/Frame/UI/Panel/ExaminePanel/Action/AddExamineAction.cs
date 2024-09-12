@@ -21,8 +21,10 @@ public class AddExamineAction : PD_BaseAction
     {
         base.Action(inf:inf);
 
-        ExamineInfo info = inf[0] as ExamineInfo;
+        List<ExamineInfo> list = inf[0] as List<ExamineInfo>;
+        if (list.Count == 0) return;
 
+        ExamineInfo info = list[0];
         List<int> id = new List<int>();
         foreach (var item in ExaminePanel.m_examineesInfo)
             id.Add(int.Parse(item.id));

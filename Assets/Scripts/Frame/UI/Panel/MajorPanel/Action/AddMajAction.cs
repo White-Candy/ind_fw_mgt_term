@@ -8,9 +8,10 @@ public class AddMajAction : PD_BaseAction
     public override void Init(params object[] inf)
     {
         // Debug.Log("AddFacAction");
-        MajorPropertyDialog.instance.Clear();
-        MajorPropertyDialog.instance.RegisterTime.enabled = false;
-        MajorPropertyDialog.instance.ID.enabled = false;
+        MajorPropertyDialog dialog = UIHelper.FindPanel<MajorPropertyDialog>();
+        dialog.Clear();
+        dialog.RegisterTime.enabled = false;
+        dialog.ID.enabled = false;
     }
 
     public override void Action(Action append = default, params object[] inf)

@@ -18,21 +18,21 @@ public class SingleItem : MonoBehaviour
     public ChoiceItem m_toC;
     public ChoiceItem m_toD;
 
-    private ExamineDialog m_parentPanel;
+    private ExamineDialog m_examinePanel;
 
     public void Start()
     {
         Delete.onClick.AddListener(() => 
         {
-            m_parentPanel = UIHelper.FindPanel<ExamineDialog>();
-
+            m_examinePanel = UIHelper.FindPanel<ExamineDialog>();
+            ExamineInfo bufInfo = m_examinePanel.m_info.Clone();
             int idx = -1;
             int.TryParse(m_SerialNum.text, out idx);
-            if (idx != -1 && idx - 1 < m_parentPanel.m_info.SingleChoices.Count)
+            if (idx != -1 && idx - 1 < bufInfo.SingleChoices.Count)
             {
-                m_parentPanel.m_info.SingleChoices.RemoveAt(idx - 1);
-                m_parentPanel.m_info.SingleNum--;
-                m_parentPanel.Loading(m_parentPanel.m_info);
+                bufInfo.SingleChoices.RemoveAt(idx - 1);
+                bufInfo.SingleNum--;
+                m_examinePanel.Loading(bufInfo);
             }
         });
     }
@@ -46,6 +46,11 @@ public class SingleItem : MonoBehaviour
         m_toB.m_Content.text = choice?.toB.m_content;
         m_toC.m_Content.text = choice?.toC.m_content;
         m_toD.m_Content.text = choice?.toD.m_content;
+
+        m_toA.m_toggle.isOn = choice.toA.m_isOn;
+        m_toB.m_toggle.isOn = choice.toB.m_isOn;
+        m_toC.m_toggle.isOn = choice.toC.m_isOn;
+        m_toD.m_toggle.isOn = choice.toD.m_isOn;      
         gameObject.SetActive(true);
     }
 
@@ -58,7 +63,7 @@ public class SingleItem : MonoBehaviour
             toB = new ItemChoice(m_toB.m_Content.text, m_toB.m_toggle.isOn), 
             toC = new ItemChoice(m_toC.m_Content.text, m_toC.m_toggle.isOn), 
             toD = new ItemChoice(m_toD.m_Content.text, m_toD.m_toggle.isOn), 
-            Score = int.Parse(m_Score.text)
+            Score = m_Score.text
         };
 
         string answer = "";

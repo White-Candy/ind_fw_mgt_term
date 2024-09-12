@@ -98,7 +98,7 @@ public class UserPanel : BasePanel
         Clear();
 
         string ret = objs[0] as string;
-        Debug.Log("show: " + ret);
+        //Debug.Log("show: " + ret);
         m_UsersInfo = JsonMapper.ToObject<List<UserInfo>>(ret);
         foreach (UserInfo inf in m_UsersInfo)
         {

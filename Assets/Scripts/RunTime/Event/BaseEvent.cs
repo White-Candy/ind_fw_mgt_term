@@ -20,11 +20,12 @@ public class BaseEvent
     public virtual async void AddEvent(MessPackage pkg) { await UniTask.Yield(); }
     public virtual async void ReviseInfoEvent(MessPackage pkg) { await UniTask.Yield(); }
     public virtual async void DeleteInfoEvent(MessPackage pkg) { await UniTask.Yield(); }
+    public virtual async void SearchInfoEvent(MessPackage pkg) { await UniTask.Yield(); }
 }
 
 public enum OperateType
 {
-    NONE = 0, GET, ADD, REVISE, DELETE,
+    NONE = 0, GET, ADD, REVISE, DELETE, SEARCH
 }
 
 public enum EventType
@@ -42,5 +43,6 @@ public enum EventType
     ClassEvent,
     ColumnsEvent,
     CourseEvent,
-    ExamineEvent
+    ExamineEvent,
+    ScoreEvent
 }

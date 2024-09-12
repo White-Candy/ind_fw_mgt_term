@@ -31,8 +31,9 @@ public class MajorPanel : BasePanel
     {
         AddTo.OnClickAsObservable().Subscribe(_ => 
         {
-            MajorPropertyDialog.instance.Init(null, PropertyType.PT_MAJ_ADDTO);
-            MajorPropertyDialog.instance.Active(true);
+            MajorPropertyDialog dialog = UIHelper.FindPanel<MajorPropertyDialog>();
+            dialog.Init(null, PropertyType.PT_MAJ_ADDTO);
+            dialog.Active(true);
         });
 
         Refresh.OnClickAsObservable().Subscribe(_ => 
@@ -91,7 +92,8 @@ public class MajorPanel : BasePanel
     /// </summary>
     public override void Close()
     {
-        MajorPropertyDialog.instance.Close();
+        MajorPropertyDialog dialog = UIHelper.FindPanel<MajorPropertyDialog>();
+        dialog.Close();
         Active(false);
 
         Clear();

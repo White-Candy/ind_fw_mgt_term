@@ -53,7 +53,7 @@ public static class FileHelper
     // 打开文件资源管理器，文件路径返回
     public static string SaveFileDialog(string filter, string title, string defExt)
     {
-        OpenFileDlg pth = new OpenFileDlg();
+        SaveFileDlg pth = new SaveFileDlg();
         pth.structSize = Marshal.SizeOf(pth);
 
         string filepath = "";
@@ -71,8 +71,7 @@ public static class FileHelper
         if (FileAPI.GetSaveFileName(pth))
         {
             filepath = pth.file;//选择的文件路径;
-
-            DirectoryInfo inf = new DirectoryInfo(filepath);
+            DirectoryInfo inf = new DirectoryInfo(filepath); 
 
             //上级目录
             string path = inf.Parent.FullName;//返回文件的上级目录

@@ -12,6 +12,7 @@ Hey! I'm the original developer.
 */
 
 using System.Collections.Generic;
+using System.Data.Common;
 using LitJson;
 using UniRx;
 using UnityEngine;
@@ -26,6 +27,8 @@ public class ExaminePanel : BasePanel
     public Button AddTo;
 
     public Button Activation;
+
+    public Button Refresh;
 
     public static List<ExamineInfo> m_examineesInfo = new List<ExamineInfo>();
 
@@ -55,6 +58,11 @@ public class ExaminePanel : BasePanel
             m_activationDialog.Init();
             m_activationDialog.Active(true);
             m_exmaineDialog.Active(false);
+        });
+        
+        Refresh.OnClickAsObservable().Subscribe(_ => 
+        {
+            TCPHelper.GetInfoReq<ExamineInfo>(EventType.ExamineEvent);
         });
 
         Active(false);
@@ -125,8 +133,10 @@ public class ExamineInfo : BaseInfo
     public string ColumnsName;
     public string CourseName;
     public string RegisterTime;
-    public int TrainingScore;
-    public int ClassNum;
+    public string TheoryTime = "5"; // 分钟
+    public string TrainingTime = "5"; // 分钟
+    public string TrainingScore;
+    public int PNum;
     public int SingleNum;
     public int MulitNum;
     public int TOFNum;
@@ -134,12 +144,34 @@ public class ExamineInfo : BaseInfo
     public List<SingleChoice> SingleChoices = new List<SingleChoice>();
     public List<MulitChoice> MulitChoices = new List<MulitChoice>();
     public List<TOFChoice> TOFChoices = new List<TOFChoice>();
+
+    public ExamineInfo() {}
+    public ExamineInfo Clone ()
+    {
+        ExamineInfo inf = new ExamineInfo();
+        inf.id = id;
+        inf.ColumnsName = ColumnsName;
+        inf.CourseName = CourseName;
+        inf.RegisterTime = RegisterTime;
+        inf.TrainingScore = TrainingScore;
+        inf.PNum = PNum;
+        inf.SingleNum = SingleNum;
+        inf.MulitNum = MulitNum;
+        inf.TOFNum = TOFNum;
+        inf.TheoryTime = TheoryTime;
+        inf.TrainingTime = TrainingTime;
+        inf.Status = Status;
+        foreach (var Option in SingleChoices) { inf.SingleChoices.Add(Option.Clone()); }
+        foreach (var Option in MulitChoices) { inf.MulitChoices.Add(Option.Clone()); }
+        foreach (var Option in TOFChoices) { inf.TOFChoices.Add(Option.Clone()); }
+        return inf;
+    }    
 }
 
 /// <summary>
 /// 单选题包
 /// </summary>
-public class SingleChoice : BaseChoice
+public class SingleChoice
 {
     public string Topic;
     public ItemChoice toA = new ItemChoice();
@@ -147,30 +179,64 @@ public class SingleChoice : BaseChoice
     public ItemChoice toC = new ItemChoice();
     public ItemChoice toD = new ItemChoice();
     public string Answer;
-    public int Score = 0;
+    public string Score = "";
+
+    public SingleChoice Clone()
+    {
+        SingleChoice single = new SingleChoice();
+        single.Topic = Topic;
+        single.toA = toA.Clone();
+        single.toB = toB.Clone();
+        single.toC = toB.Clone();
+        single.toD = toB.Clone();
+        single.Answer = Answer;
+        single.Score = Score;
+        return single;
+    }    
 }
 
 /// <summary>
 /// 多选
 /// </summary>
-public class MulitChoice : BaseChoice
+public class MulitChoice
 {
     public string Topic;
     public List<MulitChoiceItem> Options = new List<MulitChoiceItem>(); // {{"A", "xxxxx", true}, {"B", "xxxxxxx", false}}
     public string Answer;
-    public int Score;
+    public string Score = "";
+
+    public MulitChoice Clone()
+    {
+        MulitChoice mulit = new MulitChoice();
+        mulit.Topic = Topic;
+        foreach (var Option in Options) { mulit.Options.Add(Option.Clone()); }
+        mulit.Answer = Answer;
+        mulit.Score = Score;
+        return mulit;
+    }
 }
 
 /// <summary>
 /// 判断题
 /// </summary>
-public class TOFChoice : BaseChoice
+public class TOFChoice
 {
     public string Topic;
     public ItemChoice toA = new ItemChoice();
     public ItemChoice toB = new ItemChoice();
     public string Answer;
-    public int Score;
+    public string Score = "";
+
+    public TOFChoice Clone()
+    {
+        TOFChoice tof = new TOFChoice();
+        tof.Topic = Topic;
+        tof.toA = toA.Clone();
+        tof.toB = toB.Clone();
+        tof.Answer = Answer;
+        tof.Score = Score;
+        return tof;
+    }
 }
 
 /// <summary>
@@ -188,6 +254,14 @@ public class ItemChoice
         m_content = content;
         m_isOn = ison;
     }
+
+    public ItemChoice Clone()
+    {
+        ItemChoice item = new ItemChoice();
+        item.m_content = m_content;
+        item.m_isOn = m_isOn;
+        return item;
+    }
 }
 
 /// <summary>
@@ -200,11 +274,21 @@ public class MulitChoiceItem
     public bool isOn = false;
 
     public MulitChoiceItem() {}
-    public MulitChoiceItem(string serial, string content, bool isOn)
+
+    public MulitChoiceItem(string serial, string content, bool _isOn) 
     {
         Serial = serial;
         Content = content;
-        this.isOn = isOn;
+        isOn = _isOn;
+    }
+
+    public MulitChoiceItem Clone()
+    {
+        MulitChoiceItem item = new MulitChoiceItem();
+        item.Serial = Serial;
+        item.Content = Content;
+        item.isOn = isOn;
+        return item;
     }
 }
 

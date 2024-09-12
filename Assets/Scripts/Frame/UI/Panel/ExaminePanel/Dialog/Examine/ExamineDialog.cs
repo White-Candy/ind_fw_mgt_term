@@ -14,6 +14,8 @@ public class ExamineDialog : BasePanel
     public TMP_InputField singleNumber;
     public TMP_InputField mulitNumber;
     public TMP_InputField tofNumber;
+    public TMP_InputField theoryTime;
+    public TMP_InputField trainingTime;
 
     public Button single;
     public Button muilt;
@@ -90,10 +92,7 @@ public class ExamineDialog : BasePanel
             Close();
         });
 
-        cancelButton.OnClickAsObservable().Subscribe(_=> 
-        {
-            Close();
-        });        
+        cancelButton.OnClickAsObservable().Subscribe(_=> { Close(); });
 
         // 默认是单选题的界面
         singlePanel.Active(true);
@@ -130,6 +129,8 @@ public class ExamineDialog : BasePanel
         singleNumber.text = inf.SingleNum.ToString();
         mulitNumber.text = inf.MulitNum.ToString();
         tofNumber.text = inf.TOFNum.ToString();
+        theoryTime.text = inf.TheoryTime;
+        trainingTime.text = inf.TrainingTime;
 
         singlePanel.Init(inf.SingleChoices);
         mulitPanel.Init(inf.MulitChoices);
@@ -140,14 +141,19 @@ public class ExamineDialog : BasePanel
     /// 信息打包
     /// </summary>
     /// <returns></returns>
-    public ExamineInfo Output()
+    public List<ExamineInfo> Output()
     {
+        List<ExamineInfo> list = new List<ExamineInfo>();
         ExamineInfo inf = new ExamineInfo()
         {
-            TrainingScore = int.Parse(trainingScore.text),
+            id = m_info?.id,
+            RegisterTime = m_info?.RegisterTime,
+            TrainingScore = trainingScore.text,
             SingleNum = int.Parse(singleNumber.text),
             MulitNum = int.Parse(mulitNumber.text),
             TOFNum = int.Parse(tofNumber.text),
+            TheoryTime = theoryTime.text,
+            TrainingTime = trainingTime.text,
             SingleChoices = singlePanel.Output(),
             MulitChoices = mulitPanel.Output(),
             TOFChoices = tofPanel.Output()
@@ -158,8 +164,8 @@ public class ExamineDialog : BasePanel
 
         if (course.value >= 0)
             inf.CourseName = course.options[course.value].text;
-        
-        return inf;
+        list.Add(inf);
+        return list;
     }
     
     /// <summary>

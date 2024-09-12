@@ -70,7 +70,7 @@ public class ExcelTools
         });
     }
 
-    // 将Userinfos数据写入外部Excel表中
+    // 将Usersinfo数据写入外部Excel表中
     public static async UniTask WriteUserinfo2Excel(List<UserInfo> usinf, string path)
     {
         if (!File.Exists(path) || string.IsNullOrEmpty(path)) return;
@@ -92,7 +92,7 @@ public class ExcelTools
                     "用户名", "姓名", "性别", "身份证号",
                     "年龄",  "身份", "联系方式"
                 };
-                for (int col = 1; col <= 8; ++col)
+                for (int col = 1; col <= 7; ++col)
                     sheet.Cells[1, col].Value = title[col - 1];
 
                 for (int i = 0; i < usinf.Count; ++i)
@@ -112,4 +112,49 @@ public class ExcelTools
             }
         });
     }
+
+
+ 
+    // 将ScoresInf数据写入外部Excel表中
+    public static async UniTask WriteScoresInf2Excel(List<ScoreInfo> scoresInf, string path)
+    {
+        if (!File.Exists(path) || string.IsNullOrEmpty(path)) return;
+
+        await UniTask.RunOnThreadPool(() =>
+        {
+            // get excel file info.
+            FileInfo f_inf = new FileInfo(path);
+
+            // Open excel file by file info.
+            using (ExcelPackage excelPkg = new ExcelPackage(f_inf))
+            {
+                // get first sheet of excel file.
+                // Notice: The first index of 'excelPkg.Workbook.Worksheets' starts from 1.
+                ExcelWorksheet sheet = excelPkg.Workbook.Worksheets[1];
+                
+                List<string> title = new List<string>()
+                { 
+                    "用户名", "姓名", "班级", "栏目",
+                    "课程",  "理论成绩", "实训成绩", "总成绩"
+                };
+                for (int col = 1; col <= 8; ++col)
+                    sheet.Cells[1, col].Value = title[col - 1];
+
+                for (int i = 0; i < scoresInf.Count; ++i)
+                {
+                    var inf = scoresInf[i];
+                    sheet.Cells[i + 2, 1].Value = inf.userName;
+                    sheet.Cells[i + 2, 2].Value = inf.Name;
+                    sheet.Cells[i + 2, 3].Value = inf.className;
+                    sheet.Cells[i + 2, 4].Value = inf.columnsName;
+                    sheet.Cells[i + 2, 5].Value = inf.courseName;
+                    sheet.Cells[i + 2, 6].Value = inf.theoryScore;
+                    sheet.Cells[i + 2, 7].Value = inf.trainingScore;
+                    sheet.Cells[i + 2, 8].Value = (float.Parse(inf.theoryScore) + float.Parse(inf.trainingScore)).ToString();
+                }
+
+                excelPkg.Save();
+            }
+        });
+    }   
 }

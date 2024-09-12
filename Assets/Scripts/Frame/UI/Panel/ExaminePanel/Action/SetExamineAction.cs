@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SetExamineAction : PD_BaseAction
@@ -19,7 +20,7 @@ public class SetExamineAction : PD_BaseAction
     {
         base.Action(inf:inf);
 
-        ExamineInfo info = inf[0] as ExamineInfo;
+        List<ExamineInfo> info = inf[0] as List<ExamineInfo>;
 
         TCPHelper.OperateInfo(info, EventType.ExamineEvent, OperateType.REVISE);
     }

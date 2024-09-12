@@ -14,21 +14,22 @@ public class TOFItem : MonoBehaviour
     public ChoiceItem toA;
     public ChoiceItem toB;
 
-    private ExamineDialog m_parentPanel;
+    private ExamineDialog m_examinePanel;
 
     public void Start()
     {
         Delete.onClick.AddListener(() => 
         {
-            m_parentPanel = UIHelper.FindPanel<ExamineDialog>();
+            m_examinePanel = UIHelper.FindPanel<ExamineDialog>();
+            ExamineInfo bufInfo = m_examinePanel.m_info.Clone();
 
             int idx = -1;
             int.TryParse(SerialNum.text, out idx);
-            if (idx != -1 && idx - 1 < m_parentPanel.m_info.TOFChoices.Count)
+            if (idx != -1 && idx - 1 < bufInfo.TOFChoices.Count)
             {
-                m_parentPanel.m_info.TOFChoices.RemoveAt(idx - 1);
-                m_parentPanel.m_info.TOFNum--;
-                m_parentPanel.Loading(m_parentPanel.m_info);
+                bufInfo.TOFChoices.RemoveAt(idx - 1);
+                bufInfo.TOFNum--;
+                m_examinePanel.Loading(bufInfo);
             }
         });
     }
@@ -40,6 +41,9 @@ public class TOFItem : MonoBehaviour
         TopicContent.text = choice?.Topic;
         toA.m_Content.text = choice?.toA.m_content;
         toB.m_Content.text = choice?.toB.m_content;
+
+        toA.m_toggle.isOn = choice.toA.m_isOn;
+        toB.m_toggle.isOn = choice.toB.m_isOn;        
         gameObject.SetActive(true);
     }
 
@@ -50,7 +54,7 @@ public class TOFItem : MonoBehaviour
             Topic = TopicContent.text,
             toA = new ItemChoice(toA.m_Content.text, toA.m_toggle.isOn), 
             toB = new ItemChoice(toB.m_Content.text, toB.m_toggle.isOn), 
-            Score = int.Parse(Score.text)
+            Score = Score.text
         };
 
         string answer = "";

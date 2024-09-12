@@ -41,6 +41,7 @@ public class SinglePanel : BasePanel
     public void Init(List<SingleChoice> choices)
     {   
         Clear();
+        Debug.Log("Single choices Count: " + choices.Count);
         for (int i = 0; i < choices.Count; ++i)
         {
             SingleItem item = Instantiate(m_SingleItem, m_SingleTrans);

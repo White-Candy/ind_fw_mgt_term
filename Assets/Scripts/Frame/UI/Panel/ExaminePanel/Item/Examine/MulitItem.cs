@@ -22,7 +22,7 @@ public class MulitItem : MonoBehaviour
     private List<MulitChoiceItem> choicesItemInfo = new List<MulitChoiceItem>();
     private MulitChoice m_mulitChoice = new MulitChoice();
 
-    private ExamineDialog m_parentPanel;
+    private ExamineDialog m_examinePanel;
 
     public void Start()
     {
@@ -33,15 +33,15 @@ public class MulitItem : MonoBehaviour
 
         Delete.onClick.AddListener(() => 
         {
-            m_parentPanel = UIHelper.FindPanel<ExamineDialog>();
-
+            m_examinePanel = UIHelper.FindPanel<ExamineDialog>();
+            ExamineInfo bufInfo = m_examinePanel.m_info.Clone();
             int idx = -1;
             int.TryParse(SerialNum.text, out idx);
-            if (idx != -1 && idx - 1 < m_parentPanel.m_info.MulitChoices.Count)
+            if (idx != -1 && idx - 1 < bufInfo.MulitChoices.Count)
             {
-                m_parentPanel.m_info.MulitChoices.RemoveAt(idx - 1);
-                m_parentPanel.m_info.MulitNum--;
-                m_parentPanel.Loading(m_parentPanel.m_info);
+                bufInfo.MulitChoices.RemoveAt(idx - 1);
+                bufInfo.MulitNum--;
+                m_examinePanel.Loading(bufInfo);
             }
         });        
     }
@@ -120,7 +120,7 @@ public class MulitItem : MonoBehaviour
         MulitChoice mulitChoice = new MulitChoice()
         {
             Topic = TopicContent.text,
-            Score = int.Parse(Score.text)
+            Score = Score.text
         };
 
         string answer = "";
@@ -129,7 +129,8 @@ public class MulitItem : MonoBehaviour
             mulitChoice.Options.Add(new MulitChoiceItem(item.Serial.text, item.m_Content.text, item.m_toggle.isOn));
             if (item.m_toggle.isOn)
             {
-                answer += item.Serial.text;
+                string[] split = item.Serial.text.Split(".");
+                answer += split[0];
             }
         }
         mulitChoice.Answer = answer;

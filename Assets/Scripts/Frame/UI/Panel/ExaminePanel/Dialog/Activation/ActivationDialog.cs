@@ -54,8 +54,9 @@ public class ActivationDialog : BasePanel
 
         UIHelper.AddDropDownOptions(ref columns, GlobalData.columnsList);
 
-        string colName = GlobalData.coursesList[0].Columns;  
-        CourseSelection(colName);       
+        columns.value = 0;
+        string colName = columns.options[0].text;
+        CourseSelection(colName);
     }
 
     /// <summary>
@@ -66,7 +67,7 @@ public class ActivationDialog : BasePanel
     {   
         Save();
         Clear();
-
+        Debug.Log($"target Columns Name: {colName} | mlist Length: {m_list.Count}.");
         foreach (var inf in m_list)
         {
             if (inf.ColumnsName == colName)
@@ -82,7 +83,7 @@ public class ActivationDialog : BasePanel
     {
         foreach (var item in m_itemList)
         {
-            int i = m_list.FindIndex(x => x.CourseName == item.courseName.text);
+            int i = m_list.FindIndex(x => x.CourseName == item.courseName.text && x.RegisterTime == item.registerTime.text);
             if (-1 != i)
             {
                 m_list[i].Status = item.toggle.isOn;
