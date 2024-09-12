@@ -26,8 +26,9 @@ public class MajorItem : MonoBehaviour
 
         Revise.OnClickAsObservable().Subscribe(_ => 
         {
-            MajorPropertyDialog.instance.Init(m_info, PropertyType.PT_MAJ_SET);
-            MajorPropertyDialog.instance.Active(true);
+            MajorPropertyDialog dialog = UIHelper.FindPanel<MajorPropertyDialog>();
+            dialog.Init(m_info, PropertyType.PT_MAJ_SET);
+            dialog.Active(true);
         });
     }
 

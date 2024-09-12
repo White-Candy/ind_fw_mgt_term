@@ -9,6 +9,7 @@ public class DispatcherEvent
         {"ADD", (_event, pkg) => _event.AddEvent(pkg) },
         {"REVISE", (_event, pkg) => _event.ReviseInfoEvent(pkg) },
         {"DELETE", (_event, pkg) => _event.DeleteInfoEvent(pkg) },
+        {"SEARCH", (_event, pkg) => _event.SearchInfoEvent(pkg) },
         {"NONE", (_event, pkg) => _event.OnEvent(pkg) },
     };
 

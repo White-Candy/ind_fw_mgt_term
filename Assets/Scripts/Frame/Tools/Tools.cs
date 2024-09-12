@@ -123,4 +123,16 @@ public class Tools
     {
         return vct.Count > index;
     }
+
+    /// <summary>
+    /// Êı×ÖÅĞ¶Ï
+    /// </summary>
+    /// <param name="str"></param>
+    /// <returns></returns>
+    public static bool isDigit(string str)
+    {
+        float i = 0;
+        bool result = float.TryParse(str, out i);
+        return result;
+    }
 }

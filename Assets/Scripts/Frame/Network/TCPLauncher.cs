@@ -28,8 +28,9 @@ public class TCPLauncher : MonoBehaviour
         }
     }
 
-    public async void OnDestroy()
+    public void OnDestroy()
     {
-        await UniTask.WaitUntil(() => { return true == TCPHelper.Close(); });
+        TCPHelper.Close();
+        //await UniTask.WaitUntil(() => { return true == TCPHelper.Close(); });
     }
 }

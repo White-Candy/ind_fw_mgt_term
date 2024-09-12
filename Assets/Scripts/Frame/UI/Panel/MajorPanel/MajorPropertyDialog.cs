@@ -6,8 +6,6 @@ using static TMPro.TMP_Dropdown;
 
 public class MajorPropertyDialog : BasePanel
 {
-    public static MajorPropertyDialog instance;
-
     public Button OK;
     public Button Cancel;
     public TMP_InputField ID;
@@ -22,7 +20,6 @@ public class MajorPropertyDialog : BasePanel
     {
         base.Awake();
 
-        instance = this;
         Active(false);
     }
 

@@ -6,9 +6,10 @@ public class SetMajAction : PD_BaseAction
     public override void Init(params object[] inf)
     {   
         MajorInfo info = inf[0] as MajorInfo;
-        MajorPropertyDialog.instance.Loading(info);
-        MajorPropertyDialog.instance.RegisterTime.enabled = false;
-        MajorPropertyDialog.instance.ID.enabled = false;
+        MajorPropertyDialog dialog = UIHelper.FindPanel<MajorPropertyDialog>();
+        dialog.Loading(info);
+        dialog.RegisterTime.enabled = false;
+        dialog.ID.enabled = false;
     }
 
     public override void Action(Action append = default, params object[] inf)
