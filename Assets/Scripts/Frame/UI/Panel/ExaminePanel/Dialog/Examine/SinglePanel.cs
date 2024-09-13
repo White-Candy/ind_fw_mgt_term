@@ -50,6 +50,15 @@ public class SinglePanel : BasePanel
         }
     }
 
+    public bool InputFieldCheck()
+    {
+        foreach (var item in itemList)
+        {
+            if (!item.InputFieldCheck()) return false;
+        }
+        return true;
+    }
+
     /// <summary>
     /// 把所有的题目打包
     /// </summary>

@@ -47,6 +47,11 @@ public class TOFItem : MonoBehaviour
         gameObject.SetActive(true);
     }
 
+    public bool InputFieldCheck()
+    {
+        return true;
+    }
+    
     public TOFChoice Output()
     {
         TOFChoice tofChoice = new TOFChoice()

@@ -201,6 +201,7 @@ public static class ValidateHelper
         string regex = @"^[+-]?\d*$";
         return Regex.IsMatch(str, regex);
     }
+    
     /// <summary>
     /// 验证小数是否正确
     /// </summary>

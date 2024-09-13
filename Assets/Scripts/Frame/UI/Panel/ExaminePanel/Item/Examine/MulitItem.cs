@@ -115,6 +115,11 @@ public class MulitItem : MonoBehaviour
         }        
     }
 
+    public bool InputFieldCheck()
+    {
+        return true;
+    }
+    
     public MulitChoice Output()
     {
         MulitChoice mulitChoice = new MulitChoice()

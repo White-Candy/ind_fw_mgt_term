@@ -12,7 +12,6 @@ Hey! I'm the original developer.
 */
 
 using System.Collections.Generic;
-using System.Data.Common;
 using LitJson;
 using TMPro;
 using UniRx;
@@ -28,7 +27,6 @@ public class ExaminePanel : BasePanel
     public Button AddTo;
 
     public Button Activation;
-
     public Button Refresh;
    public GameObject Search;
     public static List<ExamineInfo> m_examineesInfo = new List<ExamineInfo>();
@@ -164,19 +162,21 @@ public class ExamineInfo : BaseInfo
     public ExamineInfo() {}
     public ExamineInfo Clone ()
     {
-        ExamineInfo inf = new ExamineInfo();
-        inf.id = id;
-        inf.ColumnsName = ColumnsName;
-        inf.CourseName = CourseName;
-        inf.RegisterTime = RegisterTime;
-        inf.TrainingScore = TrainingScore;
-        inf.PNum = PNum;
-        inf.SingleNum = SingleNum;
-        inf.MulitNum = MulitNum;
-        inf.TOFNum = TOFNum;
-        inf.TheoryTime = TheoryTime;
-        inf.TrainingTime = TrainingTime;
-        inf.Status = Status;
+        ExamineInfo inf = new ExamineInfo
+        {
+            id = id,
+            ColumnsName = ColumnsName,
+            CourseName = CourseName,
+            RegisterTime = RegisterTime,
+            TrainingScore = TrainingScore,
+            PNum = PNum,
+            SingleNum = SingleNum,
+            MulitNum = MulitNum,
+            TOFNum = TOFNum,
+            TheoryTime = TheoryTime,
+            TrainingTime = TrainingTime,
+            Status = Status
+        };
         foreach (var Option in SingleChoices) { inf.SingleChoices.Add(Option.Clone()); }
         foreach (var Option in MulitChoices) { inf.MulitChoices.Add(Option.Clone()); }
         foreach (var Option in TOFChoices) { inf.TOFChoices.Add(Option.Clone()); }

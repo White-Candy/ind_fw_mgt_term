@@ -54,6 +54,11 @@ public class SingleItem : MonoBehaviour
         gameObject.SetActive(true);
     }
 
+    public bool InputFieldCheck()
+    {
+        return true;
+    }
+
     public SingleChoice Output()
     {
         SingleChoice singleChoice = new SingleChoice()
