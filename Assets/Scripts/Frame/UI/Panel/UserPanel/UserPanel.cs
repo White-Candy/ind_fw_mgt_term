@@ -1,6 +1,7 @@
 using LitJson;
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,13 +15,15 @@ public class UserPanel : BasePanel
     public Button Export;
     public Button AddTo;
     public Button Refresh;
-
+    public GameObject Search;
     // public static UserPanel instance;
 
     private List<GameObject> itemList = new List<GameObject>();
 
     private List<UserInfo> m_UsersInfo = new List<UserInfo>();
-
+    private Button m_searchBtn;
+    private TMP_InputField m_searchIpt;
+    
     public override void Awake()
     {
         base.Awake();
@@ -31,6 +34,9 @@ public class UserPanel : BasePanel
 
     public void Start()
     {
+        m_searchBtn = Search.GetComponentInChildren<Button>();
+        m_searchIpt = Search.GetComponentInChildren<TMP_InputField>();
+
         // 信息导入
         Import.OnClickAsObservable().Subscribe(async x =>
         {
@@ -39,7 +45,7 @@ public class UserPanel : BasePanel
             {
                 DialogHelper helper = new DialogHelper();
                 MessageDialog dialog = helper.CreateMessDialog("MessageDialog");
-                dialog.Init("课程信息的删除", "是否删除该课程信息？", new ItemPackage("确定", null));    
+                dialog.Show ("课程信息的删除", "是否删除该课程信息？", new ItemPackage("确定", null));    
                 return;
             }
             
@@ -49,7 +55,7 @@ public class UserPanel : BasePanel
             if (list != null)
             {
                 TCPHelper.OperateInfo(list, EventType.UserEvent, OperateType.ADD);
-            }
+            }              
         });
 
         // 导出按钮。
@@ -76,6 +82,16 @@ public class UserPanel : BasePanel
             // TCPHelper.GetInfoReq<TCPStuHelper>();
             TCPHelper.GetInfoReq<UserInfo>(EventType.UserEvent);
         });
+
+        m_searchBtn.OnClickAsObservable().Subscribe(_ => 
+        {
+            if (!UIHelper.InputFieldCheck(m_searchIpt.text)) { return; }
+            UserInfo inf = new UserInfo()
+            {
+                Name = m_searchIpt.text
+            };
+            TCPHelper.OperateInfo(inf, EventType.UserEvent, OperateType.SEARCH);
+        });         
     }
 
     /// <summary>

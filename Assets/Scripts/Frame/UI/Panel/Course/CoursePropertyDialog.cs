@@ -52,6 +52,8 @@ public class CoursePropertyDialog : BasePanel
         {
             m_Action.Action(() => 
             {
+                if (!UIHelper.InputFieldCheck(Course.text) || !UIHelper.InputFieldCheck(Working.text)) return;
+
                 string colName = Columns.options[Columns.value].text;
                 string courseName = Course.text;
                 string relativePath = $"{colName}\\{courseName}\\";

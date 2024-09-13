@@ -5,7 +5,7 @@ public class SetUserAction : PD_BaseAction
 {
     public override void Init(params object[] info)
     {
-        Debug.Log("Set Init!");
+        //Debug.Log("Set Init!");
 
         UserInfo inf = info[0] as UserInfo;
         UserPropertyDialog.instance.Clear();

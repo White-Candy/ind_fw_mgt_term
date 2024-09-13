@@ -7,6 +7,9 @@ public class ScoreItem : MonoBehaviour
 {
     public GameObject userName;
     public GameObject Name;
+    public GameObject ClassName;
+    public GameObject CourseName;
+    public GameObject RegisterTime;
     public GameObject Theory;
     public GameObject Training;
     public GameObject Total;
@@ -26,7 +29,7 @@ public class ScoreItem : MonoBehaviour
         {
             DialogHelper helper = new DialogHelper();
             MessageDialog dialog = helper.CreateMessDialog("MessageDialog");
-            dialog.Init("成绩信息的删除", "是否删除该成绩信息？", new ItemPackage("确定", ConfirmDelete), new ItemPackage("取消", null));    
+            dialog.Show("成绩信息的删除", "是否删除该成绩信息？", new ItemPackage("确定", ConfirmDelete), new ItemPackage("取消", null));    
         });
 
         Revise.OnClickAsObservable().Subscribe(_ => 
@@ -46,6 +49,9 @@ public class ScoreItem : MonoBehaviour
         
         userName.GetComponentInChildren<TextMeshProUGUI>().text = info.userName;
         Name.GetComponentInChildren<TextMeshProUGUI>().text = info.Name;
+        ClassName.GetComponentInChildren<TextMeshProUGUI>().text = info.className;
+        CourseName.GetComponentInChildren<TextMeshProUGUI>().text = info.courseName;
+        RegisterTime.GetComponentInChildren<TextMeshProUGUI>().text = info.registerTime;
         Theory.GetComponentInChildren<TextMeshProUGUI>().text = info.theoryScore;
         Training.GetComponentInChildren<TextMeshProUGUI>().text = info.trainingScore;
         Total.GetComponentInChildren<TextMeshProUGUI>().text = (float.Parse(info.theoryScore) + float.Parse(info.trainingScore)).ToString();

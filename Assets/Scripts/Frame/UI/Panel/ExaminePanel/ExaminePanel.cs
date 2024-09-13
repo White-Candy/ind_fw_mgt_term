@@ -14,6 +14,7 @@ Hey! I'm the original developer.
 using System.Collections.Generic;
 using System.Data.Common;
 using LitJson;
+using TMPro;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,13 +30,15 @@ public class ExaminePanel : BasePanel
     public Button Activation;
 
     public Button Refresh;
-
+   public GameObject Search;
     public static List<ExamineInfo> m_examineesInfo = new List<ExamineInfo>();
 
     private List<GameObject> m_itemList = new List<GameObject>();
 
     private ExamineDialog m_exmaineDialog;
     private ActivationDialog m_activationDialog;
+    private Button m_searchBtn;
+    private TMP_InputField m_searchIpt;
 
     public override void Awake()
     {
@@ -44,7 +47,10 @@ public class ExaminePanel : BasePanel
     
     public void Start()
     {
+        m_searchBtn = Search.GetComponentInChildren<Button>();
+        m_searchIpt = Search.GetComponentInChildren<TMP_InputField>();       
         m_exmaineDialog = UIHelper.FindPanel<ExamineDialog>();
+
         AddTo.OnClickAsObservable().Subscribe(_ => 
         {
             m_exmaineDialog.Init(null, PropertyType.PT_EXA_ADDTO); // Dialog窗口打开默认是 理论窗口
@@ -64,6 +70,16 @@ public class ExaminePanel : BasePanel
         {
             TCPHelper.GetInfoReq<ExamineInfo>(EventType.ExamineEvent);
         });
+
+        m_searchBtn.OnClickAsObservable().Subscribe(_ => 
+        {
+            if (!UIHelper.InputFieldCheck(m_searchIpt.text)) { return; }
+            ExamineInfo inf = new ExamineInfo()
+            {
+                CourseName = m_searchIpt.text
+            };
+            TCPHelper.OperateInfo(inf, EventType.ExamineEvent, OperateType.SEARCH);
+        });   
 
         Active(false);
     }

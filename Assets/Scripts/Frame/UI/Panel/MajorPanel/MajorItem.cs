@@ -21,7 +21,7 @@ public class MajorItem : MonoBehaviour
         {
             DialogHelper helper = new DialogHelper();
             MessageDialog dialog = helper.CreateMessDialog("MessageDialog");
-            dialog.Init("专业信息的删除", "是否删除该专业信息？", new ItemPackage("确定", ConfirmDelete), new ItemPackage("取消", null));    
+            dialog.Show("专业信息的删除", "是否删除该专业信息？", new ItemPackage("确定", ConfirmDelete), new ItemPackage("取消", null));    
         });
 
         Revise.OnClickAsObservable().Subscribe(_ => 

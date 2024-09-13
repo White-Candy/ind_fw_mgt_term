@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using LitJson;
+using TMPro;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,11 +15,14 @@ public class MajorPanel : BasePanel
 
     public Button AddTo;
     public Button Refresh;
+    public GameObject Search;
 
     public static List<MajorInfo> m_majorInfo = new List<MajorInfo>();
 
     private List<GameObject> m_itemList = new List<GameObject>();
-
+    private Button m_searchBtn;
+    private TMP_InputField m_searchIpt;
+    
     public override void Awake()
     {
         base.Awake();
@@ -29,6 +33,9 @@ public class MajorPanel : BasePanel
     
     public void Start()
     {
+        m_searchBtn = Search.GetComponentInChildren<Button>();
+        m_searchIpt = Search.GetComponentInChildren<TMP_InputField>();
+
         AddTo.OnClickAsObservable().Subscribe(_ => 
         {
             MajorPropertyDialog dialog = UIHelper.FindPanel<MajorPropertyDialog>();
@@ -40,6 +47,17 @@ public class MajorPanel : BasePanel
         {
             TCPHelper.GetInfoReq<MajorInfo>(EventType.MajorEvent);
         });
+
+        m_searchBtn.OnClickAsObservable().Subscribe(_ => 
+        {
+            if (!UIHelper.InputFieldCheck(m_searchIpt.text)) { return; }
+
+            MajorInfo inf = new MajorInfo()
+            {
+                MajorName = m_searchIpt.text
+            };
+            TCPHelper.OperateInfo(inf, EventType.MajorEvent, OperateType.SEARCH);
+        });        
     }
 
     public override void Init()

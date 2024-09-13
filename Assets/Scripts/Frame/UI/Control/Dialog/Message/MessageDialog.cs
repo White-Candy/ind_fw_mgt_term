@@ -43,7 +43,7 @@ public class MessageDialog : MonoBehaviour
     /// <summary>
     /// Dialog窗口初始化
     /// </summary>
-    public void Init(string title, string hint, params ItemPackage[] packages)
+    public void Show(string title, string hint, params ItemPackage[] packages)
     {
         m_Title.text = title;
         m_Hint.text = hint;
@@ -85,6 +85,7 @@ public class MessageDialog : MonoBehaviour
         {
             m_Pool.Destroy(item);
         }
+        Destroy(this.gameObject);
     }
 }
 

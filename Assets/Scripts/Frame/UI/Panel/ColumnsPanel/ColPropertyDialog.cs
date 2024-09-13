@@ -27,6 +27,7 @@ public class ColPropertyDialog : BasePanel
     {
         OK.OnClickAsObservable().Subscribe(_=> 
         {
+            if (!UIHelper.InputFieldCheck(ColumnsName.text)) return;
             m_Action.Action(inf:Output());
             Close();
         });
