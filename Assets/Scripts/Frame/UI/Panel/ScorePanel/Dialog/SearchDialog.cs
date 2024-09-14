@@ -5,6 +5,7 @@ using TMPro;
 using UniRx;
 using UnityEngine.UI;
 using System.Linq;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Logical;
 
 public class SearchDialog : BasePanel
 {
@@ -21,6 +22,8 @@ public class SearchDialog : BasePanel
     {
         Search.OnClickAsObservable().Subscribe(_ => 
         {
+            //if (!InputFieldCheck()) return;
+
             string usrName = "", _className = "", _courseName = "", _registerTime = "";
             if (Name.text.Count() > 0) { usrName = Name.text; }
             if (Class.value > 0) { _className = Class.options[Class.value].text; }
@@ -39,6 +42,13 @@ public class SearchDialog : BasePanel
         Cancel.OnClickAsObservable().Subscribe(_ => { Close(); });
 
         Close();
+    }
+
+    public bool InputFieldCheck()
+    {
+        if (!UIHelper.InputFieldCheck(Name.text) || !UIHelper.InputFieldCheck(Year.text) || !UIHelper.InputFieldCheck(Month.text)
+            || !UIHelper.InputFieldCheck(Day.text)) return false;
+        return true;
     }
 
     public override void Init()

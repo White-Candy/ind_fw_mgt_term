@@ -85,7 +85,7 @@ public class ExamineDialog : BasePanel
 
         okButton.OnClickAsObservable().Subscribe(_=> 
         {
-            if (InputFieldCheck() && singlePanel.InputFieldCheck() && mulitPanel.InputFieldCheck() && tofPanel.InputFieldCheck()) return;
+            if (!InputFieldCheck() || !singlePanel.InputFieldCheck() || !mulitPanel.InputFieldCheck() || !tofPanel.InputFieldCheck()) { return; }
             m_Action.Action(inf:Output());
             Close();
         });
@@ -142,20 +142,19 @@ public class ExamineDialog : BasePanel
     public List<ExamineInfo> Output()
     {
         List<ExamineInfo> list = new List<ExamineInfo>();
-        ExamineInfo inf = new ExamineInfo()
-        {
-            id = m_info?.id,
-            RegisterTime = m_info?.RegisterTime,
-            TrainingScore = trainingScore.text,
-            SingleNum = int.Parse(singleNumber.text),
-            MulitNum = int.Parse(mulitNumber.text),
-            TOFNum = int.Parse(tofNumber.text),
-            TheoryTime = theoryTime.text,
-            TrainingTime = trainingTime.text,
-            SingleChoices = singlePanel.Output(),
-            MulitChoices = mulitPanel.Output(),
-            TOFChoices = tofPanel.Output()
-        };
+        ExamineInfo inf = new ExamineInfo();
+
+            inf.id = m_info?.id;
+            inf.RegisterTime = m_info?.RegisterTime;
+            inf.TrainingScore = trainingScore.text;
+            inf.SingleNum = int.Parse(singleNumber.text);
+            inf.MulitNum = int.Parse(mulitNumber.text);
+            inf.TOFNum = int.Parse(tofNumber.text);
+            inf.TheoryTime = theoryTime.text;
+            inf.TrainingTime = trainingTime.text;
+            inf.SingleChoices = singlePanel.Output();
+            inf.MulitChoices = mulitPanel.Output();
+            inf.TOFChoices = tofPanel.Output();
 
         if (columns.value >= 0)
             inf.ColumnsName = columns.options[columns.value].text;
