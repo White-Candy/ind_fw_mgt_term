@@ -54,6 +54,13 @@ public class SingleItem : MonoBehaviour
         gameObject.SetActive(true);
     }
 
+    public bool InputFieldCheck()
+    {
+        if (!UIHelper.InputFieldCheck(m_TopicContent.text) || !ValidateHelper.IsNumberPosInt(m_Score.text)
+            || !m_toA.InputFieldCheck() || m_toB.InputFieldCheck() || m_toC.InputFieldCheck() || m_toD.InputFieldCheck()) return false;
+        return true;
+    }
+
     public SingleChoice Output()
     {
         SingleChoice singleChoice = new SingleChoice()

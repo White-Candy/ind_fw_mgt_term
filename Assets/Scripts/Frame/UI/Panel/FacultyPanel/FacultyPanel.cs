@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using LitJson;
+using TMPro;
 using UniRx;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -19,10 +20,13 @@ public class FacultyPanel : BasePanel
 
     public Button AddTo;
     public Button Refresh;
+    public GameObject Search;
 
     public static List<FacultyInfo> m_faculiesInfo = new List<FacultyInfo>();
 
     private List<GameObject> m_itemList = new List<GameObject>();
+    private Button m_searchBtn;
+    private TMP_InputField m_searchIpt;
 
     public override void Awake()
     {
@@ -34,6 +38,9 @@ public class FacultyPanel : BasePanel
     
     public void Start()
     {
+        m_searchBtn = Search.GetComponentInChildren<Button>();
+        m_searchIpt = Search.GetComponentInChildren<TMP_InputField>();
+
         AddTo.OnClickAsObservable().Subscribe(_ => 
         {
             FacPropertyDialog.instance.Init(null, PropertyType.PT_FAC_ADDTO);
@@ -43,6 +50,16 @@ public class FacultyPanel : BasePanel
         Refresh.OnClickAsObservable().Subscribe(_ => 
         {
             TCPHelper.GetInfoReq<FacultyInfo>(EventType.FacultyEvent);
+        });
+
+        m_searchBtn.OnClickAsObservable().Subscribe(_ => 
+        {
+            if (!UIHelper.InputFieldCheck(m_searchIpt.text)) { return; }
+            FacultyInfo inf = new FacultyInfo()
+            {
+                Name = m_searchIpt.text
+            };
+            TCPHelper.OperateInfo(inf, EventType.FacultyEvent, OperateType.SEARCH);
         });
     }
 

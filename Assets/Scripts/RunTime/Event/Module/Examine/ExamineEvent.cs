@@ -35,4 +35,12 @@ public class ExamineEvent : BaseEvent
 
         await UniTask.Yield();
     }
+
+    public override async void SearchInfoEvent(MessPackage mp)
+    {
+        ExaminePanel panel = UIHelper.FindPanel<ExaminePanel>();
+        panel.Show(mp.ret);
+
+        await UniTask.Yield();    
+    }
 }

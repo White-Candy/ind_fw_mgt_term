@@ -20,7 +20,7 @@ public class CourseItem : MonoBehaviour
         {
             DialogHelper helper = new DialogHelper();
             MessageDialog dialog = helper.CreateMessDialog("MessageDialog");
-            dialog.Init("课程信息的删除", "是否删除该课程信息？", new ItemPackage("确定", ConfirmDelete), new ItemPackage("取消", null));    
+            dialog.Show("课程信息的删除", "是否删除该课程信息？", new ItemPackage("确定", ConfirmDelete), new ItemPackage("取消", null));    
         });
 
         Revise.OnClickAsObservable().Subscribe(_ => 

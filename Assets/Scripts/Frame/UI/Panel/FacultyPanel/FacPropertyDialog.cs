@@ -28,6 +28,7 @@ public class FacPropertyDialog : BasePanel
     {
         OK.OnClickAsObservable().Subscribe(_=> 
         {
+            if (!UIHelper.InputFieldCheck(FacultyName.text)) { return; }
             m_Action.Action(inf:Output());
             Close();
         });

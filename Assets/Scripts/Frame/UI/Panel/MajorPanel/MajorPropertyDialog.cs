@@ -27,6 +27,7 @@ public class MajorPropertyDialog : BasePanel
     {
         OK.OnClickAsObservable().Subscribe(_=> 
         {
+            if (!UIHelper.InputFieldCheck(MajorName.text)) { return; }
             m_Action.Action(inf:Output());
             Close();
         });

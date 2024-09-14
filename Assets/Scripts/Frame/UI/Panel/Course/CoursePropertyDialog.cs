@@ -50,6 +50,7 @@ public class CoursePropertyDialog : BasePanel
     {
         OK.OnClickAsObservable().Subscribe(_=> 
         {
+            if (!UIHelper.InputFieldCheck(Course.text) || !UIHelper.InputFieldCheck(Working.text)) return;
             m_Action.Action(() => 
             {
                 string colName = Columns.options[Columns.value].text;

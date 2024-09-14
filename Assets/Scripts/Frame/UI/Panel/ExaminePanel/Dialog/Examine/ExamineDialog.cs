@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Xml;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -28,7 +26,7 @@ public class ExamineDialog : BasePanel
     public MulitPanel mulitPanel;
     public TOFPanel tofPanel;
 
-    private PD_BaseAction m_Action;
+    private PD_BaseAction m_Action; 
     public ExamineInfo m_info = new ExamineInfo();
 
     public override void Awake()
@@ -83,11 +81,11 @@ public class ExamineDialog : BasePanel
             int number = 0;
             int.TryParse(text, out number);
             tofPanel.Init(number);
-
         });
 
         okButton.OnClickAsObservable().Subscribe(_=> 
         {
+            if (!InputFieldCheck() || !singlePanel.InputFieldCheck() || !mulitPanel.InputFieldCheck() || !tofPanel.InputFieldCheck()) { return; }
             m_Action.Action(inf:Output());
             Close();
         });
@@ -144,20 +142,19 @@ public class ExamineDialog : BasePanel
     public List<ExamineInfo> Output()
     {
         List<ExamineInfo> list = new List<ExamineInfo>();
-        ExamineInfo inf = new ExamineInfo()
-        {
-            id = m_info?.id,
-            RegisterTime = m_info?.RegisterTime,
-            TrainingScore = trainingScore.text,
-            SingleNum = int.Parse(singleNumber.text),
-            MulitNum = int.Parse(mulitNumber.text),
-            TOFNum = int.Parse(tofNumber.text),
-            TheoryTime = theoryTime.text,
-            TrainingTime = trainingTime.text,
-            SingleChoices = singlePanel.Output(),
-            MulitChoices = mulitPanel.Output(),
-            TOFChoices = tofPanel.Output()
-        };
+        ExamineInfo inf = new ExamineInfo();
+
+            inf.id = m_info?.id;
+            inf.RegisterTime = m_info?.RegisterTime;
+            inf.TrainingScore = trainingScore.text;
+            inf.SingleNum = int.Parse(singleNumber.text);
+            inf.MulitNum = int.Parse(mulitNumber.text);
+            inf.TOFNum = int.Parse(tofNumber.text);
+            inf.TheoryTime = theoryTime.text;
+            inf.TrainingTime = trainingTime.text;
+            inf.SingleChoices = singlePanel.Output();
+            inf.MulitChoices = mulitPanel.Output();
+            inf.TOFChoices = tofPanel.Output();
 
         if (columns.value >= 0)
             inf.ColumnsName = columns.options[columns.value].text;
@@ -183,6 +180,17 @@ public class ExamineDialog : BasePanel
         }
         course.AddOptions(courseList);
     } 
+
+    public bool InputFieldCheck()
+    {
+        if (!(ValidateHelper.IsNumberPosInt(trainingScore.text) && ValidateHelper.IsNumberPosInt(singleNumber.text) && ValidateHelper.IsNumberPosInt(mulitNumber.text)
+        && ValidateHelper.IsNumberPosInt(tofNumber.text) && ValidateHelper.IsNumberPosInt(theoryTime.text) && ValidateHelper.IsNumberPosInt(trainingTime.text)))
+        {
+            UIHelper.ShowMessage("格式错误", "格式错误", new ItemPackage("确定", () => {}));
+            return false;
+        }
+        return true;
+    }
 
     /// <summary>
     /// 关闭

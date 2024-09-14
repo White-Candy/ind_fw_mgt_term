@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using System.Net.Http.Headers;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -115,6 +116,20 @@ public class MulitItem : MonoBehaviour
         }        
     }
 
+    /// <summary>
+    /// 输入内容检查
+    /// </summary>
+    /// <returns></returns>
+    public bool InputFieldCheck()
+    {
+        if (!UIHelper.InputFieldCheck(TopicContent.text) || !ValidateHelper.IsNumberPosInt(Score.text)) return false;
+        foreach (var choice in choicesItem)
+        {
+            if (!choice.InputFieldCheck()) return false;
+        }
+        return true;
+    }
+    
     public MulitChoice Output()
     {
         MulitChoice mulitChoice = new MulitChoice()

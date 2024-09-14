@@ -47,6 +47,13 @@ public class TOFItem : MonoBehaviour
         gameObject.SetActive(true);
     }
 
+    public bool InputFieldCheck()
+    {
+        if (!UIHelper.InputFieldCheck(TopicContent.text) || !ValidateHelper.IsNumberPosInt(Score.text)
+            || !toA.InputFieldCheck() || toB.InputFieldCheck() ) return false;
+        return true;
+    }
+    
     public TOFChoice Output()
     {
         TOFChoice tofChoice = new TOFChoice()

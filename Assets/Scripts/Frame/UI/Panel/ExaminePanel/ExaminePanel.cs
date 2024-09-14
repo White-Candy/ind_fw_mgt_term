@@ -12,8 +12,8 @@ Hey! I'm the original developer.
 */
 
 using System.Collections.Generic;
-using System.Data.Common;
 using LitJson;
+using TMPro;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,15 +27,16 @@ public class ExaminePanel : BasePanel
     public Button AddTo;
 
     public Button Activation;
-
     public Button Refresh;
-
+   public GameObject Search;
     public static List<ExamineInfo> m_examineesInfo = new List<ExamineInfo>();
 
     private List<GameObject> m_itemList = new List<GameObject>();
 
     private ExamineDialog m_exmaineDialog;
     private ActivationDialog m_activationDialog;
+    private Button m_searchBtn;
+    private TMP_InputField m_searchIpt;
 
     public override void Awake()
     {
@@ -44,7 +45,10 @@ public class ExaminePanel : BasePanel
     
     public void Start()
     {
+        m_searchBtn = Search.GetComponentInChildren<Button>();
+        m_searchIpt = Search.GetComponentInChildren<TMP_InputField>();       
         m_exmaineDialog = UIHelper.FindPanel<ExamineDialog>();
+
         AddTo.OnClickAsObservable().Subscribe(_ => 
         {
             m_exmaineDialog.Init(null, PropertyType.PT_EXA_ADDTO); // Dialog窗口打开默认是 理论窗口
@@ -64,6 +68,16 @@ public class ExaminePanel : BasePanel
         {
             TCPHelper.GetInfoReq<ExamineInfo>(EventType.ExamineEvent);
         });
+
+        m_searchBtn.OnClickAsObservable().Subscribe(_ => 
+        {
+            if (!UIHelper.InputFieldCheck(m_searchIpt.text)) { return; }
+            ExamineInfo inf = new ExamineInfo()
+            {
+                CourseName = m_searchIpt.text
+            };
+            TCPHelper.OperateInfo(inf, EventType.ExamineEvent, OperateType.SEARCH);
+        });   
 
         Active(false);
     }
@@ -148,19 +162,21 @@ public class ExamineInfo : BaseInfo
     public ExamineInfo() {}
     public ExamineInfo Clone ()
     {
-        ExamineInfo inf = new ExamineInfo();
-        inf.id = id;
-        inf.ColumnsName = ColumnsName;
-        inf.CourseName = CourseName;
-        inf.RegisterTime = RegisterTime;
-        inf.TrainingScore = TrainingScore;
-        inf.PNum = PNum;
-        inf.SingleNum = SingleNum;
-        inf.MulitNum = MulitNum;
-        inf.TOFNum = TOFNum;
-        inf.TheoryTime = TheoryTime;
-        inf.TrainingTime = TrainingTime;
-        inf.Status = Status;
+        ExamineInfo inf = new ExamineInfo
+        {
+            id = id,
+            ColumnsName = ColumnsName,
+            CourseName = CourseName,
+            RegisterTime = RegisterTime,
+            TrainingScore = TrainingScore,
+            PNum = PNum,
+            SingleNum = SingleNum,
+            MulitNum = MulitNum,
+            TOFNum = TOFNum,
+            TheoryTime = TheoryTime,
+            TrainingTime = TrainingTime,
+            Status = Status
+        };
         foreach (var Option in SingleChoices) { inf.SingleChoices.Add(Option.Clone()); }
         foreach (var Option in MulitChoices) { inf.MulitChoices.Add(Option.Clone()); }
         foreach (var Option in TOFChoices) { inf.TOFChoices.Add(Option.Clone()); }

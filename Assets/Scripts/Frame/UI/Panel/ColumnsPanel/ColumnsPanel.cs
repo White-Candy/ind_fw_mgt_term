@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using LitJson;
+using TMPro;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,10 +18,12 @@ public class ColumnsPanel : BasePanel
 
     public Button AddTo;
     public Button Refresh;
-
+    public GameObject Search;
     public static List<ColumnsInfo> m_columnsInfo = new List<ColumnsInfo>();
 
     private List<GameObject> m_itemList = new List<GameObject>();
+    private Button m_searchBtn;
+    private TMP_InputField m_searchIpt;
 
     public override void Awake()
     {
@@ -32,6 +35,9 @@ public class ColumnsPanel : BasePanel
     
     public void Start()
     {
+        m_searchBtn = Search.GetComponentInChildren<Button>();
+        m_searchIpt = Search.GetComponentInChildren<TMP_InputField>();
+
         AddTo.OnClickAsObservable().Subscribe(_ => 
         {
             ColPropertyDialog.instance.Init(null, PropertyType.PT_COL_ADDTO);
@@ -42,6 +48,16 @@ public class ColumnsPanel : BasePanel
         {
             TCPHelper.GetInfoReq<ColumnsInfo>(EventType.ColumnsEvent);
         });
+
+        m_searchBtn.OnClickAsObservable().Subscribe(_ => 
+        {
+            if (!UIHelper.InputFieldCheck(m_searchIpt.text)) { return; }
+            ColumnsInfo inf = new ColumnsInfo()
+            {
+                Name = m_searchIpt.text
+            };
+            TCPHelper.OperateInfo(inf, EventType.ColumnsEvent, OperateType.SEARCH);
+        });           
     }
 
     public override void Init()

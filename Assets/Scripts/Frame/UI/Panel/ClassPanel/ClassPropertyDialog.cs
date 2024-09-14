@@ -33,6 +33,7 @@ public class ClassPropertyDialog : BasePanel
     {
         OK.OnClickAsObservable().Subscribe(_=> 
         {
+            if (!UIHelper.InputFieldCheck(Class.text)) { return; }
             m_Action.Action(inf:Output());
             Close();
         });

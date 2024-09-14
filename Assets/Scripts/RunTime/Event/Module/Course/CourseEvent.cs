@@ -35,4 +35,12 @@ public class CourseEvent : BaseEvent
 
         await UniTask.Yield();
     }
+
+    public override async void SearchInfoEvent(MessPackage mp)
+    {
+        CoursePanel panel = UIHelper.FindPanel<CoursePanel>();
+        panel.Show(mp.ret);
+
+        await UniTask.Yield();    
+    }
 }

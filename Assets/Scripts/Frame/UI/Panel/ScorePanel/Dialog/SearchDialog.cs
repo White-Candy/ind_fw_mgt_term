@@ -4,13 +4,15 @@ using UnityEngine;
 using TMPro;
 using UniRx;
 using UnityEngine.UI;
+using System.Linq;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Logical;
 
 public class SearchDialog : BasePanel
 {
     public Button Search;
     public Button Cancel;
+    public TMP_InputField Name;
     public TMP_Dropdown Class;
-    public TMP_Dropdown Columns;
     public TMP_Dropdown Course;
     public TMP_InputField Year;
     public TMP_InputField Month;
@@ -20,12 +22,17 @@ public class SearchDialog : BasePanel
     {
         Search.OnClickAsObservable().Subscribe(_ => 
         {
+            //if (!InputFieldCheck()) return;
+
+            string usrName = "", _className = "", _courseName = "", _registerTime = "";
+            if (Name.text.Count() > 0) { usrName = Name.text; }
+            if (Class.value > 0) { _className = Class.options[Class.value].text; }
+            if (Course.value > 0) { _courseName = Course.options[Course.value].text; }
+            if (Year.text.Count() > 0 && Year.text.Count() > 0 && Year.text.Count() > 0) { _registerTime = $"{Year.text}/{Month.text}/{Day.text}"; }
             ScoreInfo scoreInf = new ScoreInfo()
             {
-                className = Class.options.Count > 0 ? Class.options[Class.value].text : "",
-                columnsName = Columns.options.Count > 0 ? Columns.options[Columns.value].text : "",
-                courseName = Course.options.Count > 0 ? Course.options[Course.value].text : "",
-                registerTime = $"{Year.text}/{Month.text}/{Day.text}"
+                Name = usrName, className = _className,
+                courseName = _courseName, registerTime = _registerTime
             };
 
             TCPHelper.OperateInfo(scoreInf, EventType.ScoreEvent, OperateType.SEARCH);
@@ -34,44 +41,47 @@ public class SearchDialog : BasePanel
 
         Cancel.OnClickAsObservable().Subscribe(_ => { Close(); });
 
-        Columns.onValueChanged.AddListener((i) => 
-        {
-            UIHelper.AddDropDownOptions(ref Course, CourseSelection());
-        });
-
         Close();
+    }
+
+    public bool InputFieldCheck()
+    {
+        if (!UIHelper.InputFieldCheck(Name.text) || !UIHelper.InputFieldCheck(Year.text) || !UIHelper.InputFieldCheck(Month.text)
+            || !UIHelper.InputFieldCheck(Day.text)) return false;
+        return true;
     }
 
     public override void Init()
     {
-        UIHelper.AddDropDownOptions(ref Class, GlobalData.classesList);
-        UIHelper.AddDropDownOptions(ref Columns, GlobalData.columnsList);
-        UIHelper.AddDropDownOptions(ref Course, CourseSelection());
+        List<string> localClassList = new List<string>(GlobalData.classesList);
+        List<string> localCourseList = new List<string>(CourseSelection());
+        localClassList.Insert(0, "无");
+        localCourseList.Insert(0, "无");
+
+        UIHelper.AddDropDownOptions(ref Class, localClassList);
+        UIHelper.AddDropDownOptions(ref Course, localCourseList);
     }
 
     public List<string> CourseSelection()
     {
-        string colName = Columns.options.Count > 0 ? Columns.options[Columns.value].text : "";
         List<string> courseNameList = new List<string>();
-        for (int i = 0; i < GlobalData.coursesList.Count && Columns.options.Count > 0; ++i) 
+        for (int i = 0; i < GlobalData.coursesList.Count; ++i) 
         { 
             CourseInfo courseInf = GlobalData.coursesList[i];
-            if (colName == courseInf.Columns)
-                courseNameList.Add(courseInf.CourseName); 
+            courseNameList.Add(courseInf.CourseName);
         }
         return courseNameList;
     }
 
     public override void Close()
     {
+        Name.text = "";
         Class.value = 0;
-        Columns.value = 0;
         Course.value = 0;
 
-        Year.text = "0";
-        Month.text = "0";
-        Day.text = "0";
-
+        Year.text = "";
+        Month.text = "";
+        Day.text = "";
         Active(false);
     }
 }

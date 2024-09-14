@@ -85,7 +85,8 @@ public class UserPropertyDialog : BasePanel
     public void Start()
     {
         OK?.OnClickAsObservable().Subscribe(x => 
-        {        
+        {    
+            if (!ValidateInputField()) return;
             m_Action.Action(inf:Output());
 
             Active(false);
@@ -198,5 +199,97 @@ public class UserPropertyDialog : BasePanel
         {
             m_StudentLayout.gameObject.SetActive(false);
         }
+    }
+
+    /// <summary>
+    /// 验证信息是否有效
+    /// </summary>
+    /// <returns></returns>
+    private bool ValidateInputField()
+    {
+        return  ValidataUserName() && ValidataPwd() && ValidataName() && ValidataAge() && ValidataIDCard() && ValidataContact();
+    }
+    
+    /// <summary>
+    /// 姓名验证
+    /// </summary>
+    /// <returns></returns>
+    private bool ValidataUserName()
+    {
+        if (!UIHelper.InputFieldCheck(m_userName.text)) {  return false; }
+        return true;
+    }
+
+    /// <summary>
+    /// 密码验证
+    /// </summary>
+    /// <returns></returns>
+    private bool ValidataPwd()
+    {
+        if (!(UIHelper.InputFieldCheck(m_Pwd.text) && UIHelper.InputFieldCheck(m_Verify.text))) {return false;}
+
+        if (m_Pwd.text != m_Verify.text) 
+        {
+            UIHelper.ShowMessage("密码异常", "两次密码必须相等!", new ItemPackage("确定", () => {}));
+            return false;
+        }
+        return true;
+    }
+
+    /// <summary>
+    /// 年龄验证
+    /// </summary>
+    /// <returns></returns>
+    private bool ValidataAge()
+    {
+        if (!UIHelper.InputFieldCheck(m_Age.text)) {  return false; }
+        int i = 0;
+        if (!int.TryParse(m_Age.text, out i))
+        {
+            UIHelper.ShowMessage("输入异常", "年龄格式输入错误!", new ItemPackage("确定", () => {}));
+            return false;
+        }
+
+        if (i < 0)
+        {
+            UIHelper.ShowMessage("输入异常", "年龄不可为负数!", new ItemPackage("确定", () => {}));
+            return false;
+        }
+        return true;
+    }
+
+    /// <summary>
+    /// 姓名验证
+    /// </summary>
+    /// <returns></returns>
+    private bool ValidataName()
+    {
+        if (!UIHelper.InputFieldCheck(m_NameIpt.text)) {  return false; }
+        return true;
+    }
+
+    /// <summary>
+    /// 身份证验证
+    /// </summary>
+    /// <returns></returns>
+    private bool ValidataIDCard()
+    {
+        if (!ValidateHelper.IsIDCard(m_IdCard.text))
+        {
+            UIHelper.ShowMessage("身份证格式错误", "身份证格式错误!", new ItemPackage("确定", () => {}));
+            return false;
+        }
+        return true;
+    }
+
+    private bool ValidataContact()
+    {
+        if (!UIHelper.InputFieldCheck(m_Contact.text)) return false;
+        if (!ValidateHelper.IsMobile(m_Contact.text))
+        {
+            UIHelper.ShowMessage("联系方式异常", "联系方式格式错误!", new ItemPackage("确定", () => {}));
+            return false;
+        }
+        return true; 
     }
 }

@@ -33,4 +33,12 @@ public class ColumnsEvent : BaseEvent
 
         await UniTask.Yield();
     }
+
+    public override async void SearchInfoEvent(MessPackage mp)
+    {
+        ColumnsPanel panel = UIHelper.FindPanel<ColumnsPanel>();
+        panel.Show(mp.ret);
+
+        await UniTask.Yield();   
+    }
 }

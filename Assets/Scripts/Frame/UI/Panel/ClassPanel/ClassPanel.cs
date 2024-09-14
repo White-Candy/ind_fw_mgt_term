@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using LitJson;
+using TMPro;
 using UniRx;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -19,11 +20,13 @@ public class ClassPanel : BasePanel
 
     public Button AddTo;
     public Button Refresh;
-
+    public GameObject Search;
     public static List<ClassInfo> m_classInfo = new List<ClassInfo>();
 
     private List<GameObject> m_itemList = new List<GameObject>();
-
+    private Button m_searchBtn;
+    private TMP_InputField m_searchIpt;
+    
     public override void Awake()
     {
         base.Awake();
@@ -34,6 +37,9 @@ public class ClassPanel : BasePanel
     
     public void Start()
     {
+        m_searchBtn = Search.GetComponentInChildren<Button>();
+        m_searchIpt = Search.GetComponentInChildren<TMP_InputField>();
+        
         AddTo.OnClickAsObservable().Subscribe(_ => 
         {
             ClassPropertyDialog.instance.Init(default, PropertyType.PT_CLASS_ADDTO);
@@ -44,6 +50,16 @@ public class ClassPanel : BasePanel
         {
             TCPHelper.GetInfoReq<ClassInfo>(EventType.ClassEvent);
         });
+
+        m_searchBtn.OnClickAsObservable().Subscribe(_ => 
+        {
+            if (!UIHelper.InputFieldCheck(m_searchIpt.text)) { return; }
+            ClassInfo inf = new ClassInfo()
+            {
+                Class = m_searchIpt.text
+            };
+            TCPHelper.OperateInfo(inf, EventType.ClassEvent, OperateType.SEARCH);
+        });            
     }
 
     public override void Init()

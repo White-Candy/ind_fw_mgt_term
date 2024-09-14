@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using LitJson;
+using TMPro;
 using UniRx;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -16,10 +17,12 @@ public class CoursePanel : BasePanel
 
     public Button AddTo;
     public Button Refresh;
-
+    public GameObject Search;
     public static List<CourseInfo> m_courseInfo = new List<CourseInfo>();
 
     private List<GameObject> m_itemList = new List<GameObject>();
+    private Button m_searchBtn;
+    private TMP_InputField m_searchIpt;
 
     public override void Awake()
     {
@@ -31,6 +34,9 @@ public class CoursePanel : BasePanel
     
     public void Start()
     {
+        m_searchBtn = Search.GetComponentInChildren<Button>();
+        m_searchIpt = Search.GetComponentInChildren<TMP_InputField>();  
+
         AddTo.OnClickAsObservable().Subscribe(_ => 
         {
             CoursePropertyDialog.instance.Init(null, PropertyType.PT_COR_ADDTO);
@@ -41,6 +47,16 @@ public class CoursePanel : BasePanel
         {
             TCPHelper.GetInfoReq<CourseInfo>(EventType.CourseEvent);
         });
+
+        m_searchBtn.OnClickAsObservable().Subscribe(_ => 
+        {
+            if (!UIHelper.InputFieldCheck(m_searchIpt.text)) { return; }
+            CourseInfo inf = new CourseInfo()
+            {
+                CourseName = m_searchIpt.text
+            };
+            TCPHelper.OperateInfo(inf, EventType.CourseEvent, OperateType.SEARCH);
+        });          
     }
 
     public override void Init()

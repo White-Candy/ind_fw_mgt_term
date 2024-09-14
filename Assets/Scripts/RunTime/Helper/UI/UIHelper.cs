@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class UIHelper
@@ -81,5 +82,48 @@ public class UIHelper
         {
             dropdown.value = i;
         }
-    }  
+    }
+
+    public static void ShowMessage(string title, string hint, params ItemPackage[] packages)
+    {
+        // new ItemPackage("确定", ConfirmDelete), new ItemPackage("取消", null)
+        DialogHelper helper = new DialogHelper();
+        MessageDialog dialog = helper.CreateMessDialog("MessageDialog");
+        dialog.Show(title, hint, packages); 
+    }
+
+    /// <summary>
+    /// InputField控件内容检查
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    public static bool InputFieldCheck(string text)
+    {
+        return IllegalCharacterCheck(text) && NullOrEmptyCheck(text);
+    }
+
+    /// <summary>
+    /// 非法字符检查
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    public static bool IllegalCharacterCheck(string text)
+    {
+        if (text.Contains("|") || text.Contains("@") || text.Contains("#"))
+        {
+            ShowMessage("输入非法字符", "不可使用非法字符'|','@','#'。", new ItemPackage("确定", () => {}));
+            return false;
+        }
+        return true;
+    }
+
+    public static bool NullOrEmptyCheck(string text)
+    {
+        if (string.IsNullOrEmpty(text))
+        {
+            ShowMessage("字符为空", "字符不可为空!", new ItemPackage("确定", () => {}));
+            return false;
+        }
+        return true;
+    }
 }

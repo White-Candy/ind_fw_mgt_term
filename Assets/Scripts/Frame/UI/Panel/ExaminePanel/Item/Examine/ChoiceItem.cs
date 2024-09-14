@@ -16,6 +16,12 @@ public class ChoiceItem : MonoBehaviour
         Serial.text = serial;
     }
 
+    public bool InputFieldCheck()
+    {
+        if (!UIHelper.InputFieldCheck(m_Content.text)) return false;
+        return true;
+    }
+
     public void Init(string serial, string content, bool ison)
     {
         Serial.text = serial;
