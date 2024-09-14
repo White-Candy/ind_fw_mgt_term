@@ -16,6 +16,7 @@ public class CoursePanel : BasePanel
     // public static CoursePanel instance;
 
     public Button AddTo;
+    public Button ResDelete;
     public Button Refresh;
     public GameObject Search;
     public static List<CourseInfo> m_courseInfo = new List<CourseInfo>();
