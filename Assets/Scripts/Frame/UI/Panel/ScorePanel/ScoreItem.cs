@@ -17,7 +17,6 @@ public class ScoreItem : MonoBehaviour
     public Button Revise;
     public Button Delete;
 
-
     private ReviseDialog reivseDialog;
 
     private ScoreInfo m_info = new ScoreInfo();
@@ -27,6 +26,7 @@ public class ScoreItem : MonoBehaviour
         reivseDialog = UIHelper.FindPanel<ReviseDialog>();
         Delete.OnClickAsObservable().Subscribe(_ => 
         {
+            if (GlobalData.s_currUsrLevel == 0) return;
             DialogHelper helper = new DialogHelper();
             MessageDialog dialog = helper.CreateMessDialog("MessageDialog");
             dialog.Show("成绩信息的删除", "是否删除该成绩信息？", new ItemPackage("确定", ConfirmDelete), new ItemPackage("取消", null));    
@@ -34,8 +34,13 @@ public class ScoreItem : MonoBehaviour
 
         Revise.OnClickAsObservable().Subscribe(_ => 
         {
-            reivseDialog.Init(m_info);
-            reivseDialog.Active(true);
+            if (GlobalData.s_currUsrLevel == 0) return;
+
+            if (GlobalData.s_currUsrLevel == 1)
+            {
+                reivseDialog.Init(m_info);
+                reivseDialog.Active(true);
+            }
         });
     }
 

@@ -12,6 +12,7 @@ public class UserItem : MonoBehaviour
     public Button IDCoder;
     public Button Age;
     public Button Identity;
+    public Button UnitName;
     public Button Contact;
     public Button Revise;
     public Button Delete;
@@ -23,6 +24,7 @@ public class UserItem : MonoBehaviour
         // 信息修改
         Revise.OnClickAsObservable().Subscribe(x => 
         {
+            if (GlobalData.s_currUsrLevel == 1) return;
             UserPropertyDialog.instance.Init(m_inf, PropertyType.PT_USER_SET);
             UserPropertyDialog.instance.Active(true);
         });
@@ -30,6 +32,7 @@ public class UserItem : MonoBehaviour
         // 信息删除
         Delete.OnClickAsObservable().Subscribe(x => 
         {
+            if (GlobalData.s_currUsrLevel == 1) return;
             DialogHelper helper = new DialogHelper();
             MessageDialog dialog = helper.CreateMessDialog("MessageDialog");
             dialog.Show("用户信息删除", "是否删除用户信息？", new ItemPackage("确定", ConfirmDelete), new ItemPackage("取消", null));     
@@ -47,6 +50,7 @@ public class UserItem : MonoBehaviour
         IDCoder.GetComponentInChildren<TextMeshProUGUI>().text = inf.idCoder;
         Identity.GetComponentInChildren<TextMeshProUGUI>().text = inf.Identity;
         Age.GetComponentInChildren<TextMeshProUGUI>().text = inf.Age;
+        UnitName.GetComponentInChildren<TextMeshProUGUI>().text = inf.UnitName;
         Contact.GetComponentInChildren<TextMeshProUGUI>().text = inf.Contact;
 
         // ClassName.GetComponentInChildren<TextMeshProUGUI>().text = inf.className;

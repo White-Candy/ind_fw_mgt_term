@@ -39,6 +39,7 @@ public class ScorePanel : BasePanel
 
         Export.OnClickAsObservable().Subscribe(async _ => 
         {
+            if (GlobalData.s_currUsrLevel == 0) return;
             string savePath = FileHelper.SaveFileDialog("Excel文件(*.xlsx)" + '\0' + "*.xlsx\0\0", "选择Excel文件", "XLSX");
             //Debug.Log("savepath : " + savePath);
 

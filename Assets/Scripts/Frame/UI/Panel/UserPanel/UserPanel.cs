@@ -1,6 +1,7 @@
 using LitJson;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -41,6 +42,7 @@ public class UserPanel : BasePanel
         Import.OnClickAsObservable().Subscribe(async x =>
         {
             List<string> filesPath = FileHelper.OpenFileDialog("Excel文件(*.xlsx)" + '\0' + "*.xlsx", "选择Excel文件", "XLSX");
+            if (filesPath[0].Count() == 0) return;
             if (filesPath.Count > 0)
             {
                 DialogHelper helper = new DialogHelper();
@@ -164,7 +166,26 @@ public class UserInfo : BaseInfo
     public string Identity;
     public string idCoder;
     public string Contact;
-    public string className;
+    public string UnitName; // 所属单位 学生所属班级，其他所属学院
     public bool login = false;
     public string hint = "";
+
+    public UserInfo Clone()
+    {
+        UserInfo inf = new UserInfo()
+        {
+            userName = userName,
+            password = password,
+            Name = Name,
+            Gender = Gender,
+            Age = Age,
+            Identity = Identity,
+            idCoder = idCoder,
+            Contact = Contact,
+            UnitName = UnitName,
+            login = login,
+            hint = hint
+        };
+        return inf;
+    }
 }
