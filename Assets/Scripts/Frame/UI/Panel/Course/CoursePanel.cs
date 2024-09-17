@@ -24,13 +24,15 @@ public class CoursePanel : BasePanel
     private List<GameObject> m_itemList = new List<GameObject>();
     private Button m_searchBtn;
     private TMP_InputField m_searchIpt;
+    
+    private ResDeletePanel m_ResDeletePanel;
+    private CoursePropertyDialog m_CourseDialog;
 
     public override void Awake()
     {
         base.Awake();
 
         // instance = this;
-        Active(false);
     }
     
     public void Start()
@@ -38,10 +40,24 @@ public class CoursePanel : BasePanel
         m_searchBtn = Search.GetComponentInChildren<Button>();
         m_searchIpt = Search.GetComponentInChildren<TMP_InputField>();  
 
+        m_ResDeletePanel = UIHelper.FindPanel<ResDeletePanel>();
+        m_ResDeletePanel.Active(false);
+
+        m_CourseDialog = UIHelper.FindPanel<CoursePropertyDialog>();
+        m_CourseDialog.Active(false);
+
         AddTo.OnClickAsObservable().Subscribe(_ => 
         {
-            CoursePropertyDialog.instance.Init(null, PropertyType.PT_COR_ADDTO);
-            CoursePropertyDialog.instance.Active(true);
+            m_CourseDialog.Init(null, PropertyType.PT_COR_ADDTO);
+            m_CourseDialog.Active(true);
+            m_ResDeletePanel.Active(false);
+        });
+
+        ResDelete.OnClickAsObservable().Subscribe(_ => 
+        {
+            m_ResDeletePanel.Init();
+            m_ResDeletePanel.Active(true);
+            m_CourseDialog.Active(false);
         });
 
         Refresh.OnClickAsObservable().Subscribe(_ => 
@@ -57,7 +73,9 @@ public class CoursePanel : BasePanel
                 CourseName = m_searchIpt.text
             };
             TCPHelper.OperateInfo(inf, EventType.CourseEvent, OperateType.SEARCH);
-        });          
+        });
+
+        Active(false);          
     }
 
     public override void Init()
