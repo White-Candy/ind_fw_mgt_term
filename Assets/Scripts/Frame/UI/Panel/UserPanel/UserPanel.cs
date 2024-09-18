@@ -42,7 +42,7 @@ public class UserPanel : BasePanel
         Import.OnClickAsObservable().Subscribe(async x =>
         {
             List<string> filesPath = FileHelper.OpenFileDialog("Excel文件(*.xlsx)" + '\0' + "*.xlsx", "选择Excel文件", "XLSX");
-            if (filesPath[0].Count() == 0) return;
+            if (filesPath.Count() == 0) return;
             if (filesPath.Count > 0)
             {
                 DialogHelper helper = new DialogHelper();

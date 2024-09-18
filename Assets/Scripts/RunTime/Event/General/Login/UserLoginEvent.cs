@@ -16,7 +16,11 @@ public class UserLoginEvent : BaseEvent
             var asyncManager = SceneManager.LoadSceneAsync("Main");
             asyncManager.allowSceneActivation = true;
         }
-
+        else
+        {
+            UIHelper.ShowMessage("登录失败", inf.hint, new ItemPackage("确定", () => {}));
+            return;
+        }
         await UniTask.Yield();
     }
 }
