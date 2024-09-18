@@ -36,10 +36,7 @@ public class ExamineDialog : BasePanel
 
     public void Start()
     {
-        columns.onValueChanged.AddListener((i) => 
-        {
-            CourseSelection(columns.options[columns.value].text);
-        });
+        columns.onValueChanged.AddListener((i) => { CourseSelection(columns.options[columns.value].text); });
 
         single.OnClickAsObservable().Subscribe(_ =>
         {
@@ -107,7 +104,7 @@ public class ExamineDialog : BasePanel
     public void Init(ExamineInfo inf, PropertyType propertyType)
     {
         UIHelper.AddDropDownOptions(ref columns, GlobalData.columnsList);
-        CourseSelection(columns.options[0].text);
+        if (columns.options.Count > 0) CourseSelection(columns.options[0].text);
 
         m_info = inf;
         m_Action = Tools.CreateObject<PD_BaseAction>(GlobalData.m_Enum2Type[propertyType]);
