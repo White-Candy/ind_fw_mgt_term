@@ -11,8 +11,7 @@ public class TCPHelper
     /// </summary>
     /// <param name="account"></param>
     /// <param name="pwd"></param>
-    /// <param name="level"></param>
-    public static void LoginReq(string account, string pwd, int level)
+    public static void LoginReq(string account, string pwd)
     {
         UserInfo inf = new UserInfo
         {
@@ -40,9 +39,6 @@ public class TCPHelper
     /// <typeparam name="T"></typeparam>
     public static void GetInfoReq<T>(EventType type) where T : BaseInfo
     {
-        // TCPBaseHelper helper = new T();
-        // helper.GetInfReq();
-
         List<T> inf = new List<T>();       
         string body = JsonMapper.ToJson(inf);
         TCP.SendAsync(body, type, OperateType.GET);

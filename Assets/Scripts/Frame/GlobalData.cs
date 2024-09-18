@@ -2,6 +2,14 @@ using System.Collections.Generic;
 
 public static class GlobalData
 {
+    public static UserInfo s_CurrUsrInf = new UserInfo();
+    public static Dictionary<string, int> s_UsrLevel = new Dictionary<string, int>()
+    {
+        {"学生", 0}, {"老师", 1}, {"主任", 2}, {"院长", 3}
+    };
+
+    public static int s_currUsrLevel = -1;
+
     public static Dictionary<PropertyType, string> m_Enum2Type = new Dictionary<PropertyType, string>()
     {
         {PropertyType.PT_USER_ADDTO, "AddUserAction"}, {PropertyType.PT_USER_SET, "SetUserAction"},
@@ -12,7 +20,7 @@ public static class GlobalData
         {PropertyType.PT_COR_ADDTO, "AddCourseAction"}, {PropertyType.PT_COR_SET, "SetCourseAction"},
         {PropertyType.PT_EXA_ADDTO, "AddExamineAction"}, {PropertyType.PT_EXA_SET, "SetExamineAction"},
     };
-
+    
     public static List<string> facultiesList = new List<string>(); // 学院
     public static List<string> classesList = new List<string>(); // 班级
     public static List<string> majorList = new List<string>(); // 班级

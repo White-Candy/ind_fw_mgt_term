@@ -7,15 +7,24 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class MenuControl : MonoBehaviour
-{
-    private List<Button> btnList = new List<Button>();
+{   
+    public Button Faculty;
+    public Button Major;
+    public Button Class;
+    public Button User;
+    public Button Columns;
+    public Button Course;
+    public Button Examine;
+    public Button Score;
+    private List<Button> m_btnList = new List<Button>();
 
     private PanelAction m_currAction = null;
 
     private void Awake()
     {
-        btnList = GetComponentsInChildren<Button>().ToList();
-        foreach (var btn in btnList)
+        m_btnList = GetComponentsInChildren<Button>().ToList();
+        Init();
+        foreach (var btn in m_btnList)
         {
             btn.onClick.AddListener(() =>
             {
@@ -28,6 +37,52 @@ public class MenuControl : MonoBehaviour
                 m_currAction?.OnEvent();
             });
         }
+    }
+
+    /// <summary>
+    /// 根据用户等级不同进行响应的初始化
+    /// </summary>
+    public void Init()
+    {
+        if (GlobalData.s_currUsrLevel == 2 || GlobalData.s_currUsrLevel == 3) { ManagerMode(); }
+        else if (GlobalData.s_currUsrLevel == 1) { TeacherMode(); }
+        else { StudentMode(); }
+    }
+
+    public void StudentMode()
+    {
+        Faculty.gameObject.SetActive(false);
+        Major.gameObject.SetActive(false);
+        Class.gameObject.SetActive(false);
+        User.gameObject.SetActive(false);
+        Columns.gameObject.SetActive(false);
+        Course.gameObject.SetActive(false);
+        Examine.gameObject.SetActive(false);
+        Score.gameObject.SetActive(true);
+    }
+
+    public void TeacherMode()
+    {
+        Faculty.gameObject.SetActive(false);
+        Major.gameObject.SetActive(false);
+        Class.gameObject.SetActive(true);
+        User.gameObject.SetActive(true);
+        Columns.gameObject.SetActive(false);
+        Course.gameObject.SetActive(true);
+        Examine.gameObject.SetActive(true);
+        Score.gameObject.SetActive(true); 
+    }
+
+    public void ManagerMode()
+    {
+        Faculty.gameObject.SetActive(true);
+        Major.gameObject.SetActive(true);
+        Class.gameObject.SetActive(true);
+        User.gameObject.SetActive(true);
+        Columns.gameObject.SetActive(true);
+        Course.gameObject.SetActive(true);
+        Examine.gameObject.SetActive(true);
+        Score.gameObject.SetActive(true); 
     }
 
     public void Destroy()

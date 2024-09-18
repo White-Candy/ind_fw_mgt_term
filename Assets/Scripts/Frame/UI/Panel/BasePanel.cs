@@ -31,7 +31,7 @@ public class BasePanel : MonoBehaviour, IPanel
         if (m_Content != null)
         {
             m_Visible = b;
-            m_Content.SetActive(b);
+            m_Content.gameObject.SetActive(b);
         }
     }
 

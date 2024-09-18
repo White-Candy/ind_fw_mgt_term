@@ -19,7 +19,7 @@ public class AddUserAction : PD_BaseAction
         UserPropertyDialog.instance.m_Identity.enabled = true;
         UserPropertyDialog.instance.m_IdCard.enabled = true;
         UserPropertyDialog.instance.m_Contact.enabled = true;
-        UserPropertyDialog.instance.m_ClassName.enabled = true;
+        UserPropertyDialog.instance.m_UnitName.enabled = true;
     }
 
     public override void Action(Action append = default, params object[] info)

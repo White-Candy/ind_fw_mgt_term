@@ -43,10 +43,7 @@ public class UserPropertyDialog : BasePanel
     public TMP_InputField m_Contact;
 
     [HideInInspector]
-    public TMP_Dropdown m_ClassName;
-
-    [HideInInspector]
-    public GameObject m_StudentLayout; // 专属于学生的控件
+    public TMP_Dropdown m_UnitName;
 
     public static UserPropertyDialog instance;
     
@@ -74,11 +71,8 @@ public class UserPropertyDialog : BasePanel
         m_Identity = GameObject.Find("IdentityrDrop").GetComponent<TMP_Dropdown>();
         m_IdCard = GameObject.Find("IdCardIpt").GetComponent<TMP_InputField>();
         m_Contact = GameObject.Find("ContactIpt").GetComponent<TMP_InputField>();
-        m_ClassName = GameObject.Find("ClassDrop").GetComponent<TMP_Dropdown>();
+        m_UnitName = GameObject.Find("UNDrop").GetComponent<TMP_Dropdown>();
 
-        m_StudentLayout = GameObject.Find("StudentLayout").gameObject;
-
-        m_StudentLayout.SetActive(false);
         Active(false);
     }
 
@@ -112,7 +106,7 @@ public class UserPropertyDialog : BasePanel
     /// <param name="t"></param>
     public void Init(UserInfo inf, PropertyType t)
     {
-        UIHelper.AddDropDownOptions(ref m_ClassName, GlobalData.classesList);
+        // UIHelper.AddDropDownOptions(ref m_UnitName, GlobalData.classesList);
 
         m_Action = Tools.CreateObject<PD_BaseAction>(GlobalData.m_Enum2Type[t]);
         m_Action.Init(inf);
@@ -134,7 +128,7 @@ public class UserPropertyDialog : BasePanel
         m_Identity.value = 0;
         m_IdCard.text = "";
         m_Contact.text = "";
-        m_ClassName.value = 0;
+        m_UnitName.value = 0;
     }
 
     /// <summary>
@@ -153,7 +147,7 @@ public class UserPropertyDialog : BasePanel
         m_IdCard.text = inf.idCoder;
         m_Identity.value = UIHelper.GetDropDownOptionIndex(m_Identity, inf.Identity);
         m_Contact.text = inf.Contact;
-        m_ClassName.value = UIHelper.GetDropDownOptionIndex(m_ClassName, inf.className);
+        m_UnitName.value = UIHelper.GetDropDownOptionIndex(m_UnitName, inf.UnitName);
     }
 
     /// <summary>
@@ -175,13 +169,7 @@ public class UserPropertyDialog : BasePanel
             Contact = m_Contact.text,
         };
 
-        if (Tools.checkList(m_ClassName.options, m_ClassName.value))
-        {
-            inf.className = m_Identity.value == 0 ? 
-                m_ClassName.options[m_ClassName.value].text : "";
-        }
-            
-        
+        if (Tools.checkList(m_UnitName.options, m_UnitName.value)) { inf.UnitName = m_UnitName.options[m_UnitName.value].text; }     
         return inf;
     }
 
@@ -192,13 +180,9 @@ public class UserPropertyDialog : BasePanel
     public void checkIdentity(int identityVal)
     {
         if (identityVal == 0)
-        {
-            m_StudentLayout.gameObject.SetActive(true);
-        }
+            UIHelper.AddDropDownOptions(ref m_UnitName, GlobalData.classesList);
         else
-        {
-            m_StudentLayout.gameObject.SetActive(false);
-        }
+            UIHelper.AddDropDownOptions(ref m_UnitName, GlobalData.facultiesList);
     }
 
     /// <summary>
