@@ -15,11 +15,22 @@ public class SearchDialog : BasePanel
     public TMP_Dropdown Class;
     public TMP_Dropdown Course;
     public TMP_InputField Year;
-    public TMP_InputField Month;
-    public TMP_InputField Day;
+    public TMP_Dropdown Month;
+    public TMP_Dropdown Day;
 
     public void Start()
     {
+        List<string> monthList = new List<string>();
+        List<string> dayList = new List<string>();
+        for(int i = 1; i <= 31; ++i)
+        {
+            if (i <= 12) monthList.Add(i.ToString());
+            dayList.Add(i.ToString());
+        }
+        UIHelper.AddDropDownOptions(ref Month, monthList);
+        UIHelper.AddDropDownOptions(ref Day, dayList);
+        
+
         Search.OnClickAsObservable().Subscribe(_ => 
         {
             //if (!InputFieldCheck()) return;
@@ -28,7 +39,7 @@ public class SearchDialog : BasePanel
             if (Name.text.Count() > 0) { usrName = Name.text; }
             if (Class.value > 0) { _className = Class.options[Class.value].text; }
             if (Course.value > 0) { _courseName = Course.options[Course.value].text; }
-            if (Year.text.Count() > 0 && Year.text.Count() > 0 && Year.text.Count() > 0) { _registerTime = $"{Year.text}/{Month.text}/{Day.text}"; }
+            if (Year.text.Count() > 0) { _registerTime = $"{Year.text}/{Month.options[Month.value].text}/{Day.options[Day.value].text}"; }
             ScoreInfo scoreInf = new ScoreInfo()
             {
                 Name = usrName, className = _className,
@@ -46,8 +57,7 @@ public class SearchDialog : BasePanel
 
     public bool InputFieldCheck()
     {
-        if (!UIHelper.InputFieldCheck(Name.text) || !UIHelper.InputFieldCheck(Year.text) || !UIHelper.InputFieldCheck(Month.text)
-            || !UIHelper.InputFieldCheck(Day.text)) return false;
+        if (!UIHelper.InputFieldCheck(Name.text) || !UIHelper.InputFieldCheck(Year.text)) return false;
         return true;
     }
 
@@ -80,8 +90,8 @@ public class SearchDialog : BasePanel
         Course.value = 0;
 
         Year.text = "";
-        Month.text = "";
-        Day.text = "";
+        Month.value = 0;
+        Day.value = 0;
         Active(false);
     }
 }

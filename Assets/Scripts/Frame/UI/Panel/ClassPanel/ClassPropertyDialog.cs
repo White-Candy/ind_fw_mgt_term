@@ -1,9 +1,7 @@
-using UnityEngine;
+
 using TMPro;
 using UniRx;
 using UnityEngine.UI;
-using static TMPro.TMP_Dropdown;
-using OpenCover.Framework.Model;
 
 public class ClassPropertyDialog : BasePanel
 {

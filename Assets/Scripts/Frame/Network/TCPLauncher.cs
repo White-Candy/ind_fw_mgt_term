@@ -11,11 +11,14 @@ public class TCPLauncher : MonoBehaviour
 
     private DispatcherEvent m_dispatcher = new DispatcherEvent();
 
-    public void Awake()
+    public async void Awake()
     {
         DontDestroyOnLoad(this);
 
-        TCP.Connect("127.0.0.1", 5800);
+        await FileHelper.DownLoadTextFromServer(Application.streamingAssetsPath + "\\IP.txt", (ip) => 
+        {
+            TCP.Connect(ip, 5800);
+        });
     }
 
     public void Update()
