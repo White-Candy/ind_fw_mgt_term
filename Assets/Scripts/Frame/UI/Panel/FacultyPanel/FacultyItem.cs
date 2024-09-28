@@ -52,6 +52,6 @@ public class FacultyItem : MonoBehaviour
     /// </summary>
     public void ConfirmDelete()
     {
-        TCPHelper.OperateInfo(m_info, EventType.FacultyEvent, OperateType.DELETE);
+        NetHelper.OperateInfo(m_info, EventType.FacultyEvent, OperateType.DELETE);
     }
 }

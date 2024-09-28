@@ -66,7 +66,7 @@ public class ExaminePanel : BasePanel
         
         Refresh.OnClickAsObservable().Subscribe(_ => 
         {
-            TCPHelper.GetInfoReq<ExamineInfo>(EventType.ExamineEvent);
+            NetHelper.GetInfoReq<ExamineInfo>(EventType.ExamineEvent);
         });
 
         m_searchBtn.OnClickAsObservable().Subscribe(_ => 
@@ -76,7 +76,7 @@ public class ExaminePanel : BasePanel
             {
                 CourseName = m_searchIpt.text
             };
-            TCPHelper.OperateInfo(inf, EventType.ExamineEvent, OperateType.SEARCH);
+            NetHelper.OperateInfo(inf, EventType.ExamineEvent, OperateType.SEARCH);
         });   
 
         Active(false);
@@ -84,8 +84,8 @@ public class ExaminePanel : BasePanel
 
     public override void Init()
     {
-        TCPHelper.GetInitReq();
-        TCPHelper.GetInfoReq<ExamineInfo>(EventType.ExamineEvent);
+        NetHelper.GetInitReq();
+        NetHelper.GetInfoReq<ExamineInfo>(EventType.ExamineEvent);
     }
 
     /// <summary>

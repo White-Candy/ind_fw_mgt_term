@@ -58,6 +58,6 @@ public class ClassItem : MonoBehaviour
     public void ConfirmDelete()
     { 
         // TODO...CHECK
-        TCPHelper.OperateInfo(m_info, EventType.ClassEvent, OperateType.DELETE);
+        NetHelper.OperateInfo(m_info, EventType.ClassEvent, OperateType.DELETE);
     }
 }

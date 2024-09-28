@@ -62,7 +62,7 @@ public class CoursePropertyDialog : BasePanel
                     m_filesInfo[i].relativePath = relativePath + fileName;
                 }
 
-                TCPHelper.UploadFile(m_filesInfo);
+                NetHelper.UploadFile(m_filesInfo);
                 m_filesInfo.Clear();
             }, inf:Output());
             Close();

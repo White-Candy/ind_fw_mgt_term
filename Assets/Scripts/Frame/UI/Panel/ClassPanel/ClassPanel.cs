@@ -48,7 +48,7 @@ public class ClassPanel : BasePanel
 
         Refresh.OnClickAsObservable().Subscribe(_ => 
         {
-            TCPHelper.GetInfoReq<ClassInfo>(EventType.ClassEvent);
+            NetHelper.GetInfoReq<ClassInfo>(EventType.ClassEvent);
         });
 
         m_searchBtn.OnClickAsObservable().Subscribe(_ => 
@@ -58,14 +58,14 @@ public class ClassPanel : BasePanel
             {
                 Class = m_searchIpt.text
             };
-            TCPHelper.OperateInfo(inf, EventType.ClassEvent, OperateType.SEARCH);
+            NetHelper.OperateInfo(inf, EventType.ClassEvent, OperateType.SEARCH);
         });            
     }
 
     public override void Init()
     {
-        TCPHelper.GetInitReq();
-        TCPHelper.GetInfoReq<ClassInfo>(EventType.ClassEvent);
+        NetHelper.GetInitReq();
+        NetHelper.GetInfoReq<ClassInfo>(EventType.ClassEvent);
     }
 
     /// <summary>

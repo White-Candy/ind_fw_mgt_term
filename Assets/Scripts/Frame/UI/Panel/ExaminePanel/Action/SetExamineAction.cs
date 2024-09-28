@@ -22,6 +22,6 @@ public class SetExamineAction : PD_BaseAction
 
         List<ExamineInfo> info = inf[0] as List<ExamineInfo>;
 
-        TCPHelper.OperateInfo(info, EventType.ExamineEvent, OperateType.REVISE);
+        NetHelper.OperateInfo(info, EventType.ExamineEvent, OperateType.REVISE);
     }
 }

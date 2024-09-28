@@ -24,7 +24,7 @@ public class ResItem : MonoBehaviour
     {
         UIHelper.ShowMessage("资源删除", "是否删除该资源文件?", new ItemPackage("确定", () => 
         {
-            TCPHelper.OperateInfo(m_info, EventType.ResEvent, OperateType.DELETE);
+            NetHelper.OperateInfo(m_info, EventType.ResEvent, OperateType.DELETE);
         }), new ItemPackage("取消", null));
     }
 }

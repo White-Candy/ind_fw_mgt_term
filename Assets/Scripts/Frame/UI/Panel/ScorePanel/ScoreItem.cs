@@ -69,6 +69,6 @@ public class ScoreItem : MonoBehaviour
     /// </summary>
     public void ConfirmDelete()
     { 
-        TCPHelper.OperateInfo(m_info, EventType.ScoreEvent, OperateType.DELETE);
+        NetHelper.OperateInfo(m_info, EventType.ScoreEvent, OperateType.DELETE);
     }    
 }

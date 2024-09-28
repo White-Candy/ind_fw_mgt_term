@@ -26,6 +26,6 @@ public class AddClassAction : PD_BaseAction
             id.Add(int.Parse(item.id));
         }
         info.id = Tools.SpawnRandom(id).ToString();
-        TCPHelper.OperateInfo(info, EventType.ClassEvent, OperateType.ADD);
+        NetHelper.OperateInfo(info, EventType.ClassEvent, OperateType.ADD);
     }
 }

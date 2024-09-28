@@ -17,6 +17,6 @@ public class SetColAction : PD_BaseAction
 
         ColumnsInfo info = inf[0] as ColumnsInfo;
 
-        TCPHelper.OperateInfo(info, EventType.ColumnsEvent, OperateType.REVISE);
+        NetHelper.OperateInfo(info, EventType.ColumnsEvent, OperateType.REVISE);
     }
 }

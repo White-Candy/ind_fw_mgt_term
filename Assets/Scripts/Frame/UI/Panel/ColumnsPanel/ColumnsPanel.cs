@@ -46,7 +46,7 @@ public class ColumnsPanel : BasePanel
 
         Refresh.OnClickAsObservable().Subscribe(_ => 
         {
-            TCPHelper.GetInfoReq<ColumnsInfo>(EventType.ColumnsEvent);
+            NetHelper.GetInfoReq<ColumnsInfo>(EventType.ColumnsEvent);
         });
 
         m_searchBtn.OnClickAsObservable().Subscribe(_ => 
@@ -56,15 +56,15 @@ public class ColumnsPanel : BasePanel
             {
                 Name = m_searchIpt.text
             };
-            TCPHelper.OperateInfo(inf, EventType.ColumnsEvent, OperateType.SEARCH);
+            NetHelper.OperateInfo(inf, EventType.ColumnsEvent, OperateType.SEARCH);
         });           
     }
 
     public override void Init()
     {
-        // TCPHelper.GetInfoReq<TCPFacHelper>();
-        TCPHelper.GetInitReq();
-        TCPHelper.GetInfoReq<ColumnsInfo>(EventType.ColumnsEvent);
+        // NetHelper.GetInfoReq<TCPFacHelper>();
+        NetHelper.GetInitReq();
+        NetHelper.GetInfoReq<ColumnsInfo>(EventType.ColumnsEvent);
     }
 
     /// <summary>

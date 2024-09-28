@@ -32,6 +32,6 @@ public class AddUserAction : PD_BaseAction
             inf
         };
     
-        TCPHelper.OperateInfo(single, EventType.UserEvent, OperateType.ADD);
+        NetHelper.OperateInfo(single, EventType.UserEvent, OperateType.ADD);
     }
 }

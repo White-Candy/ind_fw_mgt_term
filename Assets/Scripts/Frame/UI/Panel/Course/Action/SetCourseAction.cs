@@ -15,7 +15,7 @@ public class SetCourseAction : PD_BaseAction
         base.Action(inf:inf);
 
         CourseInfo info = inf[0] as CourseInfo;
-        TCPHelper.OperateInfo(info, EventType.CourseEvent, OperateType.REVISE);  
+        NetHelper.OperateInfo(info, EventType.CourseEvent, OperateType.REVISE);  
 
         append();
     }

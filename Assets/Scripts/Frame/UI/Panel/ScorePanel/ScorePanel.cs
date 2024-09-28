@@ -53,8 +53,8 @@ public class ScorePanel : BasePanel
 
     public override void Init()
     {
-        TCPHelper.GetInitReq();
-        TCPHelper.GetInfoReq<ScoreInfo>(EventType.ScoreEvent);
+        NetHelper.GetInitReq();
+        NetHelper.GetInfoReq<ScoreInfo>(EventType.ScoreEvent);
     }
 
     /// <summary>

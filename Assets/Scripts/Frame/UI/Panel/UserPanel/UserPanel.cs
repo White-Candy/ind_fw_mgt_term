@@ -56,7 +56,7 @@ public class UserPanel : BasePanel
             // 请求把新导入的学生信息保存到服务器中
             if (list != null)
             {
-                TCPHelper.OperateInfo(list, EventType.UserEvent, OperateType.ADD);
+                NetHelper.OperateInfo(list, EventType.UserEvent, OperateType.ADD);
             }              
         });
 
@@ -81,8 +81,8 @@ public class UserPanel : BasePanel
         // 刷新学生信息。
         Refresh.OnClickAsObservable().Subscribe(x => 
         {
-            // TCPHelper.GetInfoReq<TCPStuHelper>();
-            TCPHelper.GetInfoReq<UserInfo>(EventType.UserEvent);
+            // NetHelper.GetInfoReq<TCPStuHelper>();
+            NetHelper.GetInfoReq<UserInfo>(EventType.UserEvent);
         });
 
         m_searchBtn.OnClickAsObservable().Subscribe(_ => 
@@ -92,7 +92,7 @@ public class UserPanel : BasePanel
             {
                 Name = m_searchIpt.text
             };
-            TCPHelper.OperateInfo(inf, EventType.UserEvent, OperateType.SEARCH);
+            NetHelper.OperateInfo(inf, EventType.UserEvent, OperateType.SEARCH);
         });         
     }
 
@@ -101,10 +101,10 @@ public class UserPanel : BasePanel
     /// </summary>
     public override void Init()
     {
-        // TCPHelper.GetInfoReq<TCPStuHelper>();
+        // NetHelper.GetInfoReq<TCPStuHelper>();
 
-        TCPHelper.GetInitReq();
-        TCPHelper.GetInfoReq<UserInfo>(EventType.UserEvent);
+        NetHelper.GetInitReq();
+        NetHelper.GetInfoReq<UserInfo>(EventType.UserEvent);
     }
 
     /// <summary>

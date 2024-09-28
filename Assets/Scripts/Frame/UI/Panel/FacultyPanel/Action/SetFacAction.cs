@@ -17,6 +17,6 @@ public class SetFacAction : PD_BaseAction
 
         FacultyInfo info = inf[0] as FacultyInfo;
 
-        TCPHelper.OperateInfo(info, EventType.FacultyEvent, OperateType.REVISE);
+        NetHelper.OperateInfo(info, EventType.FacultyEvent, OperateType.REVISE);
     }
 }

@@ -18,6 +18,6 @@ public class SetClassAction : PD_BaseAction
         base.Action(inf:inf);
 
         ClassInfo info = inf[0] as ClassInfo;
-        TCPHelper.OperateInfo(info, EventType.ClassEvent, OperateType.REVISE);  
+        NetHelper.OperateInfo(info, EventType.ClassEvent, OperateType.REVISE);  
     }
 }

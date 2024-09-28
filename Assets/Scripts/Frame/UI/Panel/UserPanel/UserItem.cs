@@ -62,6 +62,6 @@ public class UserItem : MonoBehaviour
     /// </summary>
     public void ConfirmDelete()
     {
-        TCPHelper.OperateInfo(m_inf, EventType.UserEvent, OperateType.DELETE);
+        NetHelper.OperateInfo(m_inf, EventType.UserEvent, OperateType.DELETE);
     }
 }  

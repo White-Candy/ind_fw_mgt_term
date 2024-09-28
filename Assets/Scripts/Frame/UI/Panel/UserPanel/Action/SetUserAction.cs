@@ -31,6 +31,6 @@ public class SetUserAction : PD_BaseAction
 
         UserInfo inf = info[0] as UserInfo;
 
-        TCPHelper.OperateInfo(inf, EventType.UserEvent, OperateType.REVISE);
+        NetHelper.OperateInfo(inf, EventType.UserEvent, OperateType.REVISE);
     }
 }

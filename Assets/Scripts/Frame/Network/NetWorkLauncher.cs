@@ -5,7 +5,7 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class TCPLauncher : MonoBehaviour
+public class NetWorkLauncher : MonoBehaviour
 {
     // public static TCPLauncher instance;
 
@@ -17,15 +17,16 @@ public class TCPLauncher : MonoBehaviour
 
         await FileHelper.DownLoadTextFromServer(Application.streamingAssetsPath + "\\IP.txt", (ip) => 
         {
-            TCP.Connect(ip, 5800);
+            GlobalData.IP = $"http://{ip}/";
+            // TCP.Connect(ip, 5800);
         });
     }
 
     public void Update()
     {
-        if (TCP.m_MessQueue.Count > 0)
+        if (HTTP.m_MessQueue.Count > 0)
         {
-            MessPackage pkg = TCP.m_MessQueue.Dequeue();
+            MessPackage pkg = HTTP.m_MessQueue.Dequeue();
             //Debug.Log(pkg.ret);
             m_dispatcher.Dispatcher(pkg);
         }
@@ -33,7 +34,7 @@ public class TCPLauncher : MonoBehaviour
 
     public void OnDestroy()
     {
-        TCPHelper.Close();
-        //await UniTask.WaitUntil(() => { return true == TCPHelper.Close(); });
+        // TCPHelper.Close();
+        // await UniTask.WaitUntil(() => { return true == TCPHelper.Close(); });
     }
 }

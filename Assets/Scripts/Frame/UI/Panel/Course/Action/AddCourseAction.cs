@@ -24,7 +24,7 @@ public class AddCourseAction : PD_BaseAction
             id.Add(int.Parse(item.id));
         }
         info.id = Tools.SpawnRandom(id).ToString();
-        TCPHelper.OperateInfo(info, EventType.CourseEvent, OperateType.ADD);
+        NetHelper.OperateInfo(info, EventType.CourseEvent, OperateType.ADD);
 
         append();
     }
