@@ -3,12 +3,13 @@ using UnityEngine;
 
 public class SetFacAction : PD_BaseAction
 {
+    private FacPropertyDialog m_FacProDialog;
     public override void Init(params object[] inf)
     {   
         FacultyInfo info = inf[0] as FacultyInfo;
-        FacPropertyDialog.instance.Loading(info);
-        FacPropertyDialog.instance.RegisterTime.enabled = false;
-        FacPropertyDialog.instance.ID.enabled = false;
+        m_FacProDialog.Loading(info);
+        m_FacProDialog.RegisterTime.enabled = false;
+        m_FacProDialog.ID.enabled = false;
     }
 
     public override void Action(Action append = default, params object[] inf)

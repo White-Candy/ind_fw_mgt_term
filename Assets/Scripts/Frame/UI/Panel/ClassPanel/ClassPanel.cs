@@ -26,7 +26,7 @@ public class ClassPanel : BasePanel
     private List<GameObject> m_itemList = new List<GameObject>();
     private Button m_searchBtn;
     private TMP_InputField m_searchIpt;
-    
+    private ClassPropertyDialog m_ClassProDialog;
     public override void Awake()
     {
         base.Awake();
@@ -39,11 +39,12 @@ public class ClassPanel : BasePanel
     {
         m_searchBtn = Search.GetComponentInChildren<Button>();
         m_searchIpt = Search.GetComponentInChildren<TMP_InputField>();
-        
+        m_ClassProDialog = UIHelper.FindPanel<ClassPropertyDialog>();
+
         AddTo.OnClickAsObservable().Subscribe(_ => 
         {
-            ClassPropertyDialog.instance.Init(default, PropertyType.PT_CLASS_ADDTO);
-            ClassPropertyDialog.instance.Active(true);
+            m_ClassProDialog.Init(default, PropertyType.PT_CLASS_ADDTO);
+            m_ClassProDialog.Active(true);
         });
 
         Refresh.OnClickAsObservable().Subscribe(_ => 
@@ -112,7 +113,7 @@ public class ClassPanel : BasePanel
     /// </summary>
     public override void Close()
     {
-        ClassPropertyDialog.instance.Close();
+        m_ClassProDialog.Close();
         Active(false);
 
         Clear();

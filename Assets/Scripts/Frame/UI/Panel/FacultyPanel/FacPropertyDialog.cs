@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class FacPropertyDialog : BasePanel
 {
-    public static FacPropertyDialog instance;
+    // public static FacPropertyDialog instance;
 
     public Button OK;
     public Button Cancel;
@@ -20,7 +20,7 @@ public class FacPropertyDialog : BasePanel
     {
         base.Awake();
 
-        instance = this;
+        // instance = this;
         Active(false);
     }
 

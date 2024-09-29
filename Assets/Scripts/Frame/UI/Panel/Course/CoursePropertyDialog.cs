@@ -17,6 +17,7 @@ public class CoursePropertyDialog : BasePanel
     public TMP_InputField Working;
     public TMP_Dropdown Content;
 
+
     // 教学资源下的按钮
     private Button JiaoAn;
     private Button TuPian;
@@ -27,6 +28,7 @@ public class CoursePropertyDialog : BasePanel
     private Button GuiFan;
     private string RegisterTime;
     private PD_BaseAction m_Action;
+    private GameObject SourceDeleteGourp;
 
     private List<FilePackage> m_filesInfo = new List<FilePackage>();
 
@@ -42,6 +44,10 @@ public class CoursePropertyDialog : BasePanel
         FangAn = UIHelper.GetComponentInScene<Button>("FangAn");
         GuiFan = UIHelper.GetComponentInScene<Button>("GuiFan");
 
+#if UNITY_WEBGL
+        SourceDeleteGourp = GameObject.Find("Resources").gameObject;
+        SourceDeleteGourp.gameObject.SetActive(false);
+#endif 
         instance = this;
         Active(false);
     }

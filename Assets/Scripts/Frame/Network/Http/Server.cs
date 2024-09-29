@@ -35,7 +35,7 @@ public class Server : MonoBehaviour
             req.SetRequestHeader("Content-Type", "application/json;charset=utf8");
 
             await req.SendWebRequest();
-            if (req.error == null) 
+            if (req.error == null)  
             {
                 // Debug.Log("服务器链接成功");
                 while(!req.isDone)

@@ -33,6 +33,10 @@ public class CoursePanel : BasePanel
         base.Awake();
 
         // instance = this;
+
+#if UNITY_WEBGL
+        ResDelete.gameObject.SetActive(false);
+#endif
     }
     
     public void Start()

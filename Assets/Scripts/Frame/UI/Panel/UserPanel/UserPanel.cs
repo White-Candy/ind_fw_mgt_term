@@ -24,19 +24,19 @@ public class UserPanel : BasePanel
     private List<UserInfo> m_UsersInfo = new List<UserInfo>();
     private Button m_searchBtn;
     private TMP_InputField m_searchIpt;
-    
+    private UserPropertyDialog m_UserProDialog;
+
     public override void Awake()
     {
         base.Awake();
         // instance = this;
-        
-        Active(false);
     }
 
     public void Start()
     {
         m_searchBtn = Search.GetComponentInChildren<Button>();
         m_searchIpt = Search.GetComponentInChildren<TMP_InputField>();
+        m_UserProDialog = UIHelper.FindPanel<UserPropertyDialog>();
 
         // 信息导入
         Import.OnClickAsObservable().Subscribe(async x =>
@@ -74,8 +74,8 @@ public class UserPanel : BasePanel
         // 添加信息。
         AddTo.OnClickAsObservable().Subscribe(x => 
         {
-            UserPropertyDialog.instance.Init(default, PropertyType.PT_USER_ADDTO);
-            UserPropertyDialog.instance.Active(true);
+            m_UserProDialog.Init(default, PropertyType.PT_USER_ADDTO);
+            m_UserProDialog.Active(true);
         });
 
         // 刷新学生信息。
@@ -93,7 +93,9 @@ public class UserPanel : BasePanel
                 Name = m_searchIpt.text
             };
             NetHelper.OperateInfo(inf, EventType.UserEvent, OperateType.SEARCH);
-        });         
+        });     
+        
+        Active(false);    
     }
 
     /// <summary>

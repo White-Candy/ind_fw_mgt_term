@@ -1,3 +1,4 @@
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Logical;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -28,8 +29,11 @@ public class ClassItem : MonoBehaviour
 
         Revise.OnClickAsObservable().Subscribe(_ => 
         {
-            ClassPropertyDialog.instance.Init(m_info, PropertyType.PT_CLASS_SET);
-            ClassPropertyDialog.instance.Active(true);
+            ClassPropertyDialog classProDialog = UIHelper.FindPanel<ClassPropertyDialog>();
+            classProDialog.Active(true);
+
+            // ClassPropertyDialog.instance.Init(m_info, PropertyType.PT_CLASS_SET);
+            // ClassPropertyDialog.instance.Active(true);
         });
     }
 

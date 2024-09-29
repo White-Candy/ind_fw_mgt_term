@@ -891,6 +891,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6309206787846846585, guid: 61a782ad9dfe50046b31ccca65c0bdaf, type: 3}
+      propertyPath: m_InputType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6309206787846846585, guid: 61a782ad9dfe50046b31ccca65c0bdaf, type: 3}
+      propertyPath: m_ContentType
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 6309206787846846586, guid: 61a782ad9dfe50046b31ccca65c0bdaf, type: 3}
       propertyPath: m_SizeDelta.x
       value: 334.84
