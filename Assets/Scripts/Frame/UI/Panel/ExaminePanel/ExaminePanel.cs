@@ -28,7 +28,7 @@ public class ExaminePanel : BasePanel
 
     public Button Activation;
     public Button Refresh;
-   public GameObject Search;
+    public GameObject Search;
     public static List<ExamineInfo> m_examineesInfo = new List<ExamineInfo>();
 
     private List<GameObject> m_itemList = new List<GameObject>();
