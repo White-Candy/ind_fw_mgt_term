@@ -95,6 +95,11 @@ public class UserPanel : BasePanel
             NetHelper.OperateInfo(inf, EventType.UserEvent, OperateType.SEARCH);
         });     
         
+#if UNITY_WEBGL
+        Import.gameObject.SetActive(false);
+        Export.gameObject.SetActive(false);
+#endif
+
         Active(false);    
     }
 
