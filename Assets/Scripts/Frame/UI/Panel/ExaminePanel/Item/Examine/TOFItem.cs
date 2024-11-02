@@ -49,7 +49,7 @@ public class TOFItem : MonoBehaviour
 
     public bool InputFieldCheck()
     {
-        if (!UIHelper.InputFieldCheck(TopicContent.text) || !ValidateHelper.IsNumberPosInt(Score.text)) return false;
+        if (!UIHelper.InputFieldCheck(TopicContent.text) || !ValidateHelper.IsNumberDecimal(Score.text)) return false;
         return true;
     }
     

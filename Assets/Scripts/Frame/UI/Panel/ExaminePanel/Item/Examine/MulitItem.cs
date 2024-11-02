@@ -122,7 +122,7 @@ public class MulitItem : MonoBehaviour
     /// <returns></returns>
     public bool InputFieldCheck()
     {
-        if (!UIHelper.InputFieldCheck(TopicContent.text) || !ValidateHelper.IsNumberPosInt(Score.text)) return false;
+        if (!UIHelper.InputFieldCheck(TopicContent.text) || !ValidateHelper.IsNumberDecimal(Score.text)) return false;
         foreach (var choice in choicesItem)
         {
             if (!choice.InputFieldCheck()) return false;
