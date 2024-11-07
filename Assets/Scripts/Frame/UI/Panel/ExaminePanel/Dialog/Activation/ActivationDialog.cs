@@ -32,7 +32,7 @@ public class ActivationDialog : BasePanel
         okButton.onClick.AddListener(() => 
         {
             Save();
-            TCPHelper.OperateInfo(m_list, EventType.ExamineEvent, OperateType.REVISE);
+            NetHelper.OperateInfo(m_list, EventType.ExamineEvent, OperateType.REVISE);
             Close();
         });
 

@@ -32,6 +32,6 @@ public class AddExamineAction : PD_BaseAction
         info.id = Tools.SpawnRandom(id).ToString();
         info.RegisterTime = Tools.GetCurrLocalTime_YMD();
 
-        TCPHelper.OperateInfo(info, EventType.ExamineEvent, OperateType.ADD);
+        NetHelper.OperateInfo(info, EventType.ExamineEvent, OperateType.ADD);
     }
 }

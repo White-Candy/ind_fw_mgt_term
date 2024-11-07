@@ -45,7 +45,7 @@ public class MajorPanel : BasePanel
 
         Refresh.OnClickAsObservable().Subscribe(_ => 
         {
-            TCPHelper.GetInfoReq<MajorInfo>(EventType.MajorEvent);
+            NetHelper.GetInfoReq<MajorInfo>(EventType.MajorEvent);
         });
 
         m_searchBtn.OnClickAsObservable().Subscribe(_ => 
@@ -56,14 +56,14 @@ public class MajorPanel : BasePanel
             {
                 MajorName = m_searchIpt.text
             };
-            TCPHelper.OperateInfo(inf, EventType.MajorEvent, OperateType.SEARCH);
+            NetHelper.OperateInfo(inf, EventType.MajorEvent, OperateType.SEARCH);
         });        
     }
 
     public override void Init()
     {
-        TCPHelper.GetInitReq();
-        TCPHelper.GetInfoReq<MajorInfo>(EventType.MajorEvent);
+        NetHelper.GetInitReq();
+        NetHelper.GetInfoReq<MajorInfo>(EventType.MajorEvent);
     }
 
     /// <summary>

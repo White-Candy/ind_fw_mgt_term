@@ -6,6 +6,8 @@ using System.IO;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
+using UnityEngine.Networking;
 
 public static class FileHelper
 {
@@ -130,6 +132,25 @@ public static class FileHelper
             finally { fs?.Close(); }
         }     
         return new byte[0];
+    }
+
+    /// <summary>
+    /// 根据 path_url 找到文本内容
+    /// </summary>
+    /// <param name="path_url"></param>
+    /// <param name="callback"></param>
+    /// <returns></returns>
+    public static async UniTask DownLoadTextFromServer(string path_url, Action<string> callback = null)
+    {
+        UnityWebRequest req = UnityWebRequest.Get(path_url);
+        await req.SendWebRequest();
+
+        string content = req.downloadHandler.text;
+
+        if (callback != null)
+        {
+            callback(content);
+        }
     }
 }
 

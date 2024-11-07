@@ -33,6 +33,10 @@ public class CoursePanel : BasePanel
         base.Awake();
 
         // instance = this;
+
+#if UNITY_WEBGL
+        ResDelete.gameObject.SetActive(false);
+#endif
     }
     
     public void Start()
@@ -62,7 +66,7 @@ public class CoursePanel : BasePanel
 
         Refresh.OnClickAsObservable().Subscribe(_ => 
         {
-            TCPHelper.GetInfoReq<CourseInfo>(EventType.CourseEvent);
+            NetHelper.GetInfoReq<CourseInfo>(EventType.CourseEvent);
         });
 
         m_searchBtn.OnClickAsObservable().Subscribe(_ => 
@@ -72,7 +76,7 @@ public class CoursePanel : BasePanel
             {
                 CourseName = m_searchIpt.text
             };
-            TCPHelper.OperateInfo(inf, EventType.CourseEvent, OperateType.SEARCH);
+            NetHelper.OperateInfo(inf, EventType.CourseEvent, OperateType.SEARCH);
         });
 
         Active(false);          
@@ -80,8 +84,8 @@ public class CoursePanel : BasePanel
 
     public override void Init()
     {
-        TCPHelper.GetInitReq();
-        TCPHelper.GetInfoReq<CourseInfo>(EventType.CourseEvent);
+        NetHelper.GetInitReq();
+        NetHelper.GetInfoReq<CourseInfo>(EventType.CourseEvent);
     }
 
     /// <summary>

@@ -24,6 +24,6 @@ public class AddColAction : PD_BaseAction
         }
         info.id = Tools.SpawnRandom(id).ToString();
 
-        TCPHelper.OperateInfo(info, EventType.ColumnsEvent, OperateType.ADD);
+        NetHelper.OperateInfo(info, EventType.ColumnsEvent, OperateType.ADD);
     }
 }

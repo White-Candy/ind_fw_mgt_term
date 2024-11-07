@@ -14,6 +14,8 @@ public class FacultyItem : MonoBehaviour
     public Button Revise;
     public Button Delete;
 
+    private FacPropertyDialog m_FacProDialog;
+
     private FacultyInfo m_info = new FacultyInfo();
 
     public void Start()
@@ -27,8 +29,8 @@ public class FacultyItem : MonoBehaviour
 
         Revise.OnClickAsObservable().Subscribe(_ => 
         {
-            FacPropertyDialog.instance.Init(m_info, PropertyType.PT_FAC_SET);
-            FacPropertyDialog.instance.Active(true);
+            m_FacProDialog.Init(m_info, PropertyType.PT_FAC_SET);
+            m_FacProDialog.Active(true);
         });
     }
 
@@ -52,6 +54,6 @@ public class FacultyItem : MonoBehaviour
     /// </summary>
     public void ConfirmDelete()
     {
-        TCPHelper.OperateInfo(m_info, EventType.FacultyEvent, OperateType.DELETE);
+        NetHelper.OperateInfo(m_info, EventType.FacultyEvent, OperateType.DELETE);
     }
 }

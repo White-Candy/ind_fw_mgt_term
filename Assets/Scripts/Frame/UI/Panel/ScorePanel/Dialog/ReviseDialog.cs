@@ -23,7 +23,7 @@ public class ReviseDialog : BasePanel
             if (!InputFieldCheck()) return;
             m_inf.theoryScore = theoryScore.text;
             m_inf.trainingScore = trainingScore.text;
-            TCPHelper.OperateInfo(m_inf, EventType.ScoreEvent, OperateType.REVISE);
+            NetHelper.OperateInfo(m_inf, EventType.ScoreEvent, OperateType.REVISE);
             Close();
         });
 

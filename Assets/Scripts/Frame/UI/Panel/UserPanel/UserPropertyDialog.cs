@@ -45,7 +45,7 @@ public class UserPropertyDialog : BasePanel
     [HideInInspector]
     public TMP_Dropdown m_UnitName;
 
-    public static UserPropertyDialog instance;
+    // public static UserPropertyDialog instance;
     
     [HideInInspector]
     public PropertyType m_Type = PropertyType.PT_None; 
@@ -56,7 +56,7 @@ public class UserPropertyDialog : BasePanel
     {
         base.Awake();
 
-        instance = this;
+        // instance = this;
 
         OK = GameObject.Find("OK").GetComponent<Button>();
         Cancel = GameObject.Find("Cancel").GetComponent<Button>();
@@ -72,8 +72,6 @@ public class UserPropertyDialog : BasePanel
         m_IdCard = GameObject.Find("IdCardIpt").GetComponent<TMP_InputField>();
         m_Contact = GameObject.Find("ContactIpt").GetComponent<TMP_InputField>();
         m_UnitName = GameObject.Find("UNDrop").GetComponent<TMP_Dropdown>();
-
-        Active(false);
     }
 
     public void Start()
@@ -97,6 +95,8 @@ public class UserPropertyDialog : BasePanel
         {
             checkIdentity(idx);
         });
+
+        Active(false);
     }
 
     /// <summary>

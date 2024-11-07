@@ -17,6 +17,6 @@ public class SetMajAction : PD_BaseAction
         base.Action(inf:inf);
 
         MajorInfo info = inf[0] as MajorInfo;
-        TCPHelper.OperateInfo(info, EventType.MajorEvent, OperateType.REVISE);  
+        NetHelper.OperateInfo(info, EventType.MajorEvent, OperateType.REVISE);  
     }
 }

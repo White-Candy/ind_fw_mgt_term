@@ -28,13 +28,7 @@ public class MenuControl : MonoBehaviour
         {
             btn.onClick.AddListener(() =>
             {
-                PanelAction action = new PanelAction($"{btn.name}Panel");
-                if (m_currAction != null)
-                {
-                    m_currAction.Close();
-                }
-                m_currAction = action;
-                m_currAction?.OnEvent();
+                ButtonClick(btn);
             });
         }
     }
@@ -59,6 +53,7 @@ public class MenuControl : MonoBehaviour
         Course.gameObject.SetActive(false);
         Examine.gameObject.SetActive(false);
         Score.gameObject.SetActive(true);
+        ButtonClick(Score);
     }
 
     public void TeacherMode()
@@ -71,6 +66,7 @@ public class MenuControl : MonoBehaviour
         Course.gameObject.SetActive(true);
         Examine.gameObject.SetActive(true);
         Score.gameObject.SetActive(true); 
+        ButtonClick(Class);
     }
 
     public void ManagerMode()
@@ -83,6 +79,18 @@ public class MenuControl : MonoBehaviour
         Course.gameObject.SetActive(true);
         Examine.gameObject.SetActive(true);
         Score.gameObject.SetActive(true); 
+        ButtonClick(Faculty);
+    }
+
+    public void ButtonClick(Button btn)
+    {
+            PanelAction action = new PanelAction($"{btn.name}Panel");
+            if (m_currAction != null)
+            {
+                m_currAction.Close();
+            }
+            m_currAction = action;
+            m_currAction?.OnEvent();
     }
 
     public void Destroy()

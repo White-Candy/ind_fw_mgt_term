@@ -54,6 +54,6 @@ public class MajorItem : MonoBehaviour
     /// </summary>
     public void ConfirmDelete()
     { 
-        TCPHelper.OperateInfo(m_info, EventType.MajorEvent, OperateType.DELETE);
+        NetHelper.OperateInfo(m_info, EventType.MajorEvent, OperateType.DELETE);
     }
 }

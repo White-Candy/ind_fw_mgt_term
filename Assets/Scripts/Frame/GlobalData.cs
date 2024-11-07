@@ -10,6 +10,10 @@ public static class GlobalData
 
     public static int s_currUsrLevel = -1;
 
+    public static string IP = "";
+
+    // public static EventType currEventType = EventType.None; // 当前向服务器请求的事件类型
+
     public static Dictionary<PropertyType, string> m_Enum2Type = new Dictionary<PropertyType, string>()
     {
         {PropertyType.PT_USER_ADDTO, "AddUserAction"}, {PropertyType.PT_USER_SET, "SetUserAction"},
@@ -29,4 +33,5 @@ public static class GlobalData
     public static List<string> teachersList = new List<string>(); // 老师
     public static List<string> columnsList = new List<string>(); // 栏目
     public static List<CourseInfo> coursesList = new List<CourseInfo>(); // 课程
+    internal static string token;
 }

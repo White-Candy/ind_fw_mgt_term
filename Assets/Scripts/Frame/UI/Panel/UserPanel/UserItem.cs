@@ -18,15 +18,18 @@ public class UserItem : MonoBehaviour
     public Button Delete;
 
     private UserInfo m_inf = new UserInfo();
+    private UserPropertyDialog m_UserProDialog;
 
     public void Start()
     {
+        m_UserProDialog = UIHelper.FindPanel<UserPropertyDialog>();
+        
         // 信息修改
         Revise.OnClickAsObservable().Subscribe(x => 
         {
             if (GlobalData.s_currUsrLevel == 1) return;
-            UserPropertyDialog.instance.Init(m_inf, PropertyType.PT_USER_SET);
-            UserPropertyDialog.instance.Active(true);
+            m_UserProDialog.Init(m_inf, PropertyType.PT_USER_SET);
+            m_UserProDialog.Active(true);
         });
 
         // 信息删除
@@ -62,6 +65,6 @@ public class UserItem : MonoBehaviour
     /// </summary>
     public void ConfirmDelete()
     {
-        TCPHelper.OperateInfo(m_inf, EventType.UserEvent, OperateType.DELETE);
+        NetHelper.OperateInfo(m_inf, EventType.UserEvent, OperateType.DELETE);
     }
 }  
