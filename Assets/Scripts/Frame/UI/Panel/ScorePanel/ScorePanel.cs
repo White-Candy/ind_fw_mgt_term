@@ -69,6 +69,7 @@ public class ScorePanel : BasePanel
         m_scoresInfo = JsonMapper.ToObject<List<ScoreInfo>>(ret);
         foreach (ScoreInfo inf in m_scoresInfo)
         {
+            Debug.Log($"train scroe: {inf.trainingScore} | themory score: {inf.theoryScore}");
             CloneItem(inf);
         }
     }
