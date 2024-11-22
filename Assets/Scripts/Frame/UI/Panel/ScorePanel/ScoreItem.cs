@@ -61,8 +61,8 @@ public class ScoreItem : MonoBehaviour
         ClassName.GetComponentInChildren<TextMeshProUGUI>().text = info.className;
         CourseName.GetComponentInChildren<TextMeshProUGUI>().text = info.courseName;
         RegisterTime.GetComponentInChildren<TextMeshProUGUI>().text = info.registerTime;
-        Theory.GetComponentInChildren<TextMeshProUGUI>().text = info.theoryScore.Count() == 0 ? info.theoryScore : "0";
-        Training.GetComponentInChildren<TextMeshProUGUI>().text = info.trainingScore.Count() == 0 ? info.trainingScore : "0";
+        Theory.GetComponentInChildren<TextMeshProUGUI>().text = info.theoryScore.Count() == 0 ? "0" : info.theoryScore;
+        Training.GetComponentInChildren<TextMeshProUGUI>().text = info.trainingScore.Count() == 0 ? "0" : info.trainingScore;
         Total.GetComponentInChildren<TextMeshProUGUI>().text = (theoryScore + trainScore).ToString();
 
         gameObject.SetActive(true);
