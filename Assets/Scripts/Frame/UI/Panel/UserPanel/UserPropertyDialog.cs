@@ -45,6 +45,9 @@ public class UserPropertyDialog : BasePanel
     [HideInInspector]
     public TMP_Dropdown m_UnitName;
 
+    [HideInInspector]
+    public TMP_Dropdown usrStatus;
+
     // public static UserPropertyDialog instance;
     
     [HideInInspector]
@@ -72,6 +75,7 @@ public class UserPropertyDialog : BasePanel
         m_IdCard = GameObject.Find("IdCardIpt").GetComponent<TMP_InputField>();
         m_Contact = GameObject.Find("ContactIpt").GetComponent<TMP_InputField>();
         m_UnitName = GameObject.Find("UNDrop").GetComponent<TMP_Dropdown>();
+        usrStatus = GameObject.Find("UserStatusDrop").GetComponent<TMP_Dropdown>();
     }
 
     public void Start()
@@ -148,6 +152,7 @@ public class UserPropertyDialog : BasePanel
         m_Identity.value = UIHelper.GetDropDownOptionIndex(m_Identity, inf.Identity);
         m_Contact.text = inf.Contact;
         m_UnitName.value = UIHelper.GetDropDownOptionIndex(m_UnitName, inf.UnitName);
+        usrStatus.value = inf.login ? 0 : 1;
     }
 
     /// <summary>
@@ -167,6 +172,7 @@ public class UserPropertyDialog : BasePanel
             Age = m_Age.text,
             idCoder = m_IdCard.text,
             Contact = m_Contact.text,
+            login = usrStatus.value == 0 ? true : false
         };
 
         if (Tools.checkList(m_UnitName.options, m_UnitName.value)) { inf.UnitName = m_UnitName.options[m_UnitName.value].text; }     
