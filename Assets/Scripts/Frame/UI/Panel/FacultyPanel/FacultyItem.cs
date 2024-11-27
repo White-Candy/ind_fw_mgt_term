@@ -20,15 +20,16 @@ public class FacultyItem : MonoBehaviour
 
     public void Start()
     {
-        Delete.OnClickAsObservable().Subscribe(_ => 
+        Delete.onClick.AddListener(() =>
         {
             DialogHelper helper = new DialogHelper();
             MessageDialog dialog = helper.CreateMessDialog("MessageDialog");
             dialog.Show("学院信息的删除", "是否删除学院信息？", new ItemPackage("确定", ConfirmDelete), new ItemPackage("取消", null));    
         });
 
-        Revise.OnClickAsObservable().Subscribe(_ => 
+        Revise.onClick.AddListener(() =>
         {
+            m_FacProDialog = UIHelper.FindPanel<FacPropertyDialog>();
             m_FacProDialog.Init(m_info, PropertyType.PT_FAC_SET);
             m_FacProDialog.Active(true);
         });
@@ -45,6 +46,7 @@ public class FacultyItem : MonoBehaviour
         Id.GetComponentInChildren<TextMeshProUGUI>().text = info.id;
         Faculty.GetComponentInChildren<TextMeshProUGUI>().text = info.Name;
         ReigsterTime.GetComponentInChildren<TextMeshProUGUI>().text = info.RegisterTime;
+        TeacherName.GetComponentInChildren<TextMeshProUGUI>().text = info.TeacherName;
 
         gameObject.SetActive(true);
     }

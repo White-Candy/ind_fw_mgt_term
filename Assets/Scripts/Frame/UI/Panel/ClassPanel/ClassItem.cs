@@ -30,6 +30,7 @@ public class ClassItem : MonoBehaviour
         Revise.OnClickAsObservable().Subscribe(_ => 
         {
             ClassPropertyDialog classProDialog = UIHelper.FindPanel<ClassPropertyDialog>();
+            classProDialog.Init(m_info, PropertyType.PT_CLASS_SET);
             classProDialog.Active(true);
 
             // ClassPropertyDialog.instance.Init(m_info, PropertyType.PT_CLASS_SET);
