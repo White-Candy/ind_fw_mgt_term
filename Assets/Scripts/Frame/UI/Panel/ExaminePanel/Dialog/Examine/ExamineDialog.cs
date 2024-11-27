@@ -82,7 +82,11 @@ public class ExamineDialog : BasePanel
 
         okButton.OnClickAsObservable().Subscribe(_=> 
         {
-            if (!InputFieldCheck() || !singlePanel.InputFieldCheck() || !mulitPanel.InputFieldCheck() || !tofPanel.InputFieldCheck()) { return; }
+            if (!InputFieldCheck() || !singlePanel.InputFieldCheck() || !mulitPanel.InputFieldCheck() || !tofPanel.InputFieldCheck()) 
+            {
+                UIHelper.ShowMessage("内容不可为空", "内容不可为空", new ItemPackage("确定", () => {}));
+                return; 
+            }
             m_Action.Action(inf:Output());
             Close();
         });

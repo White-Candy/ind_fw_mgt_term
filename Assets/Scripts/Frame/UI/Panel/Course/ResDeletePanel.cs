@@ -36,7 +36,7 @@ public class ResDeletePanel : BasePanel
 
     public override void Init()
     {
-        TCPHelper.GetInfoReq<ResourcesInfo>(EventType.ResEvent);   
+        NetHelper.GetInfoReq<ResourcesInfo>(EventType.ResEvent);   
     }
 
     public void Show(params object[] objs)

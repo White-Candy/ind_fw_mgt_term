@@ -46,7 +46,7 @@ public class SearchDialog : BasePanel
                 courseName = _courseName, registerTime = _registerTime
             };
 
-            TCPHelper.OperateInfo(scoreInf, EventType.ScoreEvent, OperateType.SEARCH);
+            NetHelper.OperateInfo(scoreInf, EventType.ScoreEvent, OperateType.SEARCH);
             Close();
         });
 

@@ -53,8 +53,8 @@ public class ScorePanel : BasePanel
 
     public override void Init()
     {
-        TCPHelper.GetInitReq();
-        TCPHelper.GetInfoReq<ScoreInfo>(EventType.ScoreEvent);
+        NetHelper.GetInitReq();
+        NetHelper.GetInfoReq<ScoreInfo>(EventType.ScoreEvent);
     }
 
     /// <summary>
@@ -116,8 +116,8 @@ public class ScoreInfo : BaseInfo
     public string registerTime; // 该次考试的注册时间
     public string userName;
     public string Name;
-    public string theoryScore;
-    public string trainingScore;
+    public string theoryScore = "0";
+    public string trainingScore = "0";
     public bool theoryFinished; //本次理论考试是否完成
     public bool trainingFinished; //本次实训考试是否完成
 

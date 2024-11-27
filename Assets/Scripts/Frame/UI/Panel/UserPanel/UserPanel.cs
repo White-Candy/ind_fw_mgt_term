@@ -24,19 +24,19 @@ public class UserPanel : BasePanel
     private List<UserInfo> m_UsersInfo = new List<UserInfo>();
     private Button m_searchBtn;
     private TMP_InputField m_searchIpt;
-    
+    private UserPropertyDialog m_UserProDialog;
+
     public override void Awake()
     {
         base.Awake();
         // instance = this;
-        
-        Active(false);
     }
 
     public void Start()
     {
         m_searchBtn = Search.GetComponentInChildren<Button>();
         m_searchIpt = Search.GetComponentInChildren<TMP_InputField>();
+        m_UserProDialog = UIHelper.FindPanel<UserPropertyDialog>();
 
         // 信息导入
         Import.OnClickAsObservable().Subscribe(async x =>
@@ -56,7 +56,7 @@ public class UserPanel : BasePanel
             // 请求把新导入的学生信息保存到服务器中
             if (list != null)
             {
-                TCPHelper.OperateInfo(list, EventType.UserEvent, OperateType.ADD);
+                NetHelper.OperateInfo(list, EventType.UserEvent, OperateType.ADD);
             }              
         });
 
@@ -74,15 +74,15 @@ public class UserPanel : BasePanel
         // 添加信息。
         AddTo.OnClickAsObservable().Subscribe(x => 
         {
-            UserPropertyDialog.instance.Init(default, PropertyType.PT_USER_ADDTO);
-            UserPropertyDialog.instance.Active(true);
+            m_UserProDialog.Init(default, PropertyType.PT_USER_ADDTO);
+            m_UserProDialog.Active(true);
         });
 
         // 刷新学生信息。
         Refresh.OnClickAsObservable().Subscribe(x => 
         {
-            // TCPHelper.GetInfoReq<TCPStuHelper>();
-            TCPHelper.GetInfoReq<UserInfo>(EventType.UserEvent);
+            // NetHelper.GetInfoReq<TCPStuHelper>();
+            NetHelper.GetInfoReq<UserInfo>(EventType.UserEvent);
         });
 
         m_searchBtn.OnClickAsObservable().Subscribe(_ => 
@@ -92,8 +92,15 @@ public class UserPanel : BasePanel
             {
                 Name = m_searchIpt.text
             };
-            TCPHelper.OperateInfo(inf, EventType.UserEvent, OperateType.SEARCH);
-        });         
+            NetHelper.OperateInfo(inf, EventType.UserEvent, OperateType.SEARCH);
+        });     
+        
+#if UNITY_WEBGL
+        Import.gameObject.SetActive(false);
+        Export.gameObject.SetActive(false);
+#endif
+
+        Active(false);    
     }
 
     /// <summary>
@@ -101,10 +108,10 @@ public class UserPanel : BasePanel
     /// </summary>
     public override void Init()
     {
-        // TCPHelper.GetInfoReq<TCPStuHelper>();
+        // NetHelper.GetInfoReq<TCPStuHelper>();
 
-        TCPHelper.GetInitReq();
-        TCPHelper.GetInfoReq<UserInfo>(EventType.UserEvent);
+        NetHelper.GetInitReq();
+        NetHelper.GetInfoReq<UserInfo>(EventType.UserEvent);
     }
 
     /// <summary>

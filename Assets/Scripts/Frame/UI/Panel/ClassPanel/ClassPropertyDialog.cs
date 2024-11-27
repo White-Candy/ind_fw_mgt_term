@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ClassPropertyDialog : BasePanel
 {
-    public static ClassPropertyDialog instance;
+    // public static ClassPropertyDialog instance;
 
     public Button OK;
     public Button Cancel;
@@ -23,7 +23,7 @@ public class ClassPropertyDialog : BasePanel
     {
         base.Awake();
 
-        instance = this;
+        // instance = this;
         Active(false);
     }
 

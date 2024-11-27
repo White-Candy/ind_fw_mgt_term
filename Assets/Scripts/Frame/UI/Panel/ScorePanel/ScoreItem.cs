@@ -1,3 +1,4 @@
+using System.Linq;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -51,15 +52,18 @@ public class ScoreItem : MonoBehaviour
     public void Init(ScoreInfo info)
     {
         m_info = info.Clone();
-        
+        float theoryScore = 0.0f, trainScore = 0.0f;
+        float.TryParse(info.theoryScore, out theoryScore);
+        float.TryParse(info.trainingScore, out trainScore);
+
         userName.GetComponentInChildren<TextMeshProUGUI>().text = info.userName;
         Name.GetComponentInChildren<TextMeshProUGUI>().text = info.Name;
         ClassName.GetComponentInChildren<TextMeshProUGUI>().text = info.className;
         CourseName.GetComponentInChildren<TextMeshProUGUI>().text = info.courseName;
         RegisterTime.GetComponentInChildren<TextMeshProUGUI>().text = info.registerTime;
-        Theory.GetComponentInChildren<TextMeshProUGUI>().text = info.theoryScore;
-        Training.GetComponentInChildren<TextMeshProUGUI>().text = info.trainingScore;
-        Total.GetComponentInChildren<TextMeshProUGUI>().text = (float.Parse(info.theoryScore) + float.Parse(info.trainingScore)).ToString();
+        Theory.GetComponentInChildren<TextMeshProUGUI>().text = info.theoryScore.Count() == 0 ? "0" : info.theoryScore;
+        Training.GetComponentInChildren<TextMeshProUGUI>().text = info.trainingScore.Count() == 0 ? "0" : info.trainingScore;
+        Total.GetComponentInChildren<TextMeshProUGUI>().text = (theoryScore + trainScore).ToString();
 
         gameObject.SetActive(true);
     }    
@@ -69,6 +73,6 @@ public class ScoreItem : MonoBehaviour
     /// </summary>
     public void ConfirmDelete()
     { 
-        TCPHelper.OperateInfo(m_info, EventType.ScoreEvent, OperateType.DELETE);
+        NetHelper.OperateInfo(m_info, EventType.ScoreEvent, OperateType.DELETE);
     }    
 }

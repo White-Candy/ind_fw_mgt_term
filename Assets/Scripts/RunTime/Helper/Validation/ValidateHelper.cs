@@ -184,7 +184,7 @@ public static class ValidateHelper
     {
         if (IsNullOrEmpty(str))
             return false;
-        string regex = @"^[1-9]+\d*$";
+        string regex = @"^[0-9]+\d*$";
         return Regex.IsMatch(str, regex);
     }
 

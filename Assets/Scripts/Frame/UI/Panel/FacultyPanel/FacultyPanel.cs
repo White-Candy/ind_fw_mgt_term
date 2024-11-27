@@ -27,6 +27,7 @@ public class FacultyPanel : BasePanel
     private List<GameObject> m_itemList = new List<GameObject>();
     private Button m_searchBtn;
     private TMP_InputField m_searchIpt;
+    private FacPropertyDialog m_FacProDialog;
 
     public override void Awake()
     {
@@ -40,16 +41,17 @@ public class FacultyPanel : BasePanel
     {
         m_searchBtn = Search.GetComponentInChildren<Button>();
         m_searchIpt = Search.GetComponentInChildren<TMP_InputField>();
+        m_FacProDialog = UIHelper.FindPanel<FacPropertyDialog>();
 
         AddTo.OnClickAsObservable().Subscribe(_ => 
         {
-            FacPropertyDialog.instance.Init(null, PropertyType.PT_FAC_ADDTO);
-            FacPropertyDialog.instance.Active(true);
+            m_FacProDialog.Init(null, PropertyType.PT_FAC_ADDTO);
+            m_FacProDialog.Active(true);
         });
 
         Refresh.OnClickAsObservable().Subscribe(_ => 
         {
-            TCPHelper.GetInfoReq<FacultyInfo>(EventType.FacultyEvent);
+            NetHelper.GetInfoReq<FacultyInfo>(EventType.FacultyEvent);
         });
 
         m_searchBtn.OnClickAsObservable().Subscribe(_ => 
@@ -59,15 +61,15 @@ public class FacultyPanel : BasePanel
             {
                 Name = m_searchIpt.text
             };
-            TCPHelper.OperateInfo(inf, EventType.FacultyEvent, OperateType.SEARCH);
+            NetHelper.OperateInfo(inf, EventType.FacultyEvent, OperateType.SEARCH);
         });
     }
 
     public override void Init()
     {
-        // TCPHelper.GetInfoReq<TCPFacHelper>();
-        TCPHelper.GetInitReq();
-        TCPHelper.GetInfoReq<FacultyInfo>(EventType.FacultyEvent);
+        // NetHelper.GetInfoReq<TCPFacHelper>();
+        NetHelper.GetInitReq();
+        NetHelper.GetInfoReq<FacultyInfo>(EventType.FacultyEvent);
     }
 
     /// <summary>
@@ -114,7 +116,7 @@ public class FacultyPanel : BasePanel
     /// </summary>
     public override void Close()
     {
-        FacPropertyDialog.instance.Close();
+        m_FacProDialog.Close();
         Active(false);
 
         Clear();

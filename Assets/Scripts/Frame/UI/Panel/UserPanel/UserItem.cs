@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -10,23 +11,27 @@ public class UserItem : MonoBehaviour
     public Button Name;
     public Button Gender;
     public Button IDCoder;
-    public Button Age;
     public Button Identity;
     public Button UnitName;
     public Button Contact;
+    public Button status;
     public Button Revise;
     public Button Delete;
 
     private UserInfo m_inf = new UserInfo();
+    private UserPropertyDialog m_UserProDialog;
+    private List<string> m_UsrStatus = new List<string>() { "激活", "未激活" };
 
     public void Start()
     {
+        m_UserProDialog = UIHelper.FindPanel<UserPropertyDialog>();
+        
         // 信息修改
         Revise.OnClickAsObservable().Subscribe(x => 
         {
             if (GlobalData.s_currUsrLevel == 1) return;
-            UserPropertyDialog.instance.Init(m_inf, PropertyType.PT_USER_SET);
-            UserPropertyDialog.instance.Active(true);
+            m_UserProDialog.Init(m_inf, PropertyType.PT_USER_SET);
+            m_UserProDialog.Active(true);
         });
 
         // 信息删除
@@ -49,7 +54,7 @@ public class UserItem : MonoBehaviour
         Gender.GetComponentInChildren<TextMeshProUGUI>().text = inf.Gender;
         IDCoder.GetComponentInChildren<TextMeshProUGUI>().text = inf.idCoder;
         Identity.GetComponentInChildren<TextMeshProUGUI>().text = inf.Identity;
-        Age.GetComponentInChildren<TextMeshProUGUI>().text = inf.Age;
+        status.GetComponentInChildren<TextMeshProUGUI>().text = inf.login  == true ? m_UsrStatus[0] : m_UsrStatus[1];
         UnitName.GetComponentInChildren<TextMeshProUGUI>().text = inf.UnitName;
         Contact.GetComponentInChildren<TextMeshProUGUI>().text = inf.Contact;
 
@@ -62,6 +67,6 @@ public class UserItem : MonoBehaviour
     /// </summary>
     public void ConfirmDelete()
     {
-        TCPHelper.OperateInfo(m_inf, EventType.UserEvent, OperateType.DELETE);
+        NetHelper.OperateInfo(m_inf, EventType.UserEvent, OperateType.DELETE);
     }
 }  

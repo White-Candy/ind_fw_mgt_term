@@ -51,6 +51,6 @@ public class ColumnsItem : MonoBehaviour
     /// </summary>
     public void ConfirmDelete()
     {
-        TCPHelper.OperateInfo(m_info, EventType.ColumnsEvent, OperateType.DELETE);
+        NetHelper.OperateInfo(m_info, EventType.ColumnsEvent, OperateType.DELETE);
     }
 }

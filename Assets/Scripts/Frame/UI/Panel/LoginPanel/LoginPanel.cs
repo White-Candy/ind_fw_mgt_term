@@ -30,7 +30,7 @@ public class LoginPanel : BasePanel
     {
         m_Login.OnClickAsObservable().Subscribe((x) => 
         {
-            TCPHelper.LoginReq(m_Account?.text, m_Pwd?.text);
+            NetHelper.LoginReq(m_Account?.text, m_Pwd?.text);
         });
     }
 }
