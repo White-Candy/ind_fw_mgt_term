@@ -7030,7 +7030,7 @@ MonoBehaviour:
   m_Content: {fileID: 1804490235963861805}
   m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 2
+  m_MovementType: 1
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
@@ -12486,7 +12486,7 @@ MonoBehaviour:
   m_Content: {fileID: 1804490236581349449}
   m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 2
+  m_MovementType: 1
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
@@ -31278,8 +31278,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -53.1203}
-  m_SizeDelta: {x: 1674, y: 632.8686}
+  m_AnchoredPosition: {x: 0, y: -78.641}
+  m_SizeDelta: {x: 1674, y: 683.91}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1804490235982639239
 CanvasRenderer:
@@ -31334,8 +31334,8 @@ MonoBehaviour:
   m_Content: {fileID: 1804490237504738335}
   m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 2
-  m_Elasticity: 0.1
+  m_MovementType: 1
+  m_Elasticity: 0.5
   m_Inertia: 1
   m_DecelerationRate: 0.135
   m_ScrollSensitivity: 90
@@ -59778,8 +59778,8 @@ MonoBehaviour:
   m_Content: {fileID: 1804490236327735416}
   m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 2
-  m_Elasticity: 0.1
+  m_MovementType: 1
+  m_Elasticity: 0.5
   m_Inertia: 1
   m_DecelerationRate: 0.135
   m_ScrollSensitivity: 90
@@ -62168,7 +62168,7 @@ MonoBehaviour:
   m_Content: {fileID: 1804490236383199194}
   m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 2
+  m_MovementType: 1
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
@@ -97113,7 +97113,7 @@ MonoBehaviour:
   m_Content: {fileID: 1804490236728763897}
   m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 2
+  m_MovementType: 1
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
@@ -114911,7 +114911,7 @@ MonoBehaviour:
   m_Content: {fileID: 1804490235841352836}
   m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 2
+  m_MovementType: 1
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
@@ -115379,7 +115379,7 @@ MonoBehaviour:
   m_Content: {fileID: 1804490235749438927}
   m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 2
+  m_MovementType: 1
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
@@ -133324,8 +133324,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 816.87, y: -24.275}
-  m_SizeDelta: {x: 40.2679, y: 690.56}
+  m_AnchoredPosition: {x: 816.87, y: -49.79499}
+  m_SizeDelta: {x: 40.2679, y: 741.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1804490237640276059
 CanvasRenderer:

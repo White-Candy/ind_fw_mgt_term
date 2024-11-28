@@ -56,13 +56,16 @@ public class ScoreItem : MonoBehaviour
         float.TryParse(info.theoryScore, out theoryScore);
         float.TryParse(info.trainingScore, out trainScore);
 
+        theoryScore = Tools.DigitsRetained(theoryScore, 1);
+        trainScore = Tools.DigitsRetained(trainScore, 1);
+
         userName.GetComponentInChildren<TextMeshProUGUI>().text = info.userName;
         Name.GetComponentInChildren<TextMeshProUGUI>().text = info.Name;
         ClassName.GetComponentInChildren<TextMeshProUGUI>().text = info.className;
         CourseName.GetComponentInChildren<TextMeshProUGUI>().text = info.courseName;
         RegisterTime.GetComponentInChildren<TextMeshProUGUI>().text = info.registerTime;
-        Theory.GetComponentInChildren<TextMeshProUGUI>().text = info.theoryScore.Count() == 0 ? "0" : info.theoryScore;
-        Training.GetComponentInChildren<TextMeshProUGUI>().text = info.trainingScore.Count() == 0 ? "0" : info.trainingScore;
+        Theory.GetComponentInChildren<TextMeshProUGUI>().text = info.theoryScore.Count() == 0 ? "0" : theoryScore.ToString();
+        Training.GetComponentInChildren<TextMeshProUGUI>().text = info.trainingScore.Count() == 0 ? "0" : trainScore.ToString();
         Total.GetComponentInChildren<TextMeshProUGUI>().text = (theoryScore + trainScore).ToString();
 
         gameObject.SetActive(true);
