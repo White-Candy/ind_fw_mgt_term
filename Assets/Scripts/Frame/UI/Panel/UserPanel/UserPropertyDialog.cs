@@ -9,43 +9,18 @@ using UnityEngine.UI;
 
 public class UserPropertyDialog : BasePanel
 {
-    [HideInInspector]
     public Button OK;
-
-    [HideInInspector]
     public Button Cancel;
-
-    [HideInInspector]
     public TMP_InputField m_userName;
-
-    [HideInInspector]
     public TMP_InputField m_Pwd;
-
-    [HideInInspector]
     public TMP_InputField m_Verify;
-
-    [HideInInspector]
     public TMP_InputField m_NameIpt;
-
-    [HideInInspector]
     public TMP_Dropdown m_Gender;
-
-    [HideInInspector]
     public TMP_InputField m_Age;
-
-    [HideInInspector]
     public TMP_Dropdown m_Identity;
-
-    [HideInInspector]
     public TMP_InputField m_IdCard;
-
-    [HideInInspector]
     public TMP_InputField m_Contact;
-
-    [HideInInspector]
     public TMP_Dropdown m_UnitName;
-
-    [HideInInspector]
     public TMP_Dropdown usrStatus;
 
     // public static UserPropertyDialog instance;
@@ -61,35 +36,35 @@ public class UserPropertyDialog : BasePanel
 
         // instance = this;
 
-        OK = GameObject.Find("OK").GetComponent<Button>();
-        Cancel = GameObject.Find("Cancel").GetComponent<Button>();
+        // OK = GameObject.transform.Find("OK").GetComponent<Button>();
+        // Cancel = GameObject.transform.Find("Cancel").GetComponent<Button>();
 
-        m_userName = GameObject.Find("userNameIpt").GetComponent<TMP_InputField>();
-        m_Pwd = GameObject.Find("PwdIpt").GetComponent<TMP_InputField>();
-        m_Verify = GameObject.Find("verifyIpt").GetComponent<TMP_InputField>();
+        //m_userName = GameObject.Find("userNameIpt").GetComponent<TMP_InputField>();
+        //m_Pwd = GameObject.Find("PwdIpt").GetComponent<TMP_InputField>();
+        //m_Verify = GameObject.Find("verifyIpt").GetComponent<TMP_InputField>();
 
-        m_NameIpt = GameObject.Find("NameIpt").GetComponent<TMP_InputField>();
-        m_Gender = GameObject.Find("GenderDrop").GetComponent<TMP_Dropdown>();
-        m_Age = GameObject.Find("AgeIpt").GetComponent<TMP_InputField>();
-        m_Identity = GameObject.Find("IdentityrDrop").GetComponent<TMP_Dropdown>();
-        m_IdCard = GameObject.Find("IdCardIpt").GetComponent<TMP_InputField>();
-        m_Contact = GameObject.Find("ContactIpt").GetComponent<TMP_InputField>();
-        m_UnitName = GameObject.Find("UNDrop").GetComponent<TMP_Dropdown>();
-        usrStatus = GameObject.Find("UserStatusDrop").GetComponent<TMP_Dropdown>();
+        //m_NameIpt = GameObject.Find("NameIpt").GetComponent<TMP_InputField>();
+        //m_Gender = GameObject.Find("GenderDrop").GetComponent<TMP_Dropdown>();
+        //m_Age = GameObject.Find("AgeIpt").GetComponent<TMP_InputField>();
+        //m_Identity = GameObject.Find("IdentityrDrop").GetComponent<TMP_Dropdown>();
+        //m_IdCard = GameObject.Find("IdCardIpt").GetComponent<TMP_InputField>();
+        //m_Contact = GameObject.Find("ContactIpt").GetComponent<TMP_InputField>();
+        //m_UnitName = GameObject.Find("UNDrop").GetComponent<TMP_Dropdown>();
+        //usrStatus = GameObject.Find("UserStatusDrop").GetComponent<TMP_Dropdown>();
     }
 
     public void Start()
     {
-        OK?.OnClickAsObservable().Subscribe(x => 
-        {    
-            if (!ValidateInputField()) return;
+        OK?.onClick.AddListener(() => 
+        {
+            // if (!ValidateInputField()) return;
             m_Action.Action(inf:Output());
 
             Active(false);
             Clear();
         });
 
-        Cancel?.OnClickAsObservable().Subscribe(x => 
+        Cancel?.onClick.AddListener(() =>
         {
             Active(false);
             Clear();
@@ -175,7 +150,7 @@ public class UserPropertyDialog : BasePanel
             login = usrStatus.value == 0 ? true : false
         };
 
-        if (Tools.checkList(m_UnitName.options, m_UnitName.value)) { inf.UnitName = m_UnitName.options[m_UnitName.value].text; }     
+        if (Tools.checkList(m_UnitName.options, m_UnitName.value)) { inf.UnitName = m_UnitName.options[m_UnitName.value].text; }
         return inf;
     }
 

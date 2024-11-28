@@ -7,6 +7,10 @@ public class SetFacAction : PD_BaseAction
     public override void Init(params object[] inf)
     {   
         FacultyInfo info = inf[0] as FacultyInfo;
+
+        m_FacProDialog = UIHelper.FindPanel<FacPropertyDialog>();
+        m_FacProDialog.Clear();
+
         m_FacProDialog.Loading(info);
         m_FacProDialog.RegisterTime.enabled = false;
         m_FacProDialog.ID.enabled = false;

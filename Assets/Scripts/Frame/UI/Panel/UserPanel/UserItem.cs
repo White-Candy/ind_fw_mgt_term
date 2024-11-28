@@ -49,14 +49,15 @@ public class UserItem : MonoBehaviour
     {
         m_inf = inf;
 
-        UserName.GetComponentInChildren<TextMeshProUGUI>().text = inf.userName;
-        Name.GetComponentInChildren<TextMeshProUGUI>().text = inf.Name;
-        Gender.GetComponentInChildren<TextMeshProUGUI>().text = inf.Gender;
-        IDCoder.GetComponentInChildren<TextMeshProUGUI>().text = inf.idCoder;
-        Identity.GetComponentInChildren<TextMeshProUGUI>().text = inf.Identity;
+        Debug.Log($"UserName: {inf.userName}, and after convert unicode: {Tools.Unicode2String(inf.userName)}");
+        UserName.GetComponentInChildren<TextMeshProUGUI>().text = Tools.Unicode2String(inf.userName);
+        Name.GetComponentInChildren<TextMeshProUGUI>().text = Tools.Unicode2String(inf.Name);
+        Gender.GetComponentInChildren<TextMeshProUGUI>().text = Tools.Unicode2String(inf.Gender);
+        IDCoder.GetComponentInChildren<TextMeshProUGUI>().text = Tools.Unicode2String(inf.idCoder);
+        Identity.GetComponentInChildren<TextMeshProUGUI>().text = Tools.Unicode2String(inf.Identity);
         status.GetComponentInChildren<TextMeshProUGUI>().text = inf.login  == true ? m_UsrStatus[0] : m_UsrStatus[1];
-        UnitName.GetComponentInChildren<TextMeshProUGUI>().text = inf.UnitName;
-        Contact.GetComponentInChildren<TextMeshProUGUI>().text = inf.Contact;
+        UnitName.GetComponentInChildren<TextMeshProUGUI>().text = Tools.Unicode2String(inf.UnitName);
+        Contact.GetComponentInChildren<TextMeshProUGUI>().text = Tools.Unicode2String(inf.Contact);
 
         // ClassName.GetComponentInChildren<TextMeshProUGUI>().text = inf.className;
         gameObject.SetActive(true);    

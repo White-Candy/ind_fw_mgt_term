@@ -1,8 +1,13 @@
 
 using Cysharp.Threading.Tasks;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Information;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
+using System.Text;
+using System.Text.RegularExpressions;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -134,5 +139,41 @@ public class Tools
         float i = 0;
         bool result = float.TryParse(str, out i);
         return result;
+    }
+
+
+    public static string ConvertUnicode(string from)
+    {
+        var bytes = Encoding.Unicode.GetBytes(from);
+        return System.Text.Encoding.Unicode.GetString(bytes);
+    }
+
+    /// <summary>
+    /// Unicode转字符串
+    /// </summary>
+    /// <param name="source">经过Unicode编码的字符串</param>
+    /// <returns>正常字符串</returns>
+    internal static string Unicode2String(string source)
+    {
+        if (string.IsNullOrEmpty(source)) return "无";
+        return new Regex(@"\\u([0-9A-F]{4})", RegexOptions.IgnoreCase | RegexOptions.Compiled).Replace(source, x => Convert.ToChar(Convert.ToUInt16(x.Result("$1"), 16)).ToString());
+    }
+
+    /// <summary>
+    /// float 保留小数点后几位
+    /// </summary>
+    /// <param name="fNum"></param>
+    /// <param name="bit"></param>
+    /// <returns></returns>
+    public static float DigitsRetained(float fNum, int bit)
+    {
+        float b = 1.0f;
+        for (int i = 1; i <= bit; ++i)
+        {
+            b = b * 10.0f;
+        }
+
+        float roundedNum = Mathf.Round(fNum * 10f) / b;
+        return roundedNum;
     }
 }
