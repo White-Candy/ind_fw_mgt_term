@@ -17,6 +17,7 @@ public class UserItem : MonoBehaviour
     public Button status;
     public Button Revise;
     public Button Delete;
+    public Toggle delToggle;
 
     private UserInfo m_inf = new UserInfo();
     private UserPropertyDialog m_UserProDialog;

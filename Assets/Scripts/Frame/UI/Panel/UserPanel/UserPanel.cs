@@ -16,8 +16,13 @@ public class UserPanel : BasePanel
     public Button Export;
     public Button AddTo;
     public Button Refresh;
+    public Button batchDelete;
     public GameObject Search;
     // public static UserPanel instance;
+
+    public GameObject delControls;
+    public Button deleteOk; // 确认删除
+    public Button delCancel; // 取消删除
 
     private List<GameObject> itemList = new List<GameObject>();
 
@@ -93,8 +98,40 @@ public class UserPanel : BasePanel
                 Name = m_searchIpt.text
             };
             NetHelper.OperateInfo(inf, EventType.UserEvent, OperateType.SEARCH);
-        });     
-        
+        });
+
+        // 批量删除
+        batchDelete.onClick.AddListener(() =>
+        {
+            delControls.SetActive(true);
+            foreach (var item in itemList)
+            {
+                UserItem usrItem = item.GetComponent<UserItem>();
+                usrItem.Delete.gameObject.SetActive(false);
+                usrItem.delToggle.gameObject.SetActive(true);
+            }
+        });
+
+        // 确认删除
+        deleteOk.onClick.AddListener(() => 
+        {
+            DialogHelper helper = new DialogHelper();
+            MessageDialog dialog = helper.CreateMessDialog("MessageDialog");
+            dialog.Show("用户信息删除", "是否批量删除用户信息？", new ItemPackage("确定", BatchDeletion), new ItemPackage("取消", null));
+        });
+
+        // 取消删除
+        delCancel.onClick.AddListener(() => 
+        {
+            delControls.SetActive(false);
+            foreach (var item in itemList)
+            {
+                UserItem usrItem = item.GetComponent<UserItem>();
+                usrItem.Delete.gameObject.SetActive(true);
+                usrItem.delToggle.gameObject.SetActive(false);
+            }
+        });
+
 #if UNITY_WEBGL
         Import.gameObject.SetActive(false);
         Export.gameObject.SetActive(false);
@@ -137,6 +174,18 @@ public class UserPanel : BasePanel
         var item = clone.GetComponent<UserItem>();
         item.Init(inf);
         itemList.Add(clone);
+    }
+
+    public void BatchDeletion()
+    {
+        foreach (var item in itemList)
+        {
+            UserItem usrItem = item?.GetComponent<UserItem>();
+            if (usrItem.delToggle.isOn)
+            {
+                usrItem.ConfirmDelete();
+            }
+        }
     }
 
     public void Clear()
