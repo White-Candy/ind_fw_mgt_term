@@ -1,4 +1,4 @@
-
+//using System.Collections;
 //using System.Collections.Generic;
 //using System.Net.Sockets;
 //using System.Net;
@@ -8,6 +8,8 @@
 //using System.Text;
 //using LitJson;
 //using Unity.VisualScripting;
+//using UnityEditor;
+//using Cysharp.Threading.Tasks;
 
 //public static class TCP
 //{
@@ -18,9 +20,9 @@
 //    private static int buf_length = 1024000;
 //    private static byte[] buffer = new byte[buf_length];
 
-//    内容包队列
+//    // 内容包队列
 //    public static Queue<MessPackage> m_MessQueue = new Queue<MessPackage>();
-//    前置包队列
+//    // 前置包队列
 //    public static Queue<FrontMp> m_FrontQueue = new Queue<FrontMp>();
 
 //    public static float percent;
@@ -34,7 +36,7 @@
 
 //    private static void ConnectCallbackAsync(IAsyncResult ar)
 //    {
-//        Socket socket = (Socket)ar.AsyncState;
+//        // Socket socket = (Socket)ar.AsyncState;
 //        if (m_Socket != null)
 //        {
 //            m_Socket.EndConnect(ar);
@@ -62,14 +64,14 @@
 //        catch { }
 //    }
 
-//    / <summary>
-//    / 异步发送信息
-//    / </summary>
-//    / <param name = "mess" > 内容 </ param >
-//    / < param name="event_type">事件类型</param>
+//    /// <summary>
+//    /// 异步发送信息
+//    /// </summary>
+//    /// <param name="mess">内容</param>
+//    /// <param name="event_type">事件类型</param>
 //    public static void SendAsync(string mess, EventType event_type, OperateType operateType)
 //    {
-//        await Tools.OnAwait(0.1f, () => { });
+//        //await Tools.OnAwait(0.1f, () => {});      
 //        string front = FrontPackage(mess, event_type, operateType);
 //        string totalInfoPkg = $"|{front}#{mess}@";
 //        long totalLength = totalInfoPkg.Count();
@@ -80,10 +82,10 @@
 //        m_Socket.BeginSend(outputBuffer, 0, outputBuffer.Length, SocketFlags.None, SendAsyncCbk, null);
 //    }
 
-//    / <summary>
-//    / 异步发送回调
-//    / </summary>
-//    / <param name = "ar" ></ param >
+//    /// <summary>
+//    /// 异步发送回调
+//    /// </summary>
+//    /// <param name="ar"></param>
 //    private static void SendAsyncCbk(IAsyncResult ar)
 //    {
 //        try
@@ -99,11 +101,11 @@
 //        }
 //    }
 
-//    / <summary>
-//    / 前置包
-//    / </summary>
-//    / <param name = "mess" ></ param >
-//    / < param name="event_type"></param>
+//    /// <summary>
+//    /// 前置包
+//    /// </summary>
+//    /// <param name="mess"></param>
+//    /// <param name="event_type"></param>
 //    public static string FrontPackage(string mess, EventType event_type, OperateType operateType)
 //    {
 //        FrontMp mpinfo = new FrontMp()
@@ -118,20 +120,20 @@
 //        return s_info;
 //    }
 
-//    / <summary>
-//    / 为消息队列 Clone pkg 并且存放
-//    / </summary>
-//    / <param name = "pkg" ></ param >
+//    /// <summary>
+//    /// 为消息队列 Clone pkg 并且存放
+//    /// </summary>
+//    /// <param name="pkg"></param>
 //    public static void MessQueueAdd(MessPackage mp)
 //    {
 //        MessPackage pkg = new MessPackage(mp);
 //        m_MessQueue.Enqueue(pkg);
 //    }
 
-//    / <summary>
-//    / 前置包和内容包解析
-//    / </summary>
-//    / <param name = "pkg" ></ param >
+//    /// <summary>
+//    /// 前置包和内容包解析
+//    /// </summary>
+//    /// <param name="pkg"></param>
 //    public static void ParsingThePackageBody(string package, MessPackage mp)
 //    {
 //        string[] Split = package.Split("#");
@@ -150,15 +152,15 @@
 //        percent = 0.0f;
 //    }
 
-//    / <summary>
-//    / 进度检查
-//    / </summary>
-//    / <param name = "pkg" ></ param >
+//    /// <summary>
+//    /// 进度检查
+//    /// </summary>
+//    /// <param name="pkg"></param>
 //    public static void check(MessPackage mp)
 //    {
 //        int retLength = mp.ret.Count() + 2;
 //        float percent = retLength * 1.0f / mp.length * 1.0f * 100.0f;
-//        Debug.Log("----------" + mp.ip + " | " + percent + "%");  // Add message package for queue.
+//        // Debug.Log("----------" +  mp.ip + " | " + percent + "%");  // Add message package for queue.
 
 //        if (percent == 100.0f)
 //        {
@@ -167,16 +169,16 @@
 //        }
 //    }
 
-//    / <summary>
-//    / 接受到的信息分析
-//    / </summary>
-//    / <param name = "mess" ></ param >
-//    / < param name="mp"></param>
+//    /// <summary>
+//    /// 接受到的信息分析
+//    /// </summary>
+//    /// <param name="mess"></param>
+//    /// <param name="mp"></param>
 //    public static void InforProcessing(string mess, MessPackage mp)
 //    {
 //        if (string.IsNullOrEmpty(mess) || mess.Count() == 0) return;
 
-//        Debug.Log("===========  mess : " + mess);
+//        // Debug.Log("===========  mess : " + mess);
 //        string[] lengthSplit = mess.Split("|");
 //        string totalLength = lengthSplit[0];
 //        if (!mp.get_length && !string.IsNullOrEmpty(totalLength))
@@ -195,9 +197,9 @@
 //        check(mp);
 //    }
 
-//    / <summary>
-//    / 关闭请求
-//    / </summary>
+//    /// <summary>
+//    /// 关闭请求
+//    /// </summary>
 //    public static void Close()
 //    {
 //        var outputBuffer = Encoding.Default.GetBytes("Close");
@@ -206,12 +208,12 @@
 //}
 
 
-/// < summary >
-/// 这是一个接受完整信息的 信息包类
-/// </ summary >
+///// <summary>
+///// 这是一个接受完整信息的 信息包类
+///// </summary>
 //public class MessPackage
 //{
-//    public Socket socket = default; // 发送信息的soket
+//    // public Socket socket = default; // 发送信息的soket
 //    public string ip = ""; // 他的ip
 //    public string ret = ""; // 他发送的信息
 //    public string operate_type = "";
@@ -222,7 +224,7 @@
 
 //    public void Clear()
 //    {
-//        socket = default;
+//        // socket = default;
 //        ip = "";
 //        ret = "";
 //        event_type = "";
@@ -235,7 +237,7 @@
 
 //    public MessPackage(MessPackage mp)
 //    {
-//        socket = mp.socket;
+//        // socket = mp.socket;
 //        ip = mp.ip;
 //        ret = mp.ret;
 //        event_type = mp.event_type;
@@ -246,9 +248,9 @@
 //    }
 //}
 
-/// < summary >
-/// 前置包结构
-/// </ summary >
+///// <summary>
+///// 前置包结构
+///// </summary>
 //public class FrontMp
 //{
 //    public string ip;

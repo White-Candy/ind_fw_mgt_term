@@ -56,7 +56,7 @@ public class SingleItem : MonoBehaviour
 
     public bool InputFieldCheck()
     {
-        if (!UIHelper.InputFieldCheck(m_TopicContent.text) || !ValidateHelper.IsNumberPosInt(m_Score.text)) return false;
+        if (!UIHelper.InputFieldCheck(m_TopicContent.text) || !ValidateHelper.IsNumberDecimal(m_Score.text)) return false;
         return true;
     }
 

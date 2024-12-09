@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;
@@ -15,10 +16,17 @@ public class NetWorkLauncher : MonoBehaviour
     {
         DontDestroyOnLoad(this);
 
-        await FileHelper.DownLoadTextFromServer(Application.streamingAssetsPath + "\\IP.txt", (ip) => 
+        await FileHelper.DownLoadTextFromServer(Application.streamingAssetsPath + "\\IP.txt", (url) => 
         {
-            GlobalData.IP = $"http://{ip}/";
-            // TCP.Connect(ip, 5800);
+            GlobalData.IP = $"http://{url}/";
+
+            //string[] split = url.Split(':');
+            //if (split.Count() == 2)
+            //{
+            //    string ip = split[0];
+            //    string port = split[1];
+            //    TCP.Connect(ip, int.Parse(port));
+            //}
         });
     }
 

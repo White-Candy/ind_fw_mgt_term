@@ -5,6 +5,8 @@ using System.Linq;
 using TMPro;
 using UniRx;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UserPanel : BasePanel
@@ -16,8 +18,14 @@ public class UserPanel : BasePanel
     public Button Export;
     public Button AddTo;
     public Button Refresh;
+    public Button batchDelete;
     public GameObject Search;
     // public static UserPanel instance;
+
+    public GameObject delControls;
+    public Button deleteOk; // 确认删除
+    public Button delCancel; // 取消删除
+    public Toggle seleteAll;
 
     private List<GameObject> itemList = new List<GameObject>();
 
@@ -25,6 +33,8 @@ public class UserPanel : BasePanel
     private Button m_searchBtn;
     private TMP_InputField m_searchIpt;
     private UserPropertyDialog m_UserProDialog;
+
+    private long m_AllSelectCnt = 0;
 
     public override void Awake()
     {
@@ -43,13 +53,13 @@ public class UserPanel : BasePanel
         {
             List<string> filesPath = FileHelper.OpenFileDialog("Excel文件(*.xlsx)" + '\0' + "*.xlsx", "选择Excel文件", "XLSX");
             if (filesPath.Count() == 0) return;
-            if (filesPath.Count > 0)
-            {
-                DialogHelper helper = new DialogHelper();
-                MessageDialog dialog = helper.CreateMessDialog("MessageDialog");
-                dialog.Show ("课程信息的删除", "是否删除该课程信息？", new ItemPackage("确定", null));    
-                return;
-            }
+            //if (filesPath.Count > 0)
+            //{
+            //    DialogHelper helper = new DialogHelper();
+            //    MessageDialog dialog = helper.CreateMessDialog("MessageDialog");
+            //    dialog.Show ("课程信息的删除", "是否删除该课程信息？", new ItemPackage("确定", null));    
+            //    return;
+            //}
             
             var list = await ExcelTools.Excel2UserInfos(filesPath[0]);
 
@@ -93,8 +103,51 @@ public class UserPanel : BasePanel
                 Name = m_searchIpt.text
             };
             NetHelper.OperateInfo(inf, EventType.UserEvent, OperateType.SEARCH);
-        });     
-        
+        });
+
+        // 批量删除
+        batchDelete.onClick.AddListener(() =>
+        {
+            seleteAll.isOn = false;
+            foreach (var item in itemList)
+            {
+                UserItem usrItem = item.GetComponent<UserItem>();
+                usrItem.delToggle.isOn = false;
+                usrItem.Delete.gameObject.SetActive(false);
+                usrItem.delToggle.gameObject.SetActive(true);
+            }
+            delControls.SetActive(true);
+        });
+
+        // 确认删除
+        deleteOk.onClick.AddListener(() => 
+        {
+            DialogHelper helper = new DialogHelper();
+            MessageDialog dialog = helper.CreateMessDialog("MessageDialog");
+            dialog.Show("用户信息删除", "是否批量删除用户信息？", new ItemPackage("确定", BatchDeletion), new ItemPackage("取消", null));
+        });
+
+        // 取消删除
+        delCancel.onClick.AddListener(() => 
+        {
+            delControls.SetActive(false);
+            foreach (var item in itemList)
+            {
+                UserItem usrItem = item.GetComponent<UserItem>();
+                usrItem.Delete.gameObject.SetActive(true);
+                usrItem.delToggle.gameObject.SetActive(false);
+            }
+        });
+
+        seleteAll.onValueChanged.AddListener((b) =>
+        {
+            foreach (var item in itemList)
+            {
+                UserItem usrItem = item.GetComponent<UserItem>();
+                usrItem.delToggle.isOn = b;
+            }
+        });
+
 #if UNITY_WEBGL
         Import.gameObject.SetActive(false);
         Export.gameObject.SetActive(false);
@@ -129,6 +182,7 @@ public class UserPanel : BasePanel
         {
             CloneItem(inf);
         }
+        delControls.SetActive(false);
     }
 
     public void CloneItem(UserInfo inf)
@@ -136,7 +190,34 @@ public class UserPanel : BasePanel
         GameObject clone = Instantiate(itemTemp, TempParent);
         var item = clone.GetComponent<UserItem>();
         item.Init(inf);
+
+        item.delToggle.onValueChanged.AddListener((b) => 
+        {
+            if (!b)
+            {
+                seleteAll.isOn = false;
+                m_AllSelectCnt--;
+            }
+            else
+            {
+                m_AllSelectCnt++;
+                if (m_AllSelectCnt == itemList.Count())
+                    seleteAll.isOn = true;
+            }
+        });
         itemList.Add(clone);
+    }
+
+    public void BatchDeletion()
+    {
+        foreach (var item in itemList)
+        {
+            UserItem usrItem = item?.GetComponent<UserItem>();
+            if (usrItem.delToggle.isOn)
+            {
+                usrItem.ConfirmDelete();
+            }
+        }
     }
 
     public void Clear()
@@ -147,6 +228,7 @@ public class UserPanel : BasePanel
             Destroy(item);
         }
         itemList.Clear();
+        m_AllSelectCnt = 0;
     }
 
     /// <summary>

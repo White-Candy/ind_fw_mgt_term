@@ -17,6 +17,7 @@ public class UserItem : MonoBehaviour
     public Button status;
     public Button Revise;
     public Button Delete;
+    public Toggle delToggle;
 
     private UserInfo m_inf = new UserInfo();
     private UserPropertyDialog m_UserProDialog;
@@ -58,7 +59,7 @@ public class UserItem : MonoBehaviour
         status.GetComponentInChildren<TextMeshProUGUI>().text = inf.login  == true ? m_UsrStatus[0] : m_UsrStatus[1];
         UnitName.GetComponentInChildren<TextMeshProUGUI>().text = Tools.Unicode2String(inf.UnitName);
         Contact.GetComponentInChildren<TextMeshProUGUI>().text = Tools.Unicode2String(inf.Contact);
-
+        delToggle.gameObject.SetActive(false);
         // ClassName.GetComponentInChildren<TextMeshProUGUI>().text = inf.className;
         gameObject.SetActive(true);    
     }

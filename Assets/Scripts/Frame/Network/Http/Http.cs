@@ -20,7 +20,7 @@ public class HTTP
         foreach (var message in messages)
         {
             InforProcessing(message, mp);
-        }           
+        }
     }
 
     public static async void SendAsyncPost(string mess, EventType event_type, OperateType operateType)
@@ -35,11 +35,11 @@ public class HTTP
         string finalPkg = totalLength.ToString() + totalInfoPkg;
 
         Debug.Log($"{totalLength} | {finalPkg}");
-        await Client.m_Server.Post(GlobalData.IP, finalPkg, (text) => 
+        await Client.m_Server.Post(GlobalData.IP, finalPkg, (text) =>
         {
             Debug.Log("Post Return: " + text);
             HttpFieldProcessing(text);
-        });       
+        });
     }
 
     /// <summary>
@@ -60,10 +60,10 @@ public class HTTP
         string s_info = JsonMapper.ToJson(mpinfo);
         return s_info;
     }
-    
+
     static void InforProcessing(string mess, MessPackage mp)
     {
-        if (string.IsNullOrEmpty(mess) || mess.Count() == 0) 
+        if (string.IsNullOrEmpty(mess) || mess.Count() == 0)
         {
             // Debug.Log("its null string..");
             return;
@@ -84,7 +84,7 @@ public class HTTP
                 mp.ret += mess;
             }
         }
-        check(mp);                  
+        check(mp);
     }
 
     /// <summary>
