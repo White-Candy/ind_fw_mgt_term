@@ -45,7 +45,8 @@ public class ExcelTools
                         Contact = sheet.Cells[i, 7].Value?.ToString(),
                         // className = sheet.Cells[i, 8].Value?.ToString()
                     };
-                    list.Add(inf);
+                    
+                    if (list.FindIndex(x => x.userName == inf.userName) == -1) list.Add(inf);
                 }
                 //excelPkg.Save();
             }
@@ -98,13 +99,13 @@ public class ExcelTools
                 for (int i = 0; i < usinf.Count; ++i)
                 {
                     var inf = usinf[i];
-                    sheet.Cells[i + 2, 1].Value = inf.userName;
-                    sheet.Cells[i + 2, 2].Value = inf.Name;
-                    sheet.Cells[i + 2, 3].Value = inf.Gender;
-                    sheet.Cells[i + 2, 4].Value = inf.idCoder;
-                    sheet.Cells[i + 2, 5].Value = inf.Age;
-                    sheet.Cells[i + 2, 6].Value = inf.Identity;
-                    sheet.Cells[i + 2, 7].Value = inf.Contact;
+                    sheet.Cells[i + 2, 1].Value = Tools.Unicode2String(inf.userName);
+                    sheet.Cells[i + 2, 2].Value = Tools.Unicode2String(inf.Name);
+                    sheet.Cells[i + 2, 3].Value = Tools.Unicode2String(inf.Gender);
+                    sheet.Cells[i + 2, 4].Value = Tools.Unicode2String(inf.idCoder);
+                    sheet.Cells[i + 2, 5].Value = Tools.Unicode2String(inf.Age);
+                    sheet.Cells[i + 2, 6].Value = Tools.Unicode2String(inf.Identity);
+                    sheet.Cells[i + 2, 7].Value = Tools.Unicode2String(inf.Contact);
                     // sheet.Cells[i + 2, 8].Value = inf.className;
                 }
 
