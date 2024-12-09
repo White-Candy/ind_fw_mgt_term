@@ -5,6 +5,8 @@ using System.Linq;
 using TMPro;
 using UniRx;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UserPanel : BasePanel
@@ -23,6 +25,7 @@ public class UserPanel : BasePanel
     public GameObject delControls;
     public Button deleteOk; // 确认删除
     public Button delCancel; // 取消删除
+    public Toggle seleteAll;
 
     private List<GameObject> itemList = new List<GameObject>();
 
@@ -30,6 +33,8 @@ public class UserPanel : BasePanel
     private Button m_searchBtn;
     private TMP_InputField m_searchIpt;
     private UserPropertyDialog m_UserProDialog;
+
+    private long m_AllSelectCnt = 0;
 
     public override void Awake()
     {
@@ -103,13 +108,15 @@ public class UserPanel : BasePanel
         // 批量删除
         batchDelete.onClick.AddListener(() =>
         {
-            delControls.SetActive(true);
+            seleteAll.isOn = false;
             foreach (var item in itemList)
             {
                 UserItem usrItem = item.GetComponent<UserItem>();
+                usrItem.delToggle.isOn = false;
                 usrItem.Delete.gameObject.SetActive(false);
                 usrItem.delToggle.gameObject.SetActive(true);
             }
+            delControls.SetActive(true);
         });
 
         // 确认删除
@@ -129,6 +136,15 @@ public class UserPanel : BasePanel
                 UserItem usrItem = item.GetComponent<UserItem>();
                 usrItem.Delete.gameObject.SetActive(true);
                 usrItem.delToggle.gameObject.SetActive(false);
+            }
+        });
+
+        seleteAll.onValueChanged.AddListener((b) =>
+        {
+            foreach (var item in itemList)
+            {
+                UserItem usrItem = item.GetComponent<UserItem>();
+                usrItem.delToggle.isOn = b;
             }
         });
 
@@ -166,6 +182,7 @@ public class UserPanel : BasePanel
         {
             CloneItem(inf);
         }
+        delControls.SetActive(false);
     }
 
     public void CloneItem(UserInfo inf)
@@ -173,6 +190,21 @@ public class UserPanel : BasePanel
         GameObject clone = Instantiate(itemTemp, TempParent);
         var item = clone.GetComponent<UserItem>();
         item.Init(inf);
+
+        item.delToggle.onValueChanged.AddListener((b) => 
+        {
+            if (!b)
+            {
+                seleteAll.isOn = false;
+                m_AllSelectCnt--;
+            }
+            else
+            {
+                m_AllSelectCnt++;
+                if (m_AllSelectCnt == itemList.Count())
+                    seleteAll.isOn = true;
+            }
+        });
         itemList.Add(clone);
     }
 
@@ -196,6 +228,7 @@ public class UserPanel : BasePanel
             Destroy(item);
         }
         itemList.Clear();
+        m_AllSelectCnt = 0;
     }
 
     /// <summary>

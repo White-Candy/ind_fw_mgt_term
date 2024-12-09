@@ -59,7 +59,7 @@ public class UserItem : MonoBehaviour
         status.GetComponentInChildren<TextMeshProUGUI>().text = inf.login  == true ? m_UsrStatus[0] : m_UsrStatus[1];
         UnitName.GetComponentInChildren<TextMeshProUGUI>().text = Tools.Unicode2String(inf.UnitName);
         Contact.GetComponentInChildren<TextMeshProUGUI>().text = Tools.Unicode2String(inf.Contact);
-
+        delToggle.gameObject.SetActive(false);
         // ClassName.GetComponentInChildren<TextMeshProUGUI>().text = inf.className;
         gameObject.SetActive(true);    
     }
