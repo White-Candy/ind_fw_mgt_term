@@ -43,13 +43,13 @@ public class UserPanel : BasePanel
         {
             List<string> filesPath = FileHelper.OpenFileDialog("Excel文件(*.xlsx)" + '\0' + "*.xlsx", "选择Excel文件", "XLSX");
             if (filesPath.Count() == 0) return;
-            if (filesPath.Count > 0)
-            {
-                DialogHelper helper = new DialogHelper();
-                MessageDialog dialog = helper.CreateMessDialog("MessageDialog");
-                dialog.Show ("课程信息的删除", "是否删除该课程信息？", new ItemPackage("确定", null));    
-                return;
-            }
+            //if (filesPath.Count > 0)
+            //{
+            //    DialogHelper helper = new DialogHelper();
+            //    MessageDialog dialog = helper.CreateMessDialog("MessageDialog");
+            //    dialog.Show ("课程信息的删除", "是否删除该课程信息？", new ItemPackage("确定", null));    
+            //    return;
+            //}
             
             var list = await ExcelTools.Excel2UserInfos(filesPath[0]);
 
