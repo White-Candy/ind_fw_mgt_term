@@ -17,7 +17,7 @@ public class StatisticsItem : MonoBehaviour
     {
         deleteButton.onClick.AddListener(() =>
         {
-            if (GlobalData.s_currUsrLevel == 0) return;
+            if (GlobalData.s_currUsrLevel != 2) return;
             DialogHelper helper = new DialogHelper();
             MessageDialog dialog = helper.CreateMessDialog("MessageDialog");
             dialog.Show("信息的删除", "是否删除该考核统计信息？", new ItemPackage("确定", ConfirmDelete), new ItemPackage("取消", null));

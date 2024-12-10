@@ -54,6 +54,7 @@ public class MenuControl : MonoBehaviour
         Columns.gameObject.SetActive(false);
         Course.gameObject.SetActive(false);
         Examine.gameObject.SetActive(false);
+        statistics.gameObject.SetActive(false);
         Score.gameObject.SetActive(true);
         ButtonClick(Score);
     }
@@ -67,7 +68,8 @@ public class MenuControl : MonoBehaviour
         Columns.gameObject.SetActive(false);
         Course.gameObject.SetActive(true);
         Examine.gameObject.SetActive(true);
-        Score.gameObject.SetActive(true); 
+        Score.gameObject.SetActive(true);
+        statistics.gameObject.SetActive(true);
         ButtonClick(Class);
     }
 
@@ -80,7 +82,8 @@ public class MenuControl : MonoBehaviour
         Columns.gameObject.SetActive(true);
         Course.gameObject.SetActive(true);
         Examine.gameObject.SetActive(true);
-        Score.gameObject.SetActive(true); 
+        Score.gameObject.SetActive(true);
+        statistics.gameObject.SetActive(true);
         ButtonClick(Faculty);
     }
 
