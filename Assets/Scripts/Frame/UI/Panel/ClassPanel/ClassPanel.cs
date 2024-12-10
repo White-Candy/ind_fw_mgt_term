@@ -63,7 +63,7 @@ public class ClassPanel : BasePanel
         });            
     }
 
-    public override void Init()
+    public override void InitAsync()
     {
         NetHelper.GetInitReq();
         NetHelper.GetInfoReq<ClassInfo>(EventType.ClassEvent);

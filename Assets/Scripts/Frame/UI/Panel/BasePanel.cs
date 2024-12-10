@@ -39,7 +39,7 @@ public class BasePanel : MonoBehaviour, IPanel
     /// <summary>
     /// 初始化
     /// </summary>
-    public virtual void Init() { }
+    public virtual void InitAsync() { }
 
     /// <summary>
     /// 关闭窗口 

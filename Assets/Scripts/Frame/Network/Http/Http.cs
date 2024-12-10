@@ -35,7 +35,7 @@ public class HTTP
         string finalPkg = totalLength.ToString() + totalInfoPkg;
 
         Debug.Log($"{totalLength} | {finalPkg}");
-        await Client.m_Server.Post(GlobalData.IP, finalPkg, (text) =>
+        await Client.m_Server.HttpRequest(GlobalData.IP, finalPkg, (text) =>
         {
             Debug.Log("Post Return: " + text);
             HttpFieldProcessing(text);

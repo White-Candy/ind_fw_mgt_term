@@ -34,7 +34,7 @@ public class ResDeletePanel : BasePanel
         });
     }
 
-    public override void Init()
+    public override void InitAsync()
     {
         NetHelper.GetInfoReq<ResourcesInfo>(EventType.ResEvent);   
     }

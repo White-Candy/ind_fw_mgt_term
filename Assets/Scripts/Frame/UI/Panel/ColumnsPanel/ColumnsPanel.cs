@@ -60,7 +60,7 @@ public class ColumnsPanel : BasePanel
         });           
     }
 
-    public override void Init()
+    public override void InitAsync()
     {
         // NetHelper.GetInfoReq<TCPFacHelper>();
         NetHelper.GetInitReq();

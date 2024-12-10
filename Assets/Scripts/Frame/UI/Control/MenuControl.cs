@@ -16,6 +16,8 @@ public class MenuControl : MonoBehaviour
     public Button Course;
     public Button Examine;
     public Button Score;
+    public Button statistics;
+
     private List<Button> m_btnList = new List<Button>();
 
     private PanelAction m_currAction = null;
@@ -38,7 +40,7 @@ public class MenuControl : MonoBehaviour
     /// </summary>
     public void Init()
     {
-        if (GlobalData.s_currUsrLevel == 2 || GlobalData.s_currUsrLevel == 3) { ManagerMode(); }
+        if (GlobalData.s_currUsrLevel == 2) { ManagerMode(); }
         else if (GlobalData.s_currUsrLevel == 1) { TeacherMode(); }
         else { StudentMode(); }
     }
@@ -84,13 +86,13 @@ public class MenuControl : MonoBehaviour
 
     public void ButtonClick(Button btn)
     {
-            PanelAction action = new PanelAction($"{btn.name}Panel");
-            if (m_currAction != null)
-            {
-                m_currAction.Close();
-            }
-            m_currAction = action;
-            m_currAction?.OnEvent();
+        PanelAction action = new PanelAction($"{btn.name}Panel");
+        if (m_currAction != null)
+        {
+            m_currAction.Close();
+        }
+        m_currAction = action;
+        m_currAction?.OnEvent();
     }
 
     public void Destroy()
