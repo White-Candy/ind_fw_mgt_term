@@ -47,7 +47,7 @@ public class ActivationDialog : BasePanel
     /// <summary>
     /// 初始化
     /// </summary>
-    public async override void Init()
+    public async override void InitAsync()
     {
         m_list = ExaminePanel.m_examineesInfo;
         await UniTask.WaitUntil(() => { return GlobalData.columnsList.Count != 0; });

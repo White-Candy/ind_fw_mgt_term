@@ -33,7 +33,7 @@ public class ScorePanel : BasePanel
         searchDialog = UIHelper.FindPanel<SearchDialog>();
         Search.OnClickAsObservable().Subscribe(_ => 
         {
-            searchDialog.Init();
+            searchDialog.InitAsync();
             searchDialog.Active(true); 
         });
 
@@ -48,10 +48,10 @@ public class ScorePanel : BasePanel
             await ExcelTools.WriteScoresInf2Excel(m_scoresInfo, savePath);
         });
 
-        Refresh.OnClickAsObservable().Subscribe(_ => { Init(); });
+        Refresh.OnClickAsObservable().Subscribe(_ => { InitAsync(); });
     }
 
-    public override void Init()
+    public override void InitAsync()
     {
         NetHelper.GetInitReq();
         NetHelper.GetInfoReq<ScoreInfo>(EventType.ScoreEvent);

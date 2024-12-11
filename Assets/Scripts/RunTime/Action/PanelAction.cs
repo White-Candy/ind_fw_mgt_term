@@ -14,7 +14,7 @@ public class PanelAction
 
     public void OnEvent(params object[] objs)
     {
-        m_Panel.Init();
+        m_Panel.InitAsync();
         m_Panel.Active(true);
     }
 

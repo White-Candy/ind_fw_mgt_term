@@ -29,12 +29,12 @@ public class SearchDialog : BasePanel
         }
         UIHelper.AddDropDownOptions(ref Month, monthList);
         UIHelper.AddDropDownOptions(ref Day, dayList);
+     
         
-
         Search.OnClickAsObservable().Subscribe(_ => 
         {
             //if (!InputFieldCheck()) return;
-
+            
             string usrName = "", _className = "", _courseName = "", _registerTime = "";
             if (Name.text.Count() > 0) { usrName = Name.text; }
             if (Class.value > 0) { _className = Class.options[Class.value].text; }
@@ -45,7 +45,7 @@ public class SearchDialog : BasePanel
                 Name = usrName, className = _className,
                 courseName = _courseName, registerTime = _registerTime
             };
-
+            
             NetHelper.OperateInfo(scoreInf, EventType.ScoreEvent, OperateType.SEARCH);
             Close();
         });
@@ -61,7 +61,7 @@ public class SearchDialog : BasePanel
         return true;
     }
 
-    public override void Init()
+    public override void InitAsync()
     {
         List<string> localClassList = new List<string>(GlobalData.classesList);
         List<string> localCourseList = new List<string>(CourseSelection());

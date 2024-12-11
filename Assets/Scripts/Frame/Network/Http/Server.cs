@@ -14,7 +14,7 @@ public class Server : MonoBehaviour
     /// <param name="body"></param>
     /// <param name="callback"></param>
     /// <returns></returns>
-    public async UniTask Post(string url, string body, Action<string> callback)
+    public async UniTask HttpRequest(string url, string body, Action<string> callback, string method = UnityWebRequest.kHttpVerbPOST)
     {
         // Debug.Log("Body: " + body);
         byte[] bytes = null;
@@ -23,7 +23,7 @@ public class Server : MonoBehaviour
             string str = System.Text.RegularExpressions.Regex.Unescape(body);
             bytes = Encoding.UTF8.GetBytes(str);
         }
-        using(UnityWebRequest req = new UnityWebRequest(url, UnityWebRequest.kHttpVerbPOST)) 
+        using(UnityWebRequest req = new UnityWebRequest(url, method)) 
         {
             if (!string.IsNullOrEmpty(GlobalData.token))
             {

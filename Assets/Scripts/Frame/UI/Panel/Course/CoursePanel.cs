@@ -59,7 +59,7 @@ public class CoursePanel : BasePanel
 
         ResDelete.OnClickAsObservable().Subscribe(_ => 
         {
-            m_ResDeletePanel.Init();
+            m_ResDeletePanel.InitAsync();
             m_ResDeletePanel.Active(true);
             m_CourseDialog.Active(false);
         });
@@ -82,7 +82,7 @@ public class CoursePanel : BasePanel
         Active(false);          
     }
 
-    public override void Init()
+    public override void InitAsync()
     {
         NetHelper.GetInitReq();
         NetHelper.GetInfoReq<CourseInfo>(EventType.CourseEvent);

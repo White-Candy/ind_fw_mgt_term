@@ -60,7 +60,7 @@ public class MajorPanel : BasePanel
         });        
     }
 
-    public override void Init()
+    public override void InitAsync()
     {
         NetHelper.GetInitReq();
         NetHelper.GetInfoReq<MajorInfo>(EventType.MajorEvent);

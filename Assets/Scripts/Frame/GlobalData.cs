@@ -5,7 +5,7 @@ public static class GlobalData
     public static UserInfo s_CurrUsrInf = new UserInfo();
     public static Dictionary<string, int> s_UsrLevel = new Dictionary<string, int>()
     {
-        {"学生", 0}, {"老师", 1}, {"主任", 2}, {"院长", 3}
+        {"学生", 0}, {"教师", 1}, {"管理员", 2}
     };
 
     public static int s_currUsrLevel = -1;

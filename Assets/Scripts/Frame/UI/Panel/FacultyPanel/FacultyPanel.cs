@@ -65,7 +65,7 @@ public class FacultyPanel : BasePanel
         });
     }
 
-    public override void Init()
+    public override void InitAsync()
     {
         // NetHelper.GetInfoReq<TCPFacHelper>();
         NetHelper.GetInitReq();

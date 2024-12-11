@@ -159,7 +159,7 @@ public class UserPanel : BasePanel
     /// <summary>
     /// 初始化
     /// </summary>
-    public override void Init()
+    public override void InitAsync()
     {
         // NetHelper.GetInfoReq<TCPStuHelper>();
 
@@ -195,7 +195,6 @@ public class UserPanel : BasePanel
         {
             if (!b)
             {
-                seleteAll.isOn = false;
                 m_AllSelectCnt--;
             }
             else

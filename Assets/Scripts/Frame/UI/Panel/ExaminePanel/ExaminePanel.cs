@@ -59,7 +59,7 @@ public class ExaminePanel : BasePanel
         m_activationDialog = UIHelper.FindPanel<ActivationDialog>();
         Activation.OnClickAsObservable().Subscribe(_ => 
         {
-            m_activationDialog.Init();
+            m_activationDialog.InitAsync();
             m_activationDialog.Active(true);
             m_exmaineDialog.Active(false);
         });
@@ -82,7 +82,7 @@ public class ExaminePanel : BasePanel
         Active(false);
     }
 
-    public override void Init()
+    public override void InitAsync()
     {
         NetHelper.GetInitReq();
         NetHelper.GetInfoReq<ExamineInfo>(EventType.ExamineEvent);
