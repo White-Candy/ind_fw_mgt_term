@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class UserPanel : BasePanel
 {
@@ -26,6 +27,7 @@ public class UserPanel : BasePanel
     public Button deleteOk; // 确认删除
     public Button delCancel; // 取消删除
     public Toggle seleteAll;
+    public TMP_Dropdown identityDropdown;
 
     private List<GameObject> itemList = new List<GameObject>();
 
@@ -148,6 +150,8 @@ public class UserPanel : BasePanel
             }
         });
 
+        identityDropdown.onValueChanged.AddListener((i) => { IdentityScreening(i); });
+
 #if UNITY_WEBGL
         Import.gameObject.SetActive(false);
         Export.gameObject.SetActive(false);
@@ -174,10 +178,12 @@ public class UserPanel : BasePanel
     public void Show(params object[] objs)
     {
         Clear();
-
+        
         string ret = objs[0] as string;
         //Debug.Log("show: " + ret);
         m_UsersInfo = JsonMapper.ToObject<List<UserInfo>>(ret);
+        identityDropdown.value = 0;
+
         foreach (UserInfo inf in m_UsersInfo)
         {
             CloneItem(inf);
@@ -217,6 +223,26 @@ public class UserPanel : BasePanel
                 usrItem.ConfirmDelete();
             }
         }
+    }
+
+    private void IdentityScreening(int i)
+    {
+        string identity = identityDropdown.options[i].text;
+        foreach (var item in itemList)
+        {
+            item.SetActive(false);
+            Destroy(item);
+        }
+        itemList.Clear();
+
+        foreach (UserInfo inf in m_UsersInfo)
+        {
+            if (i == 0 || inf.Identity == identity)
+            { 
+                CloneItem(inf);
+            }
+        }
+        delControls.SetActive(false);
     }
 
     public void Clear()
