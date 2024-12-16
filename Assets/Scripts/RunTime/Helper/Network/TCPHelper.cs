@@ -20,7 +20,7 @@ public class NetHelper
         };
 
         string sJson = JsonMapper.ToJson(inf);
-        HTTP.SendAsyncPost(sJson, EventType.UserLoginEvent, OperateType.NONE);
+        TCP.SendAsync(sJson, EventType.UserLoginEvent, OperateType.NONE);
     }
 
     /// <summary>
@@ -30,7 +30,7 @@ public class NetHelper
     {
         List<string> inf = new List<string>();
         string body = JsonMapper.ToJson(inf);
-        HTTP.SendAsyncPost(body, EventType.GetEvent, OperateType.NONE);
+        TCP.SendAsync(body, EventType.GetEvent, OperateType.NONE);
     }
 
     /// <summary>
@@ -41,7 +41,7 @@ public class NetHelper
     {
         List<T> inf = new List<T>();       
         string body = JsonMapper.ToJson(inf);
-        HTTP.SendAsyncPost(body, type, OperateType.GET);
+        TCP.SendAsync(body, type, OperateType.GET);
     }
 
     /// <summary>
@@ -51,13 +51,13 @@ public class NetHelper
     public static void OperateInfo<T>(T inf, EventType type, OperateType operateType) where T : BaseInfo
     {
         string body = JsonMapper.ToJson(inf);
-        HTTP.SendAsyncPost(body, type, operateType);
+        TCP.SendAsync(body, type, operateType);
     }
 
     public static void OperateInfo<T>(List<T> inf, EventType type, OperateType operateType) where T : BaseInfo
     {
         string body = JsonMapper.ToJson(inf);
-        HTTP.SendAsyncPost(body, type, operateType);
+        TCP.SendAsync(body, type, operateType);
     }
 
     /// <summary>
@@ -67,7 +67,7 @@ public class NetHelper
     public static async void UploadFile(FilePackage fileInfo)
     {
         string bodymessage = await JsonHelper.AsyncToJson(fileInfo);
-        HTTP.SendAsyncPost(bodymessage, EventType.UploadEvent, OperateType.NONE);
+        TCP.SendAsync(bodymessage, EventType.UploadEvent, OperateType.NONE);
     }
 
     public static void UploadFile(List<FilePackage> fileList)
@@ -85,7 +85,7 @@ public class NetHelper
     /// </summary>
     public static bool Close()
     {
-        // TCP.Close();
+        TCP.Close();
         return true;
     }
 }

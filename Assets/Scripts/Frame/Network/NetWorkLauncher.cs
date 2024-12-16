@@ -18,23 +18,23 @@ public class NetWorkLauncher : MonoBehaviour
 
         await FileHelper.DownLoadTextFromServer(Application.streamingAssetsPath + "\\IP.txt", (url) => 
         {
-            GlobalData.IP = $"http://{url}/";
+            // GlobalData.IP = $"http://{url}/";
 
-            //string[] split = url.Split(':');
-            //if (split.Count() == 2)
-            //{
-            //    string ip = split[0];
-            //    string port = split[1];
-            //    TCP.Connect(ip, int.Parse(port));
-            //}
+            string[] split = url.Split(':');
+            if (split.Count() == 2)
+            {
+                string ip = split[0];
+                string port = split[1];
+                TCP.Connect(ip, int.Parse(port));
+            }
         });
     }
 
     public void Update()
     {
-        if (HTTP.m_MessQueue.Count > 0)
+        if (TCP.m_MessQueue.Count > 0)
         {
-            MessPackage pkg = HTTP.m_MessQueue.Dequeue();
+            MessPackage pkg = TCP.m_MessQueue.Dequeue();
             //Debug.Log(pkg.ret);
             m_dispatcher.Dispatcher(pkg);
         }
@@ -42,7 +42,7 @@ public class NetWorkLauncher : MonoBehaviour
 
     public void OnDestroy()
     {
-        // TCPHelper.Close();
+        NetHelper.Close();
         // await UniTask.WaitUntil(() => { return true == TCPHelper.Close(); });
     }
 }

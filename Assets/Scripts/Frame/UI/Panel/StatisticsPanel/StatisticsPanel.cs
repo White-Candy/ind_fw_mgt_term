@@ -53,12 +53,12 @@ public class StatisticsPanel : BasePanel
     {
         base.InitAsync();
 
-        await Client.m_Server.HttpRequest(GlobalData.IP + "GetUsrTimeList", "", (ret) =>
-        {
-            Debug.Log("Post Return: " + ret);
-            Show(ret);
-        }, UnityWebRequest.kHttpVerbGET);
-
+        //await Client.m_Server.HttpRequest(GlobalData.IP + "GetUsrTimeList", "", (ret) =>
+        //{
+        //    Debug.Log("Post Return: " + ret);
+        //    Show(ret);
+        //}, UnityWebRequest.kHttpVerbGET);
+        NetHelper.GetInfoReq<UserInfo>(EventType.StatisticsEvent);
     }
 
     void Update()

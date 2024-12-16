@@ -45,5 +45,6 @@ public enum EventType
     CourseEvent,
     ExamineEvent,
     ScoreEvent,
-    ResEvent
+    ResEvent,
+    StatisticsEvent
 }
