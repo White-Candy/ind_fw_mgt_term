@@ -50,7 +50,7 @@ public class UserItem : MonoBehaviour
     {
         m_inf = inf;
 
-        Debug.Log($"UserName: {inf.userName}, and after convert unicode: {Tools.Unicode2String(inf.userName)}");
+        // Debug.Log($"UserName: {inf.userName}, and after convert unicode: {Tools.Unicode2String(inf.userName)}");
         UserName.GetComponentInChildren<TextMeshProUGUI>().text = Tools.Unicode2String(inf.userName);
         Name.GetComponentInChildren<TextMeshProUGUI>().text = Tools.Unicode2String(inf.Name);
         Gender.GetComponentInChildren<TextMeshProUGUI>().text = Tools.Unicode2String(inf.Gender);
