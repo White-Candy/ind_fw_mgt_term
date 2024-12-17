@@ -8,7 +8,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class UserPanel : BasePanel
 {
@@ -28,6 +27,7 @@ public class UserPanel : BasePanel
     public Button delCancel; // 取消删除
     public Toggle seleteAll;
     public TMP_Dropdown identityDropdown;
+    public Button identityButton;
 
     private List<GameObject> itemList = new List<GameObject>();
 
@@ -35,7 +35,14 @@ public class UserPanel : BasePanel
     private Button m_searchBtn;
     private TMP_InputField m_searchIpt;
     private UserPropertyDialog m_UserProDialog;
-
+    private string IdentityButtonText 
+    { 
+        set 
+        {
+            if (identityDropdown)
+                identityButton.GetComponentInChildren<TextMeshProUGUI>().text = value; 
+        } 
+    }
     private long m_AllSelectCnt = 0;
 
     public override void Awake()
@@ -51,107 +58,34 @@ public class UserPanel : BasePanel
         m_UserProDialog = UIHelper.FindPanel<UserPropertyDialog>();
 
         // 信息导入
-        Import.OnClickAsObservable().Subscribe(async x =>
-        {
-            List<string> filesPath = FileHelper.OpenFileDialog("Excel文件(*.xlsx)" + '\0' + "*.xlsx", "选择Excel文件", "XLSX");
-            if (filesPath.Count() == 0) return;
-            //if (filesPath.Count > 0)
-            //{
-            //    DialogHelper helper = new DialogHelper();
-            //    MessageDialog dialog = helper.CreateMessDialog("MessageDialog");
-            //    dialog.Show ("课程信息的删除", "是否删除该课程信息？", new ItemPackage("确定", null));    
-            //    return;
-            //}
-            
-            var list = await ExcelTools.Excel2UserInfos(filesPath[0]);
-
-            // 请求把新导入的学生信息保存到服务器中
-            if (list != null)
-            {
-                NetHelper.OperateInfo(list, EventType.UserEvent, OperateType.ADD);
-            }              
-        });
+        Import.onClick.AddListener(ImportUsrInfo);
 
         // 导出按钮。
-        Export.OnClickAsObservable().Subscribe(async x => 
-        {
-            string savePath = FileHelper.SaveFileDialog("Excel文件(*.xlsx)" + '\0' + "*.xlsx\0\0", "选择Excel文件", "XLSX");
-            //Debug.Log("savepath : " + savePath);
-
-            await ExcelTools.CreateExcelFile(savePath);
-
-            await ExcelTools.WriteUserinfo2Excel(m_UsersInfo, savePath);
-        });
+        Export.onClick.AddListener(ExportUserInfoIntoExcelFile);
 
         // 添加信息。
-        AddTo.OnClickAsObservable().Subscribe(x => 
-        {
-            m_UserProDialog.Init(default, PropertyType.PT_USER_ADDTO);
-            m_UserProDialog.Active(true);
-        });
+        AddTo.onClick.AddListener(HttpReqUserinfoAdd);
 
         // 刷新学生信息。
-        Refresh.OnClickAsObservable().Subscribe(x => 
-        {
-            // NetHelper.GetInfoReq<TCPStuHelper>();
-            NetHelper.GetInfoReq<UserInfo>(EventType.UserEvent);
-        });
+        Refresh.onClick.AddListener(() => { NetHelper.GetInfoReq<UserInfo>(EventType.UserEvent); });
 
-        m_searchBtn.OnClickAsObservable().Subscribe(_ => 
-        {
-            if (!UIHelper.InputFieldCheck(m_searchIpt.text)) { return; }
-            UserInfo inf = new UserInfo()
-            {
-                Name = m_searchIpt.text
-            };
-            NetHelper.OperateInfo(inf, EventType.UserEvent, OperateType.SEARCH);
-        });
+        m_searchBtn.onClick.AddListener(UseRearchMethodHttpReqUsrInfo);
 
         // 批量删除
-        batchDelete.onClick.AddListener(() =>
-        {
-            seleteAll.isOn = false;
-            foreach (var item in itemList)
-            {
-                UserItem usrItem = item.GetComponent<UserItem>();
-                usrItem.delToggle.isOn = false;
-                usrItem.Delete.gameObject.SetActive(false);
-                usrItem.delToggle.gameObject.SetActive(true);
-            }
-            delControls.SetActive(true);
-        });
+        batchDelete.onClick.AddListener(BatchDeleteOpation);
 
         // 确认删除
-        deleteOk.onClick.AddListener(() => 
-        {
-            DialogHelper helper = new DialogHelper();
-            MessageDialog dialog = helper.CreateMessDialog("MessageDialog");
-            dialog.Show("用户信息删除", "是否批量删除用户信息？", new ItemPackage("确定", BatchDeletion), new ItemPackage("取消", null));
-        });
+        deleteOk.onClick.AddListener(ConfirmDelete);
 
         // 取消删除
-        delCancel.onClick.AddListener(() => 
-        {
-            delControls.SetActive(false);
-            foreach (var item in itemList)
-            {
-                UserItem usrItem = item.GetComponent<UserItem>();
-                usrItem.Delete.gameObject.SetActive(true);
-                usrItem.delToggle.gameObject.SetActive(false);
-            }
-        });
+        delCancel.onClick.AddListener(DeleteOpation);
 
-        seleteAll.onValueChanged.AddListener((b) =>
-        {
-            foreach (var item in itemList)
-            {
-                UserItem usrItem = item.GetComponent<UserItem>();
-                usrItem.delToggle.isOn = b;
-            }
-        });
+        seleteAll.onValueChanged.AddListener(SeleteAllOpation);
 
-        identityDropdown.onValueChanged.AddListener((i) => { IdentityScreening(i); });
+        identityDropdown.onValueChanged.AddListener(IdentityScreening);
 
+        identityButton.onClick.AddListener(ShowIdentityDropItemList);
+        
 #if UNITY_WEBGL
         Import.gameObject.SetActive(false);
         Export.gameObject.SetActive(false);
@@ -182,7 +116,7 @@ public class UserPanel : BasePanel
         string ret = objs[0] as string;
         //Debug.Log("show: " + ret);
         m_UsersInfo = JsonMapper.ToObject<List<UserInfo>>(ret);
-        identityDropdown.value = 0;
+        IdentityButtonText = @"身份";
 
         foreach (UserInfo inf in m_UsersInfo)
         {
@@ -225,6 +159,53 @@ public class UserPanel : BasePanel
         }
     }
 
+    private async void ExportUserInfoIntoExcelFile()
+    {
+        string savePath = FileHelper.SaveFileDialog("Excel文件(*.xlsx)" + '\0' + "*.xlsx\0\0", "选择Excel文件", "XLSX");
+        //Debug.Log("savepath : " + savePath);
+
+        await ExcelTools.CreateExcelFile(savePath);
+
+        await ExcelTools.WriteUserinfo2Excel(m_UsersInfo, savePath);
+    }
+
+    private async void ImportUsrInfo()
+    {
+        List<string> filesPath = FileHelper.OpenFileDialog("Excel文件(*.xlsx)" + '\0' + "*.xlsx", "选择Excel文件", "XLSX");
+        if (filesPath.Count() == 0) return;
+        //if (filesPath.Count > 0)
+        //{
+        //    DialogHelper helper = new DialogHelper();
+        //    MessageDialog dialog = helper.CreateMessDialog("MessageDialog");
+        //    dialog.Show ("课程信息的删除", "是否删除该课程信息？", new ItemPackage("确定", null));    
+        //    return;
+        //}
+
+        var list = await ExcelTools.Excel2UserInfos(filesPath[0]);
+
+        // 请求把新导入的学生信息保存到服务器中
+        if (list != null)
+        {
+            NetHelper.OperateInfo(list, EventType.UserEvent, OperateType.ADD);
+        }
+    }
+
+    private void HttpReqUserinfoAdd()
+    {
+        m_UserProDialog.Init(default, PropertyType.PT_USER_ADDTO);
+        m_UserProDialog.Active(true);
+    }
+
+    private void UseRearchMethodHttpReqUsrInfo()
+    {
+        if (!UIHelper.InputFieldCheck(m_searchIpt.text)) { return; }
+        UserInfo inf = new UserInfo()
+        {
+            Name = m_searchIpt.text
+        };
+        NetHelper.OperateInfo(inf, EventType.UserEvent, OperateType.SEARCH);
+    }
+
     private void IdentityScreening(int i)
     {
         string identity = identityDropdown.options[i].text;
@@ -237,12 +218,62 @@ public class UserPanel : BasePanel
 
         foreach (UserInfo inf in m_UsersInfo)
         {
-            if (i == 0 || inf.Identity == identity)
+            if (inf.Identity == identity)
             { 
                 CloneItem(inf);
             }
         }
         delControls.SetActive(false);
+
+        IdentityButtonText = identityDropdown.options[i].text;
+    }
+
+    /// <summary>
+    /// 点击button按钮 显示 dropdown的listitem
+    /// </summary>
+    private void ShowIdentityDropItemList()
+    {
+        identityDropdown.Show();
+    }
+
+    private void BatchDeleteOpation()
+    {
+        seleteAll.isOn = false;
+        foreach (var item in itemList)
+        {
+            UserItem usrItem = item.GetComponent<UserItem>();
+            usrItem.delToggle.isOn = false;
+            usrItem.Delete.gameObject.SetActive(false);
+            usrItem.delToggle.gameObject.SetActive(true);
+        }
+        delControls.SetActive(true);
+    }
+
+    private void DeleteOpation()
+    {
+        delControls.SetActive(false);
+        foreach (var item in itemList)
+        {
+            UserItem usrItem = item.GetComponent<UserItem>();
+            usrItem.Delete.gameObject.SetActive(true);
+            usrItem.delToggle.gameObject.SetActive(false);
+        }
+    }
+
+    private void SeleteAllOpation(bool b)
+    {
+        foreach (var item in itemList)
+        {
+            UserItem usrItem = item.GetComponent<UserItem>();
+            usrItem.delToggle.isOn = b;
+        }
+    }
+
+    private void ConfirmDelete()
+    {
+         DialogHelper helper = new DialogHelper();
+        MessageDialog dialog = helper.CreateMessDialog("MessageDialog");
+        dialog.Show("用户信息删除", "是否批量删除用户信息？", new ItemPackage("确定", BatchDeletion), new ItemPackage("取消", null));
     }
 
     public void Clear()
